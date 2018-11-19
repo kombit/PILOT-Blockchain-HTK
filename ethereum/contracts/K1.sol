@@ -38,6 +38,7 @@ contract K1 is ICommonState, IHasSubcontracts, CommonStates, Owned {
         require(state != TERMINATED, "state must not be TERMINATED when adding subcontract");
         numSubcontracts = 1;
         subcontract = ICommonState(_subcontract);
+        require(subcontract.getState() != TERMINATED, "Cant add a TERMINATED subcontract");
     }
 
     // state
