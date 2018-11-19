@@ -1,14 +1,15 @@
 import minimist = require('minimist')
 import chalk from 'chalk'
-import { multiSigCall, createSig, retrieveKeystore, txObj } from './sigTools.js'
+import { createSig, multiSigCall, retrieveKeystore, txObj } from './sigTools.js'
 import { keystore } from 'eth-lightwallet'
-import { addDeployedContract, getDeployedContracts, getDeployedContracts2, savedContract } from './files.js'
+import { addDeployedContract, getDeployedContracts2, savedContract } from './files.js'
 import { create } from './methods/create.js'
 import { info, recursiveWalk } from './methods/info.js'
 import { ParsedArgs } from 'minimist'
+
 const Web3 = require('web3')
 
-const {yellow, red, blue, greenBright} = chalk
+const {red} = chalk
 
 const argv = minimist(process.argv.slice(2), {
   string: [
