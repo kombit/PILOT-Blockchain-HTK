@@ -8,6 +8,7 @@ import { info, recursiveWalk } from './methods/info.js'
 import { ParsedArgs } from 'minimist'
 import { status } from './methods/status.js'
 import { sign } from './methods/sign.js'
+import { add } from './methods/add.js'
 
 const Web3 = require('web3')
 
@@ -168,23 +169,7 @@ async function _add () {
   console.assert(targetAddress, "requires address; --address -a")
   console.assert(from, "requires from; --from -f")
 
-  const web3 = new Web3('http://localhost:7545')
-  const instance:any = new web3.eth.Contract(require('../ethereum/build/contracts/IHasSubcontracts.json').abi,
-    argv.a,
-    {})
-
-  instance.methods.add(subcontractAddress)
-    .send({
-      from: argv.from || argv.f,
-    })
-    .then(() => {
-      const instance:any = new web3.eth.Contract(require('../ethereum/build/contracts/ICommonState.json').abi,
-        argv.a,
-        {})
-      instance.methods.getSubcontract(0).call().then(val => {
-        console.assert(val.toString().toLowerCase() === subcontractAddress.toLowerCase(), "Was not set correct "+red(val))
-      })
-    })
+  await add(targetAddress, subcontractAddress, from)
 }
 
 async function _info () {
