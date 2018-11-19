@@ -35,6 +35,7 @@ contract K1 is ICommonState, IHasSubcontracts, CommonStates, Owned {
     // IHasSubcontracts
 
     function add(ICommonState _subcontract) serviceProviderOnly external {
+        require(state != TERMINATED, "state must not be TERMINATED when adding subcontract");
         numSubcontracts = 1;
         subcontract = ICommonState(_subcontract);
     }
