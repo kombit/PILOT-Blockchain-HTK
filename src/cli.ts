@@ -7,6 +7,7 @@ import { create } from './methods/create.js'
 import { info, recursiveWalk } from './methods/info.js'
 import { ParsedArgs } from 'minimist'
 import { status } from './methods/status.js'
+import { sign } from './methods/sign.js'
 
 const Web3 = require('web3')
 
@@ -129,39 +130,19 @@ async function _sign () {
 
   const seedPhrase = argv.s || argv.seed
   const password = argv.p || argv.password || ''
-  const multisigAddr = argv.u || argv.multisig
+  const multisigAddress = argv.u || argv.multisig
   const destMethod = argv.m || argv.method
+  const from = argv.f || argv.from
+  const destAddress = argv.d || argv.dest
 
-  console.assert(seedPhrase, "need seedPhrase")
-  console.assert(multisigAddr, "need multisigAddr")
+  console.assert(seedPhrase, "need seed phrase --seed -s")
+  console.assert(multisigAddress, "missing --multisig -u")
   console.assert(!!password || password === '', "need password")
+  console.assert(from, "missing from --from -f")
+  console.assert(destMethod, "missing dest. method --method -m")
+  console.assert(destAddress, "missing dest. address --dest -d")
 
-  const web3 = new Web3('http://localhost:7545')
-  const multisigInstance = new web3.eth.Contract(require('../ethereum/build/contracts/SimpleMultiSig').abi,
-    multisigAddr,
-    {
-      from: argv.from || argv.f,
-    })
-
-  multisigInstance.methods.nonce().call().then(async nonce => {
-    const destAddr = argv.d || argv.dest
-    console.assert(destAddr, 'missing dest address')
-
-    const [ks, keyFromPw] = await retrieveKeystore(seedPhrase, password)
-    ks.generateNewAddress(keyFromPw, 1)
-    const [signingAddr] = ks.getAddresses()
-    let s:txObj
-    try {
-      s = createSig(ks, signingAddr, keyFromPw, multisigAddr, nonce, destMethod, destAddr)
-      console.log('Signature:')
-      console.log(JSON.stringify(s))
-    }
-    catch (e) {
-      console.error(red(e.toString()))
-      console.error(e)
-    }
-
-  })
+  await sign(destMethod, destAddress, multisigAddress, from, seedPhrase, password)
 }
 
 async function _add () {
