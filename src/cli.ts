@@ -164,24 +164,27 @@ async function _sign () {
 }
 
 async function _add () {
-  if (subcommandNoArgs(argv)) {
+  if (argv.h) {
     console.log("USAGE")
-    console.log("  add -s 0x123 -a 0x456")
+    console.log("  add --subcontract 0x123 --address 0x456 --from -0x321")
     console.log("")
     console.log("OPTIONS")
-    console.log("  -a the address of the main contract")
-    console.log("  --subcontract, -s the address of the subcontract to be added")
-
+    console.log("  --address -a the address of the main contract")
+    console.log("  --from -f the sender")
+    console.log("  --subcontract -s the address of the subcontract to be added")
     return
   }
+
   // const mainContractAddress:string = argv.a || argv.address
   const subcontractAddress:string = argv.s || argv.subcontract
-  // console.assert(mainContractAddress)
+  const targetAddress:string = argv.a || argv.address
+  const from:string = argv.f || argv.from
+
   const networkId = argv.networkId || '1337'
   console.assert(networkId)
-  console.assert(subcontractAddress)
-  console.assert(argv.a)
-  console.assert(argv.from || argv.f)
+  console.assert(subcontractAddress, "need sub contract address; --subcontract -s")
+  console.assert(targetAddress, "requires address; --address -a")
+  console.assert(from, "requires from; --from -f")
 
   const web3 = new Web3('http://localhost:7545')
   const instance:any = new web3.eth.Contract(require('../ethereum/build/contracts/IHasSubcontracts.json').abi,
@@ -193,7 +196,10 @@ async function _add () {
       from: argv.from || argv.f,
     })
     .then(() => {
-      instance.methods.subcontract().call().then(val => {
+      const instance:any = new web3.eth.Contract(require('../ethereum/build/contracts/ICommonState.json').abi,
+        argv.a,
+        {})
+      instance.methods.getSubcontract(0).call().then(val => {
         console.assert(val.toString().toLowerCase() === subcontractAddress.toLowerCase(), "Was not set correct "+red(val))
       })
     })
