@@ -6,6 +6,7 @@ import { addDeployedContract, getDeployedContracts2, savedContract } from './fil
 import { create } from './methods/create.js'
 import { info, recursiveWalk } from './methods/info.js'
 import { ParsedArgs } from 'minimist'
+import { status } from './methods/status.js'
 
 const Web3 = require('web3')
 
@@ -225,16 +226,9 @@ async function _status() {
     return
   }
 
-  const networkId = argv.networkId || '1337'
+  // const networkId = argv.networkId || '1337'
   // await info(contractAddress, networkId)
-
-  const allContracts:savedContract[] = await getDeployedContracts2()
-  const web3 = new Web3('http://localhost:7545')
-
-  allContracts
-    .forEach(contract => {
-      recursiveWalk(contract.address, web3, `Contract`)
-    })
+  await status()
 }
 
 async function _list() {
