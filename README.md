@@ -5,18 +5,20 @@
 
 # Usage
 
-Use NodeJS to `node dist/cli.js` - you might need to [install dependencies](#Installation and dependencies).
+Use NodeJS to run `cli.js` from the `dist` folder. You will need to [install dependencies](#Installation and dependencies).
 
-See a tutorial of doing a [two-party contract in the docs](./docs/two-party-contract.md).
+Example:
+ 1.  `cd dist`
+ 2.  `node cli.js list`
+ 3.  Should output `CONTRACTS OVERVIEW ...` (followed by deployed contracts if any)
 
 
 ### Installation and dependencies
 
  1.  We'll need NodeJS and npm 
- 2.  Install the Truffle framework, and Ganache test-blockchain 
-     `npm install -g ganache truffle`
-     (access to a local or remote Ethereum node is not required)
- 3.  Download this codebase, and do a `npm install`
+ 2.  Install the Truffle framework globally 
+     `npm install -g truffle`
+ 3.  Download this codebase, and do a `npm install` in the folder
 
 
 #### Two sets of tools
@@ -28,6 +30,33 @@ The Truffle setup with unit tests, and the cli tool.
 TypeScript configurations - note the two `tsconfig.json` in `src/` and `ethereum/`.
 
 
-#### Windows support
+#### Windows trouble-shooting
 
-Yes. Please use [cmder](http://cmder.net/) as terminal emulator.
+#### 1. Programs
+
+Be sure to have the following programs installed and added to your `PATH` variable
+
+  - NodeJS, our runtime, - comes with NPM, the package manager used to download project dependencies
+  - Git, used to download some dependencies
+  - Python, used to build some dependencies
+  
+  
+Test them by opening _Cmd_ or _Power Shell_, then try printing the versions (newer versions are OK):
+
+`node -v` should output `v8.0.0`
+
+`npm -v` should output `5.6.0` 
+
+`git --version` should output `git version 2.19.1.windows.1`
+
+`python --version` should output `Python 2.7.15`
+
+
+#### 2. Building dependencies
+
+Before setting up project dependencies with `npm install`, install the `windows-build-tools` globally. 
+This will require administrator privilege.
+
+`npm install --global --production windows-build-tools` 
+
+Now try running `npm install` in the project folder.
