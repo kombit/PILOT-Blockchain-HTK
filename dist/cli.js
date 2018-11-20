@@ -7,7 +7,9 @@ const eth_lightwallet_1 = require("eth-lightwallet");
 const files_js_1 = require("./files.js");
 const create_js_1 = require("./methods/create.js");
 const info_js_1 = require("./methods/info.js");
-const Web3 = require('web3');
+const status_js_1 = require("./methods/status.js");
+const sign_js_1 = require("./methods/sign.js");
+const add_js_1 = require("./methods/add.js");
 const { red } = chalk_1.default;
 const argv = minimist(process.argv.slice(2), {
     string: [
@@ -114,32 +116,17 @@ async function _sign() {
     }
     const seedPhrase = argv.s || argv.seed;
     const password = argv.p || argv.password || '';
-    const multisigAddr = argv.u || argv.multisig;
+    const multisigAddress = argv.u || argv.multisig;
     const destMethod = argv.m || argv.method;
-    console.assert(seedPhrase, "need seedPhrase");
-    console.assert(multisigAddr, "need multisigAddr");
+    const from = argv.f || argv.from;
+    const destAddress = argv.d || argv.dest;
+    console.assert(seedPhrase, "need seed phrase --seed -s");
+    console.assert(multisigAddress, "missing --multisig -u");
     console.assert(!!password || password === '', "need password");
-    const web3 = new Web3('http://localhost:7545');
-    const multisigInstance = new web3.eth.Contract(require('../ethereum/build/contracts/SimpleMultiSig').abi, multisigAddr, {
-        from: argv.from || argv.f,
-    });
-    multisigInstance.methods.nonce().call().then(async (nonce) => {
-        const destAddr = argv.d || argv.dest;
-        console.assert(destAddr, 'missing dest address');
-        const [ks, keyFromPw] = await sigTools_js_1.retrieveKeystore(seedPhrase, password);
-        ks.generateNewAddress(keyFromPw, 1);
-        const [signingAddr] = ks.getAddresses();
-        let s;
-        try {
-            s = sigTools_js_1.createSig(ks, signingAddr, keyFromPw, multisigAddr, nonce, destMethod, destAddr);
-            console.log('Signature:');
-            console.log(JSON.stringify(s));
-        }
-        catch (e) {
-            console.error(red(e.toString()));
-            console.error(e);
-        }
-    });
+    console.assert(from, "missing from --from -f");
+    console.assert(destMethod, "missing dest. method --method -m");
+    console.assert(destAddress, "missing dest. address --dest -d");
+    await sign_js_1.sign(destMethod, destAddress, multisigAddress, from, seedPhrase, password);
 }
 async function _add() {
     if (argv.h) {
@@ -161,18 +148,7 @@ async function _add() {
     console.assert(subcontractAddress, "need sub contract address; --subcontract -s");
     console.assert(targetAddress, "requires address; --address -a");
     console.assert(from, "requires from; --from -f");
-    const web3 = new Web3('http://localhost:7545');
-    const instance = new web3.eth.Contract(require('../ethereum/build/contracts/IHasSubcontracts.json').abi, argv.a, {});
-    instance.methods.add(subcontractAddress)
-        .send({
-        from: argv.from || argv.f,
-    })
-        .then(() => {
-        const instance = new web3.eth.Contract(require('../ethereum/build/contracts/ICommonState.json').abi, argv.a, {});
-        instance.methods.getSubcontract(0).call().then(val => {
-            console.assert(val.toString().toLowerCase() === subcontractAddress.toLowerCase(), "Was not set correct " + red(val));
-        });
-    });
+    await add_js_1.add(targetAddress, subcontractAddress, from);
 }
 async function _info() {
     if (subcommandNoArgs(argv)) {
@@ -191,14 +167,9 @@ async function _status() {
         console.log('  node cli.js er der styr på det?');
         return;
     }
-    const networkId = argv.networkId || '1337';
+    // const networkId = argv.networkId || '1337'
     // await info(contractAddress, networkId)
-    const allContracts = await files_js_1.getDeployedContracts2();
-    const web3 = new Web3('http://localhost:7545');
-    allContracts
-        .forEach(contract => {
-        info_js_1.recursiveWalk(contract.address, web3, `Contract`);
-    });
+    await status_js_1.status();
 }
 async function _list() {
     if (argv.h) {
