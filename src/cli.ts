@@ -2,7 +2,7 @@ import minimist = require('minimist')
 import chalk from 'chalk'
 import { multiSigCall, retrieveKeystore, } from './sigTools.js'
 import { keystore } from 'eth-lightwallet'
-import { addDeployedContract, getDeployedContracts2, savedContract } from './files.js'
+import { addDeployedContract, getContractArtifacts, getDeployedContracts2, savedContract } from './files.js'
 import { create } from './methods/create.js'
 import { info, } from './methods/info.js'
 import { ParsedArgs } from 'minimist'
@@ -34,6 +34,7 @@ enum Cmd {
   list, ls,
   register, sp,
   create, mk,
+  template, tl,
   sign,
   send,
 }
@@ -270,6 +271,32 @@ async function _create() {
   }
 }
 
+async function _template () {
+  const tpls = await getContractArtifacts()
+
+  console.log(`AVAILABLE CONTRACT TEMPLATES`)
+  console.log(``)
+
+  tpls.forEach(tpl => {
+    console.log('  ' + tpl.contractName)
+    console.log('    ' +
+      (Array.isArray(tpl.abi) ? tpl.abi : [])
+      .filter(method => method.type === "constructor")
+      .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
+        .map(input => input.type + " " + input.name)
+        .join(', ')
+      )
+    )
+    console.log(`    create ${tpl.contractName} ${
+      (Array.isArray(tpl.abi) ? tpl.abi : [])
+        .filter(method => method.type === "constructor")
+        .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
+          .map(input => `<${input.type}>`)
+          .join(' ')
+        )
+      }`)
+  })
+}
 
 function subcommandNoArgs(argv:ParsedArgs):boolean {
   return (argv.h || argv._.length === 1)
@@ -299,6 +326,9 @@ handlers.set(Cmd.list, _list)
 handlers.set(Cmd.ls, handlers.get(Cmd.list) as Handler)
 
 handlers.set(Cmd.create, _create)
+
+handlers.set(Cmd.template, _template)
+handlers.set(Cmd.tl, handlers.get(Cmd.template) as Handler)
 
 handlers.set(Cmd.mk, handlers.get(Cmd.create) as Handler)
 
