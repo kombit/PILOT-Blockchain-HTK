@@ -9,7 +9,7 @@ const opts = {
 const dataDirPath = path_1.join(__dirname, '../data');
 const filePath = path_1.join(dataDirPath, '/deployed.json');
 const contractsPath = path_1.join(__dirname, "../ethereum/build/contracts/");
-async function getDeployedContracts(networkId) {
+async function getContractArtifacts() {
     return new Promise(resolve => {
         const reads = [];
         klaw(contractsPath, opts)
@@ -21,15 +21,13 @@ async function getDeployedContracts(networkId) {
             .on('end', async () => {
             const items = await Promise.all(reads);
             const filtered = items
-                .filter(contract => contract.contractName !== 'Migrations' // filter out Truffle migration tracking
-                && contract.networks
-                && contract.networks[networkId]
-                && Object.keys(contract.networks[networkId]).length > 0);
+                .filter(artf => artf.contractName !== 'Migrations') // filter out Truffle migration tracking
+                .filter(artf => artf.bytecode !== '0x'); // filter out interfaces
             resolve(filtered);
         });
     });
 }
-exports.getDeployedContracts = getDeployedContracts;
+exports.getContractArtifacts = getContractArtifacts;
 async function addDeployedContract(name, address, msg) {
     const table = await getDeployedContracts2();
     table.push({

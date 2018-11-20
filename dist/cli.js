@@ -34,11 +34,12 @@ var Cmd;
     Cmd[Cmd["list"] = 5] = "list";
     Cmd[Cmd["ls"] = 6] = "ls";
     Cmd[Cmd["register"] = 7] = "register";
-    Cmd[Cmd["sp"] = 8] = "sp";
-    Cmd[Cmd["create"] = 9] = "create";
-    Cmd[Cmd["mk"] = 10] = "mk";
-    Cmd[Cmd["sign"] = 11] = "sign";
-    Cmd[Cmd["send"] = 12] = "send";
+    Cmd[Cmd["create"] = 8] = "create";
+    Cmd[Cmd["mk"] = 9] = "mk";
+    Cmd[Cmd["template"] = 10] = "template";
+    Cmd[Cmd["tpl"] = 11] = "tpl";
+    Cmd[Cmd["sign"] = 12] = "sign";
+    Cmd[Cmd["send"] = 13] = "send";
 })(Cmd || (Cmd = {}));
 const subcommand = Cmd[argv._[0]];
 async function _help() {
@@ -51,7 +52,7 @@ async function _help() {
         .filter(v => v.length > 2) // remove short names
         .filter(value => [
         Cmd[Cmd.help],
-        Cmd[Cmd.create],
+        Cmd[Cmd.tpl],
     ].includes(value) == false) // blacklisted
         .sort()
         .join(', '));
@@ -235,6 +236,25 @@ async function _create() {
         await files_js_1.addDeployedContract('SimpleMultiSig', multiSigContractDeployed.options.address, msg);
     }
 }
+async function _template() {
+    const tpls = await files_js_1.getContractArtifacts();
+    console.log(`AVAILABLE CONTRACT TEMPLATES`);
+    console.log(``);
+    tpls.forEach(tpl => {
+        console.log('  ' + tpl.contractName);
+        console.log('    ' +
+            (Array.isArray(tpl.abi) ? tpl.abi : [])
+                .filter(method => method.type === "constructor")
+                .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
+                .map(input => input.type + " " + input.name)
+                .join(', ')));
+        console.log(`    create ${tpl.contractName} ${(Array.isArray(tpl.abi) ? tpl.abi : [])
+            .filter(method => method.type === "constructor")
+            .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
+            .map(input => `<${input.type}>`)
+            .join(' '))}`);
+    });
+}
 function subcommandNoArgs(argv) {
     return (argv.h || argv._.length === 1);
 }
@@ -247,10 +267,11 @@ handlers.set(Cmd.send, _tx);
 handlers.set(Cmd.help, _help);
 handlers.set(Cmd.sign, _sign);
 handlers.set(Cmd.register, _register);
-handlers.set(Cmd.sp, handlers.get(Cmd.register));
 handlers.set(Cmd.list, _list);
 handlers.set(Cmd.ls, handlers.get(Cmd.list));
 handlers.set(Cmd.create, _create);
+handlers.set(Cmd.template, _template);
+handlers.set(Cmd.tpl, handlers.get(Cmd.template));
 handlers.set(Cmd.mk, handlers.get(Cmd.create));
 const handler = handlers.get(subcommand) || handlers.get(Cmd.help);
 console.assert(handler, "should have found handler");
