@@ -32,9 +32,9 @@ enum Cmd {
   status, er,
   add,
   list, ls,
-  register, sp,
+  register,
   create, mk,
-  template, tl,
+  template, tpl,
   sign,
   send,
 }
@@ -53,7 +53,7 @@ async function _help() {
     .filter(v => v.length > 2) // remove short names
     .filter(value => [
       Cmd[Cmd.help],
-      Cmd[Cmd.create],
+      Cmd[Cmd.tpl],
     ].includes(value) == false) // blacklisted
     .sort()
     .join(', ')
@@ -320,7 +320,6 @@ handlers.set(Cmd.help, _help)
 handlers.set(Cmd.sign, _sign)
 
 handlers.set(Cmd.register, _register)
-handlers.set(Cmd.sp, handlers.get(Cmd.register) as Handler)
 
 handlers.set(Cmd.list, _list)
 handlers.set(Cmd.ls, handlers.get(Cmd.list) as Handler)
@@ -328,7 +327,7 @@ handlers.set(Cmd.ls, handlers.get(Cmd.list) as Handler)
 handlers.set(Cmd.create, _create)
 
 handlers.set(Cmd.template, _template)
-handlers.set(Cmd.tl, handlers.get(Cmd.template) as Handler)
+handlers.set(Cmd.tpl, handlers.get(Cmd.template) as Handler)
 
 handlers.set(Cmd.mk, handlers.get(Cmd.create) as Handler)
 
