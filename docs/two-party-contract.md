@@ -29,12 +29,12 @@ Ethereum network.
      
  2.  #### 1st party, the owner 
      Obtain the _signing address_ of the 2nd party, this is needed **before**
-     deployment (aka migration).
+     deployment.
      
- 3.  Write and deploy a new smart contract  
-     1.  Save the solidity code under `contracts`
-     2.  Write a migration script, save it under `migrations`
-     3.  `truffle deploy --reset`
+ 3.  Write the new smart contract  
+     1. Save the solidity code under `contracts`
+     2. Use `truffle compile` to compile Solidity
+     3. The artifact will be written to `build/contracts` - be sure to commit the new artifact. 
      
  4.  Notify the 2nd party that you're ready to do a multisig transaction. 
      They will need the addresses of the business contract, and the generic multisig contract
