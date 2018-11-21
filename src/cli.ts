@@ -117,7 +117,7 @@ async function _tx () {
 async function _sign () {
   if (argv.h) {
     console.log("USAGE")
-    console.log(`  sign --method testHest --multisig 0x234 --dest 0x345 --from 0x456 --seed "mnemonic .. words"`)
+    console.log(`  sign  --dest 0x345 --method testHest --multisig 0x234 --from 0x456 --seed "mnemonic .. words"`)
     console.log("")
     console.log("OPTIONS")
     console.log("  --method, -m destination method")
@@ -142,7 +142,12 @@ async function _sign () {
   console.assert(destMethod, "missing dest. method --method -m")
   console.assert(destAddress, "missing dest. address --dest -d")
 
-  await sign(destMethod, destAddress, multisigAddress, from, seedPhrase, password)
+  const sig = await sign(destMethod, destAddress, multisigAddress, from, seedPhrase, password)
+  console.log('Signature')
+  console.log(JSON.stringify(sig))
+  console.log('')
+  console.log(`  Use it with node send like so:`)
+  console.log(`  ${Cmd[Cmd.send]} '${JSON.stringify(sig)}' <other sig> --from ${from} --dest ${destAddress} --multisig ${multisigAddress}`)
 }
 
 async function _add () {
