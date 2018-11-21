@@ -42,7 +42,7 @@ Ethereum network.
      #### 2nd party
 
  5.  Use the CLI to make a JSON serialized, partial transaction
-     `node cli.js sign -s "mnemonic words" -d 0x654 -m 0x321`
+     `node cli.js sign --seed "mnemonic words" --dest 0x654 --method activate --multisig 0x231 --from 0x890`
     
      Gives `{"sigV": 28, "sigR": "0x789", "sigS": "0x456"}`
     
@@ -50,8 +50,8 @@ Ethereum network.
     transaction when ready.
     
  7. #### 1st party
-    Broadcast the transaction using this command
+    Broadcast the transaction using `send` 
     
-    `node cli.js tx --from 0xac5 '{"sigV":28,"sigR":"0x84b","sigS":"0x6a"}' '{"sigV":28,"sigR":"0xaca","sigS":"0x6b0"}'`
+    `node cli.js send '{"sigV":28,"sigR":"0x84b","sigS":"0x6a"}' '{"sigV":28,"sigR":"0xaca","sigS":"0x6b0"}' --from 0x123 --dest 0x345 --multisig 0x678`
     
     Node the `--from` argument, which must be an account paying for the transaction gas. 
