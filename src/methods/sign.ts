@@ -1,4 +1,5 @@
 import { createSig, retrieveKeystore, txObj } from '../sigTools.js'
+import { join } from 'path'
 const Web3 = require('web3')
 
 export async function sign(destMethod:string, destAddress:string, multisigAddress:string, from:string, seedPhrase:string, password:string):Promise<txObj> {
@@ -6,7 +7,7 @@ export async function sign(destMethod:string, destAddress:string, multisigAddres
 
   return new Promise<txObj>(resolve => {
 
-    const multisigInstance = new web3.eth.Contract(require('../ethereum/build/contracts/SimpleMultiSig').abi,
+    const multisigInstance = new web3.eth.Contract(require(join(__dirname, '../../ethereum/build/contracts/SimpleMultiSig')).abi,
       multisigAddress,
       {
         from,
