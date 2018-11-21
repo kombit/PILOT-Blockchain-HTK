@@ -256,7 +256,7 @@ async function _create() {
   if (Array.isArray(multiSigOwners)) {
     console.log("Deploying multisig contract for "+multiSigOwners.length + " owners ...")
     multiSigContractDeployed = await create('SimpleMultiSig', from, [multiSigOwners.length, multiSigOwners])
-    constructorArgs.unshift(multiSigContractDeployed.options.address)
+    constructorArgs[0] = multiSigContractDeployed.options.address
     console.log('')
   }
 
