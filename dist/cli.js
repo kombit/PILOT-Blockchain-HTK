@@ -105,7 +105,7 @@ async function _tx() {
 async function _sign() {
     if (argv.h) {
         console.log("USAGE");
-        console.log(`  sign --method testHest --multisig 0x234 --dest 0x345 --from 0x456 --seed "mnemonic .. words"`);
+        console.log(`  sign  --dest 0x345 --method testHest --multisig 0x234 --from 0x456 --seed "mnemonic .. words"`);
         console.log("");
         console.log("OPTIONS");
         console.log("  --method, -m destination method");
@@ -127,7 +127,12 @@ async function _sign() {
     console.assert(from, "missing from --from -f");
     console.assert(destMethod, "missing dest. method --method -m");
     console.assert(destAddress, "missing dest. address --dest -d");
-    await sign_js_1.sign(destMethod, destAddress, multisigAddress, from, seedPhrase, password);
+    const sig = await sign_js_1.sign(destMethod, destAddress, multisigAddress, from, seedPhrase, password);
+    console.log('Signature');
+    console.log(JSON.stringify(sig));
+    console.log('');
+    console.log(`  Use it with node send like so:`);
+    console.log(`  ${Cmd[Cmd.send]} '${JSON.stringify(sig)}' <other sig> --from ${from} --dest ${destAddress} --multisig ${multisigAddress}`);
 }
 async function _add() {
     if (argv.h) {
@@ -220,7 +225,7 @@ async function _create() {
     if (Array.isArray(multiSigOwners)) {
         console.log("Deploying multisig contract for " + multiSigOwners.length + " owners ...");
         multiSigContractDeployed = await create_js_1.create('SimpleMultiSig', from, [multiSigOwners.length, multiSigOwners]);
-        constructorArgs.unshift(multiSigContractDeployed.options.address);
+        constructorArgs[0] = multiSigContractDeployed.options.address;
         console.log('');
     }
     console.log(`Constructor arguments in applied order (${constructorArgs.length || "none"})`);
