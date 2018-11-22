@@ -1,7 +1,7 @@
 import { extname, join } from 'path'
 import { Item, Options } from 'klaw'
 import * as klaw from 'klaw'
-import { ensureDir, readJSON, writeJSON } from 'fs-extra'
+import { ensureDir, ensureFile, readJSON, writeJSON } from 'fs-extra'
 
 const opts = <Options>{
   filter: filePath => extname(filePath) === ".json",
@@ -59,8 +59,14 @@ export async function addDeployedContract (name:string, address: string, msg?:st
 export async function getDeployedContracts2 ():Promise<savedContract[]> {
   try {
     await ensureDir(dataDirPath)
-    let table:savedContract[] = await readJSON(filePath)
-    return table
+    await ensureFile(filePath)
+    const map = await readJSON(filePath)
+    if (Array.isArray(map)) {
+      return map
+    }
+    else if (map && typeof map === "object") {
+      return Object.values(map)
+    }
   }
   catch (e) {
   }
