@@ -1,21 +1,18 @@
 import { createSig, retrieveKeystore, txObj } from '../sigTools.js'
 import { join } from 'path'
-const Web3 = require('web3')
+import { getWeb3 } from '../web3.js'
 
-export async function sign(destMethod:string, destAddress:string, multisigAddress:string, from:string, seedPhrase:string, password:string):Promise<txObj> {
-  const web3 = new Web3('http://localhost:7545')
+export function sign(destMethod:string, destAddress:string, multisigAddress:string, seedPhrase:string, password:string):Promise<txObj> {
+  const web3 = getWeb3()
 
-  return new Promise<txObj>(resolve => {
+  const multisigInstance = new web3.eth.Contract(require(join(__dirname, '../../ethereum/build/contracts/SimpleMultiSig')).abi,
+    multisigAddress,
+    {
+    })
 
-    const multisigInstance = new web3.eth.Contract(require(join(__dirname, '../../ethereum/build/contracts/SimpleMultiSig')).abi,
-      multisigAddress,
-      {
-        from,
-      })
+  const p = new Promise<txObj>(resolve => {
 
     multisigInstance.methods.nonce().call().then(async nonce => {
-      console.assert(destAddress, 'missing dest address')
-
       const [ks, keyFromPw] = await retrieveKeystore(seedPhrase, password)
       ks.generateNewAddress(keyFromPw, 1)
       const [signingAddr] = ks.getAddresses()
@@ -25,4 +22,6 @@ export async function sign(destMethod:string, destAddress:string, multisigAddres
       resolve(s)
     })
   })
+
+  return p
 }

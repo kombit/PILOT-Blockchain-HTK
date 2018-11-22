@@ -124,7 +124,6 @@ async function _sign () {
     console.log("  --dest, -d destination contract")
     console.log("  --multisig, -u address of the multisig contract")
     console.log("  --seed, -s seed words to signing HD wallet")
-    console.log("  --from, -f transaction from address")
     return
   }
 
@@ -132,22 +131,20 @@ async function _sign () {
   const password = argv.p || argv.password || ''
   const multisigAddress = argv.u || argv.multisig
   const destMethod = argv.m || argv.method
-  const from = argv.f || argv.from
   const destAddress = argv.d || argv.dest
 
   console.assert(seedPhrase, "need seed phrase --seed -s")
   console.assert(multisigAddress, "missing --multisig -u")
   console.assert(!!password || password === '', "need password")
-  console.assert(from, "missing from --from -f")
   console.assert(destMethod, "missing dest. method --method -m")
   console.assert(destAddress, "missing dest. address --dest -d")
 
-  const sig = await sign(destMethod, destAddress, multisigAddress, from, seedPhrase, password)
+  const sig = await sign(destMethod, destAddress, multisigAddress, seedPhrase, password)
   console.log('Signature')
   console.log(JSON.stringify(sig))
   console.log('')
   console.log(`  Use it with node send like so:`)
-  console.log(`  ${Cmd[Cmd.send]} '${JSON.stringify(sig)}' <other sig> --from ${from} --dest ${destAddress} --multisig ${multisigAddress}`)
+  console.log(`  ${Cmd[Cmd.send]} '${JSON.stringify(sig)}' <other sig> --dest ${destAddress} --multisig ${multisigAddress}`)
 }
 
 async function _add () {
