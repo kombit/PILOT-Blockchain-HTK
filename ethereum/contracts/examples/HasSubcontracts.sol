@@ -1,7 +1,7 @@
 pragma solidity ^0.4.0;
 
-import './Owned.sol';
-import './ICommonState.sol';
+import '../Owned.sol';
+import '../ICommonState.sol';
 
 contract HasSubcontracts is ICommonState, Owned {
 

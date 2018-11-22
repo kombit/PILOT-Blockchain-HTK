@@ -1,6 +1,6 @@
 pragma solidity ^0.4.0;
 
-import './Owned.sol';
+import '../Owned.sol';
 
 contract StatefulOwned is Owned {
     uint state = 1;
