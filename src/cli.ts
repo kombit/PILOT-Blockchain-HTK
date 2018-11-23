@@ -117,7 +117,7 @@ async function _tx () {
 async function _sign () {
   if (argv.h) {
     console.log("USAGE")
-    console.log(`  sign  --dest 0x345 --method testHest --multisig 0x234 --from 0x456 --seed "mnemonic .. words"`)
+    console.log(`  sign --dest 0x345 --method testHest --multisig 0x234 --seed "mnemonic .. words"`)
     console.log("")
     console.log("OPTIONS")
     console.log("  --method, -m destination method")
