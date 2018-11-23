@@ -229,6 +229,7 @@ async function _list() {
 
 async function _create() {
   if (subcommandNoArgs(argv)) {
+
     console.log("USAGE")
     console.log(`  node.cli create --from 0x123 --message "a test contract" <contract name> <constructor arguments>`)
     console.log(``)
@@ -237,6 +238,16 @@ async function _create() {
     console.log(`  --message, -m is the administrative note about the contract`)
     console.log(`  --owners to set up a multisig contract as owner (requires the contracts to implement Owned)`)
     console.log(`  --json to deserialize every constructor argument as JSON (useful if sending a list)`)
+    console.log('')
+    console.log('Possible contract templates:')
+
+    const tpls = await getContractArtifacts()
+    tpls.filter(tpl => tpl.contractName !== 'Owned')
+      .filter(((value, index) => index < 100))
+      .forEach(tpl => console.log('  ' + tpl.contractName))
+
+    console.log('')
+    console.log(`SEE MORE about the available templates using: node cli.js ${Cmd[Cmd.template]}`)
     return
   }
 
