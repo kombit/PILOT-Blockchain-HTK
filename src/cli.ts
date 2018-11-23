@@ -9,6 +9,7 @@ import { ParsedArgs } from 'minimist'
 import { status } from './methods/status.js'
 import { sign } from './methods/sign.js'
 import { add } from './methods/add.js'
+import { getWeb3 } from './web3.js'
 
 const {red} = chalk
 
@@ -97,15 +98,22 @@ async function _tx () {
   const destMethod:string = argv.m || argv.method
   const destAddress:string = argv.d || argv.dest
   const multisigAddress:string = argv.u || argv.multisig
-  const from:string = argv.from || argv.f
+  let from:string = argv.from || argv.f
 
   console.assert(destMethod, "missing dest. method; use --method -m")
   console.assert(destAddress, "missing dest. address; use --dest -d")
   console.assert(multisigAddress, "missing multiSig address; use --multisig -u")
-  console.assert(from, "missing from; --from -f")
 
   const sig1 = JSON.parse(argv._[1]) // {"sigV":28,"sigR":"0x7d223c507acf17887340f364f7cf910ec54dfb2f10e08ce5ddc3d60bf9b221b3","sigS":"0x1bdd9f4ba9afd5466b59010746caf55dd396769a1c8a8c001e3ee693276af1d3"}
   const sig2 = JSON.parse(argv._[2]) // {"sigV":28,"sigR":"0x7d223c507acf17887340f364f7cf910ec54dfb2f10e08ce5ddc3d60bf9b221b3","sigS":"0x1bdd9f4ba9afd5466b59010746caf55dd396769a1c8a8c001e3ee693276af1d3"}
+
+  if (!from) {
+    const web3 = getWeb3()
+    const accounts = await web3.eth.getAccounts();
+    console.assert(accounts.length > 0, "Unexpected; 0 accounts retrieved via getAccounts()")
+    from = accounts[0]
+  }
+  console.assert(from, "missing from!")
 
   // validate all input
   new Array(sig1, sig2)
