@@ -283,7 +283,7 @@ async function _create() {
     console.log('')
   }
 
-  console.log(`Constructor arguments in applied order (${constructorArgs.length || "none"})`)
+  console.log(constructorArgs.length > 0 ? `Constructor arguments in applied order (${constructorArgs.length}):` : 'No constructor arguments.')
   constructorArgs
     .map(value => Array.isArray(value) ? JSON.stringify(value) : value + '')
     .forEach(value => console.log('  ' + value))
