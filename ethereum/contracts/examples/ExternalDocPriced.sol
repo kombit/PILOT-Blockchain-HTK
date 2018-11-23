@@ -1,7 +1,7 @@
 pragma solidity ^0.4.0;
 
 import '../Owned.sol';
-import "../ICommonState.sol";
+import "../interfaces/ICommonState.sol";
 import "../CommonStates.sol";
 
 contract ExternalDocPriced is ICommonState, CommonStates, Owned {

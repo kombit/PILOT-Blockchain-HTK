@@ -1,8 +1,9 @@
 pragma solidity ^0.4.0;
 
 import "../Owned.sol";
-import "../IHasSubcontracts.sol";
+import "../interfaces/IHasSubcontracts.sol";
 import "../CommonStates.sol";
+import "../interfaces/ICommonState.sol";
 
 contract K1 is ICommonState, IHasSubcontracts, CommonStates, Owned {
 
