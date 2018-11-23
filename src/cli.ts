@@ -252,9 +252,16 @@ async function _create() {
   }
 
   const msg = argv.m || argv.message || argv.msg
-  const from = argv.f || argv.from
-  console.assert(msg, "Please leave a note for the contract deployment using --message")
-  console.assert(from, "'create' needs --from, -f")
+  let from = argv.f || argv.from
+  console.assert(msg, `Please leave a note for the contract deployment using --message, -m`)
+
+  if (!from) {
+    const web3 = getWeb3()
+    const accounts = await web3.eth.getAccounts();
+    console.assert(accounts.length > 0, "Unexpected; 0 accounts retrieved via getAccounts()")
+    from = accounts[0]
+  }
+  console.assert(from, "missing from!")
 
   const tpl = argv._[1]
   console.assert(tpl, "Need a template name")
