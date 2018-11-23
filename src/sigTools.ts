@@ -10,7 +10,7 @@ const txutils = (lightwallet as any).txutils // type washing
 console.assert(txutils, 'lightwallet.txutils should be a thing');
 
 // keystore
-export type txObj = {sigV: number, sigR: string, sigS: string}
+export type ECSignature = {sigV: number, sigR: string, sigS: string}
 
 export function retrieveKeystore (seedPhrase:string, password:string = ''):Promise<[keystore, Uint8Array]> {
   return new Promise(resolve => {
@@ -27,7 +27,7 @@ export function retrieveKeystore (seedPhrase:string, password:string = ''):Promi
   })
 }
 
-export function createSig (ks:keystore, signingAddr:string, keyFromPw:Uint8Array, multisigContractAddr:string, nonce:number, destinationMethod:string, destinationAddr:string, destinationValue:number = 0):txObj {
+export function createSig (ks:keystore, signingAddr:string, keyFromPw:Uint8Array, multisigContractAddr:string, nonce:number, destinationMethod:string, destinationAddr:string, destinationValue:number = 0):ECSignature {
   const nonceBn:BigNumber = new BigNumber(nonce, 10) // typeguard
   const valueBn:BigNumber = new BigNumber(destinationValue, 10) // typeguard
   console.assert(multisigContractAddr.substr(0,2) === "0x", "multisigAddr should be in hex format",multisigContractAddr)
@@ -48,15 +48,15 @@ export function createSig (ks:keystore, signingAddr:string, keyFromPw:Uint8Array
     .signMsgHash(ks, keyFromPw, hash,
       signingAddr)
 
-  let sigV = sig.v
-  let sigR = '0x' + sig.r.toString('hex')
-  let sigS = '0x' + sig.s.toString('hex')
+  const sigV = sig.v
+  const sigR = '0x' + sig.r.toString('hex')
+  const sigS = '0x' + sig.s.toString('hex')
 
-  return <txObj>{sigV: sigV, sigR: sigR, sigS: sigS}
+  return <ECSignature>{sigV, sigR, sigS}
 }
 
-export function multiSigCall (method:string, sig1:txObj, sig2:txObj, destAddress:string, multisigAddress:string, from:string) {
-  const sigsOrdered:txObj[] = [sig1, sig2] // .sort() // should have been sorted based on sender address
+export function multiSigCall (method:string, sig1:ECSignature, sig2:ECSignature, destAddress:string, multisigAddress:string, from:string) {
+  const sigsOrdered:ECSignature[] = [sig1, sig2] // .sort() // should have been sorted based on sender address
   // validate all input
   sigsOrdered.forEach(sig1 => console.assert(sig1.sigV && sig1.sigR && sig1.sigS, "missing V, R or S", sig1))
 
