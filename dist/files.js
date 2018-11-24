@@ -44,8 +44,14 @@ exports.addDeployedContract = addDeployedContract;
 async function getDeployedContracts2() {
     try {
         await fs_extra_1.ensureDir(dataDirPath);
-        let table = await fs_extra_1.readJSON(filePath);
-        return table;
+        await fs_extra_1.ensureFile(filePath);
+        const map = await fs_extra_1.readJSON(filePath);
+        if (Array.isArray(map)) {
+            return map;
+        }
+        else if (map && typeof map === "object") {
+            return Object.values(map);
+        }
     }
     catch (e) {
     }

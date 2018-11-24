@@ -38,10 +38,10 @@ function createSig(ks, signingAddr, keyFromPw, multisigContractAddr, nonce, dest
     let hash = solsha3(input);
     let sig = eth_lightwallet_1.signing
         .signMsgHash(ks, keyFromPw, hash, signingAddr);
-    let sigV = sig.v;
-    let sigR = '0x' + sig.r.toString('hex');
-    let sigS = '0x' + sig.s.toString('hex');
-    return { sigV: sigV, sigR: sigR, sigS: sigS };
+    const sigV = sig.v;
+    const sigR = '0x' + sig.r.toString('hex');
+    const sigS = '0x' + sig.s.toString('hex');
+    return { sigV, sigR, sigS };
 }
 exports.createSig = createSig;
 function multiSigCall(method, sig1, sig2, destAddress, multisigAddress, from) {
