@@ -123,7 +123,7 @@ async function _tx () {
 }
 
 async function _sign () {
-  if (argv.h) {
+  if (subcommandNoArgs(argv)) {
     console.log("USAGE")
     console.log(`  sign --dest 0x345 --method testHest --multisig 0x234 --seed "mnemonic .. words"`)
     console.log("")
@@ -156,7 +156,7 @@ async function _sign () {
 }
 
 async function _add () {
-  if (argv.h) {
+  if (subcommandNoArgs(argv)) {
     console.log("USAGE")
     console.log("  add --subcontract 0x123 --address 0x456 --from -0x321")
     console.log("")
@@ -327,7 +327,7 @@ async function _template () {
 }
 
 function subcommandNoArgs(argv:ParsedArgs):boolean {
-  return (argv.h || argv._.length === 1)
+  return (argv.h || argv._.length === 1 && Object.values(argv).length === 1)
 }
 
 // router
