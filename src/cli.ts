@@ -9,7 +9,7 @@ import { ParsedArgs } from 'minimist'
 import { status } from './methods/status.js'
 import { sign } from './methods/sign.js'
 import { add } from './methods/add.js'
-import { getWeb3 } from './web3.js'
+import { getAccount } from './web3.js'
 
 const {red} = chalk
 
@@ -98,22 +98,15 @@ async function _tx () {
   const destMethod:string = argv.m || argv.method
   const destAddress:string = argv.d || argv.dest
   const multisigAddress:string = argv.u || argv.multisig
-  let from:string = argv.from || argv.f
+  const from:string = argv.from || argv.f || await getAccount()
 
   console.assert(destMethod, "missing dest. method; use --method -m")
   console.assert(destAddress, "missing dest. address; use --dest -d")
   console.assert(multisigAddress, "missing multiSig address; use --multisig -u")
+  console.assert(from, "requires from; --from -f")
 
   const sig1 = JSON.parse(argv._[1]) // {"sigV":28,"sigR":"0x7d223c507acf17887340f364f7cf910ec54dfb2f10e08ce5ddc3d60bf9b221b3","sigS":"0x1bdd9f4ba9afd5466b59010746caf55dd396769a1c8a8c001e3ee693276af1d3"}
   const sig2 = JSON.parse(argv._[2]) // {"sigV":28,"sigR":"0x7d223c507acf17887340f364f7cf910ec54dfb2f10e08ce5ddc3d60bf9b221b3","sigS":"0x1bdd9f4ba9afd5466b59010746caf55dd396769a1c8a8c001e3ee693276af1d3"}
-
-  if (!from) {
-    const web3 = getWeb3()
-    const accounts = await web3.eth.getAccounts();
-    console.assert(accounts.length > 0, "Unexpected; 0 accounts retrieved via getAccounts()")
-    from = accounts[0]
-  }
-  console.assert(from, "missing from!")
 
   // validate all input
   new Array(sig1, sig2)
@@ -170,7 +163,7 @@ async function _add () {
   // const mainContractAddress:string = argv.a || argv.address
   const subcontractAddress:string = argv.s || argv.subcontract
   const targetAddress:string = argv.a || argv.address
-  const from:string = argv.f || argv.from
+  const from:string = argv.f || argv.from || await getAccount()
 
   const networkId = argv.networkId || '1337'
   console.assert(networkId)
@@ -252,16 +245,9 @@ async function _create() {
   }
 
   const msg = argv.m || argv.message || argv.msg
-  let from = argv.f || argv.from
+  const from = argv.f || argv.from || await getAccount()
   console.assert(msg, `Please leave a note for the contract deployment using --message, -m`)
-
-  if (!from) {
-    const web3 = getWeb3()
-    const accounts = await web3.eth.getAccounts();
-    console.assert(accounts.length > 0, "Unexpected; 0 accounts retrieved via getAccounts()")
-    from = accounts[0]
-  }
-  console.assert(from, "missing from!")
+  console.assert(from, "requires from; --from -f")
 
   const tpl = argv._[1]
   console.assert(tpl, "Need a template name")
