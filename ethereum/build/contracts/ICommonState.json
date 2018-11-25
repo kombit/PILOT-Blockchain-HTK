@@ -1,0 +1,248 @@
+{
+  "contractName": "ICommonState",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getState",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.4.0;\n\nimport './Owned.sol';\n\ninterface ICommonState {\n    function getState() external constant returns(uint);\n}\n",
+  "sourcePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/ICommonState.sol",
+  "ast": {
+    "absolutePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/ICommonState.sol",
+    "exportedSymbols": {
+      "ICommonState": [
+        20
+      ]
+    },
+    "id": 21,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 13,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:1"
+      },
+      {
+        "absolutePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/Owned.sol",
+        "file": "./Owned.sol",
+        "id": 14,
+        "nodeType": "ImportDirective",
+        "scope": 21,
+        "sourceUnit": 230,
+        "src": "25:21:1",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 20,
+        "linearizedBaseContracts": [
+          20
+        ],
+        "name": "ICommonState",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 19,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getState",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "94:2:1"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 18,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 17,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 19,
+                  "src": "123:4:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 16,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "123:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "122:6:1"
+            },
+            "scope": 20,
+            "src": "77:52:1",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 21,
+        "src": "48:83:1"
+      }
+    ],
+    "src": "0:132:1"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/ICommonState.sol",
+    "exportedSymbols": {
+      "ICommonState": [
+        20
+      ]
+    },
+    "id": 21,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 13,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:1"
+      },
+      {
+        "absolutePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/Owned.sol",
+        "file": "./Owned.sol",
+        "id": 14,
+        "nodeType": "ImportDirective",
+        "scope": 21,
+        "sourceUnit": 230,
+        "src": "25:21:1",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 20,
+        "linearizedBaseContracts": [
+          20
+        ],
+        "name": "ICommonState",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 19,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getState",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 15,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "94:2:1"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 18,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 17,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 19,
+                  "src": "123:4:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 16,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "123:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "122:6:1"
+            },
+            "scope": 20,
+            "src": "77:52:1",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 21,
+        "src": "48:83:1"
+      }
+    ],
+    "src": "0:132:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.1",
+  "updatedAt": "2018-11-25T13:52:06.674Z"
+}

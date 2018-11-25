@@ -1,10 +1,10 @@
 pragma solidity ^0.4.0;
 
-import './Owned.sol';
-import "./ICommonState.sol";
-import "./CommonStates.sol";
+import '../Owned.sol';
+import "../CommonStateNames.sol";
+import "../ICommonState.sol";
 
-contract ExternalDocPriced is ICommonState, CommonStates, Owned {
+contract ExternalDocPriced is ICommonState, CommonStateNames, Owned {
     uint public state = ACTIVE;
 
     address public paymentAddress;

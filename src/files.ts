@@ -1,7 +1,7 @@
 import { extname, join } from 'path'
 import { Item, Options } from 'klaw'
 import * as klaw from 'klaw'
-import { ensureDir, readJSON, writeJSON } from 'fs-extra'
+import { ensureDir, ensureFile, readJSON, writeJSON } from 'fs-extra'
 
 const opts = <Options>{
   filter: filePath => extname(filePath) === ".json",
@@ -14,7 +14,7 @@ const contractsPath = join(__dirname, "../ethereum/build/contracts/")
 type json = {[k :string]: json[]|json|string|number|boolean|null}
 type jsonList = json[]
 
-export async function getDeployedContracts(networkId:string):Promise<json[]> {
+export async function getContractArtifacts():Promise<json[]> {
   return new Promise<json[]>(resolve => {
     const reads = <Promise<any>[]>[]
 
@@ -27,10 +27,8 @@ export async function getDeployedContracts(networkId:string):Promise<json[]> {
       .on('end', async () => {
         const items:jsonList = await Promise.all(reads)
         const filtered = items
-          .filter(contract => contract.contractName !== 'Migrations'   // filter out Truffle migration tracking
-            && contract.networks
-            && contract.networks[networkId]
-            && Object.keys(contract.networks[networkId]).length > 0)
+          .filter(artf => artf.contractName !== 'Migrations')   // filter out Truffle migration tracking
+          .filter(artf => artf.bytecode !== '0x')   // filter out interfaces
 
         resolve(filtered)
       })
@@ -61,8 +59,14 @@ export async function addDeployedContract (name:string, address: string, msg?:st
 export async function getDeployedContracts2 ():Promise<savedContract[]> {
   try {
     await ensureDir(dataDirPath)
-    let table:savedContract[] = await readJSON(filePath)
-    return table
+    await ensureFile(filePath)
+    const map = await readJSON(filePath)
+    if (Array.isArray(map)) {
+      return map
+    }
+    else if (map && typeof map === "object") {
+      return Object.values(map)
+    }
   }
   catch (e) {
   }
