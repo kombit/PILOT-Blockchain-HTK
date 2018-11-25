@@ -264,6 +264,7 @@ async function _create() {
   console.assert(multiSigOwners === undefined || (Array.isArray(multiSigOwners) && multiSigOwners.length > 1), "specifying multisig with --owners requires at least 2 owners")
   if (Array.isArray(multiSigOwners)) {
     console.log("Deploying multisig contract for "+multiSigOwners.length + " owners ...")
+    multiSigOwners.sort() // important! see SimpleMultiSig.sol
     multiSigContractDeployed = await create('SimpleMultiSig', from, [multiSigOwners.length, multiSigOwners])
     constructorArgs[0] = multiSigContractDeployed.options.address
     console.log('')
