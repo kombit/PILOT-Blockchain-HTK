@@ -1,9 +1,10 @@
 pragma solidity ^0.4.0;
 
-import '../Owned.sol';
+import "./ICommonState.sol";
 
-interface ICommonState {
-    function getState() external constant returns(uint);
+interface IHasSubcontracts {
+    function add(ICommonState _subcontract) external;
+
     function countSubcontracts() external constant returns(uint);
     function getSubcontract(uint _index) external constant returns(address);
 }

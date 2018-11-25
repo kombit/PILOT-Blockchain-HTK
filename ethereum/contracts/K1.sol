@@ -1,11 +1,11 @@
 pragma solidity ^0.4.0;
 
-import "../Owned.sol";
-import "../interfaces/IHasSubcontracts.sol";
-import "../CommonStates.sol";
-import "../interfaces/ICommonState.sol";
+import "./Owned.sol";
+import "./IHasSubcontracts.sol";
+import "./CommonStateNames.sol";
+import "./ICommonState.sol";
 
-contract K1 is ICommonState, IHasSubcontracts, CommonStates, Owned {
+contract K1 is ICommonState, IHasSubcontracts, CommonStateNames, Owned {
 
     uint public state = DRAFT; // defaults to draft
 
@@ -50,16 +50,11 @@ contract K1 is ICommonState, IHasSubcontracts, CommonStates, Owned {
     }
 
     function terminate() external ownerOnly {
-        require(state == ACTIVE, "current state was not ACTIVE");
-
-        require(serviceProvider.balance >= totalPrice, "payment address did not hold enough ether to enter state 3");
-
-        require(subcontract.getState() == TERMINATED, "subcontract state was not 3");
-
+        require(state == ACTIVE, "current state was not DRAFT");
         state = TERMINATED;
     }
 
-    function setDocumentChecksum(bytes32 _checksum) serviceProviderOnly {
+    function setDocumentChecksum(bytes32 _checksum) public serviceProviderOnly {
         documentChecksum = _checksum;
     }
 
