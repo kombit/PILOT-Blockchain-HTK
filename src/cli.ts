@@ -11,7 +11,7 @@ import { sign } from './methods/sign.js'
 import { add } from './methods/add.js'
 import { getAccount } from './web3.js'
 
-const {red} = chalk
+const {red, grey} = chalk
 
 const argv = minimist(process.argv.slice(2), {
   string: [
@@ -305,14 +305,14 @@ async function _template () {
         .join(', ')
       )
     )
-    console.log(`    create ${tpl.contractName} ${
+    console.log(grey(`    create ${tpl.contractName} ${
       (Array.isArray(tpl.abi) ? tpl.abi : [])
         .filter(method => method.type === "constructor")
         .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
           .map(input => `<${input.type}>`)
           .join(' ')
         )
-      }`)
+      }`))
   })
 }
 
