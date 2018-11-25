@@ -231,6 +231,7 @@ async function _create() {
     console.log(`  --message, -m is the administrative note about the contract`)
     console.log(`  --owners to set up a multisig contract as owner (requires the contracts to implement Owned)`)
     console.log(`  --json to deserialize every constructor argument as JSON (useful if sending a list)`)
+    console.log(`  --owner-index, -i the zero indexed position of the 'owner' in constructor arguments. Default 0 (first)`)
     console.log('')
     console.log('Possible contract templates:')
 
@@ -246,8 +247,10 @@ async function _create() {
 
   const msg = argv.m || argv.message || argv.msg
   const from = argv.f || argv.from || await getAccount()
+  const ownerIndex = argv.i || argv.ownerIndex || 0
   console.assert(msg, `Please leave a note for the contract deployment using --message, -m`)
   console.assert(from, "requires from; --from -f")
+  console.assert(typeof ownerIndex === 'number', "missing owner index")
 
   const tpl = argv._[1]
   console.assert(tpl, "Need a template name")
@@ -266,7 +269,7 @@ async function _create() {
     console.log("Deploying multisig contract for "+multiSigOwners.length + " owners ...")
     multiSigOwners.sort() // important! see SimpleMultiSig.sol
     multiSigContractDeployed = await create('SimpleMultiSig', from, [multiSigOwners.length, multiSigOwners])
-    constructorArgs[0] = multiSigContractDeployed.options.address
+    constructorArgs[ownerIndex] = multiSigContractDeployed.options.address
     console.log('')
   }
 
