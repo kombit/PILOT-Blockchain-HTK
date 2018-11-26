@@ -11,7 +11,8 @@ const status_js_1 = require("./methods/status.js");
 const sign_js_1 = require("./methods/sign.js");
 const add_js_1 = require("./methods/add.js");
 const web3_js_1 = require("./web3.js");
-const { red } = chalk_1.default;
+const fund_js_1 = require("./methods/fund.js");
+const { red, grey } = chalk_1.default;
 const argv = minimist(process.argv.slice(2), {
     string: [
         '_',
@@ -28,19 +29,20 @@ const argv = minimist(process.argv.slice(2), {
 var Cmd;
 (function (Cmd) {
     Cmd[Cmd["help"] = 0] = "help";
-    Cmd[Cmd["info"] = 1] = "info";
-    Cmd[Cmd["status"] = 2] = "status";
-    Cmd[Cmd["er"] = 3] = "er";
-    Cmd[Cmd["add"] = 4] = "add";
-    Cmd[Cmd["list"] = 5] = "list";
-    Cmd[Cmd["ls"] = 6] = "ls";
-    Cmd[Cmd["register"] = 7] = "register";
-    Cmd[Cmd["create"] = 8] = "create";
-    Cmd[Cmd["mk"] = 9] = "mk";
-    Cmd[Cmd["template"] = 10] = "template";
-    Cmd[Cmd["tpl"] = 11] = "tpl";
-    Cmd[Cmd["sign"] = 12] = "sign";
-    Cmd[Cmd["send"] = 13] = "send";
+    Cmd[Cmd["fund"] = 1] = "fund";
+    Cmd[Cmd["info"] = 2] = "info";
+    Cmd[Cmd["status"] = 3] = "status";
+    Cmd[Cmd["er"] = 4] = "er";
+    Cmd[Cmd["add"] = 5] = "add";
+    Cmd[Cmd["list"] = 6] = "list";
+    Cmd[Cmd["ls"] = 7] = "ls";
+    Cmd[Cmd["register"] = 8] = "register";
+    Cmd[Cmd["create"] = 9] = "create";
+    Cmd[Cmd["mk"] = 10] = "mk";
+    Cmd[Cmd["template"] = 11] = "template";
+    Cmd[Cmd["tpl"] = 12] = "tpl";
+    Cmd[Cmd["sign"] = 13] = "sign";
+    Cmd[Cmd["send"] = 14] = "send";
 })(Cmd || (Cmd = {}));
 const subcommand = Cmd[argv._[0]];
 async function _help() {
@@ -66,12 +68,17 @@ async function _register() {
         console.log("  register");
         return;
     }
+    const fundNewAccount = (argv.f !== undefined);
     const newSeed = eth_lightwallet_1.keystore.generateRandomSeed();
     const [ks, keyFromPw] = await sigTools_js_1.retrieveKeystore(newSeed, '');
     ks.generateNewAddress(keyFromPw, 1);
     const [signingAddr] = ks.getAddresses();
     console.log("Address: " + signingAddr);
     console.log("Seed:    " + newSeed);
+    if (fundNewAccount) {
+        await fund_js_1.fund(signingAddr, '1');
+        console.log("  Sent 1 ether to new account.");
+    }
 }
 async function _tx() {
     if (subcommandNoArgs(argv)) {
@@ -263,12 +270,27 @@ async function _template() {
                 .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
                 .map(input => input.type + " " + input.name)
                 .join(', ')));
-        console.log(`    create ${tpl.contractName} ${(Array.isArray(tpl.abi) ? tpl.abi : [])
+        console.log(grey(`    create ${tpl.contractName} ${(Array.isArray(tpl.abi) ? tpl.abi : [])
             .filter(method => method.type === "constructor")
             .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
             .map(input => `<${input.type}>`)
-            .join(' '))}`);
+            .join(' '))}`));
     });
+}
+async function _fund() {
+    if (subcommandNoArgs(argv)) {
+        console.log("USAGE ");
+        console.log("  fund <address> <amount>");
+        console.log("");
+        return;
+    }
+    const address = argv._[1];
+    const amount = argv._[2];
+    console.assert(amount, 'missing amount (ether)');
+    console.assert(address, 'missing address');
+    console.assert(address.substr(0, 2) === '0x', 'something is off with address');
+    await fund_js_1.fund(address, amount);
+    console.log("Transaction sent! Be sure to check for confirmations.");
 }
 function subcommandNoArgs(argv) {
     return (argv.h || argv._.length === 1 && Object.values(argv).length === 1);
@@ -285,10 +307,11 @@ handlers.set(Cmd.register, _register);
 handlers.set(Cmd.list, _list);
 handlers.set(Cmd.ls, handlers.get(Cmd.list));
 handlers.set(Cmd.create, _create);
+handlers.set(Cmd.fund, _fund);
 handlers.set(Cmd.template, _template);
 handlers.set(Cmd.tpl, handlers.get(Cmd.template));
 handlers.set(Cmd.mk, handlers.get(Cmd.create));
 const handler = handlers.get(subcommand) || handlers.get(Cmd.help);
 console.assert(handler, "should have found handler");
-handler()
-    .catch(err => console.error(red(err.toString())));
+handler();
+// .catch(err => console.error(red(err.toString())))
