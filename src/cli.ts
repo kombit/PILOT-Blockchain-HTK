@@ -72,6 +72,8 @@ async function _register () {
     return
   }
 
+  const fundNewAccount = (argv.f !== undefined)
+
   const newSeed = keystore.generateRandomSeed()
   const [ks, keyFromPw] = await retrieveKeystore(newSeed, '')
 
@@ -79,6 +81,10 @@ async function _register () {
   const [signingAddr] = ks.getAddresses()
   console.log("Address: "+signingAddr)
   console.log("Seed:    "+newSeed)
+  if (fundNewAccount) {
+    await fund(signingAddr, '1')
+    console.log("  Sent 1 ether to new account.")
+  }
 }
 
 async function _tx () {
