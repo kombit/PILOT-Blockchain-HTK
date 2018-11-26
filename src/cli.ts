@@ -10,6 +10,7 @@ import { status } from './methods/status.js'
 import { sign } from './methods/sign.js'
 import { add } from './methods/add.js'
 import { getAccount } from './web3.js'
+import { fund } from './methods/fund.js'
 
 const {red, grey} = chalk
 
@@ -29,6 +30,7 @@ const argv = minimist(process.argv.slice(2), {
 
 enum Cmd {
   help,
+  fund,
   info,
   status, er,
   add,
@@ -316,6 +318,25 @@ async function _template () {
   })
 }
 
+async function _fund () {
+  if (subcommandNoArgs(argv)) {
+    console.log("USAGE ")
+    console.log("  fund <address> <amount>")
+    console.log("")
+    return
+  }
+
+  const address = argv._[1]
+  const amount = argv._[2]
+
+  console.assert(amount, 'missing amount (ether)')
+  console.assert(address, 'missing address')
+  console.assert(address.substr(0,2 ) === '0x', 'something is off with address')
+
+  await fund(address, amount)
+  console.log("Transaction sent! Be sure to check for confirmations.")
+}
+
 function subcommandNoArgs(argv:ParsedArgs):boolean {
   return (argv.h || argv._.length === 1 && Object.values(argv).length === 1)
 }
@@ -343,6 +364,7 @@ handlers.set(Cmd.list, _list)
 handlers.set(Cmd.ls, handlers.get(Cmd.list) as Handler)
 
 handlers.set(Cmd.create, _create)
+handlers.set(Cmd.fund, _fund)
 
 handlers.set(Cmd.template, _template)
 handlers.set(Cmd.tpl, handlers.get(Cmd.template) as Handler)
@@ -352,4 +374,4 @@ handlers.set(Cmd.mk, handlers.get(Cmd.create) as Handler)
 const handler = handlers.get(subcommand as any) || handlers.get(Cmd.help) as Handler
 console.assert(handler, "should have found handler")
 handler()
-  .catch(err => console.error(red(err.toString())))
+  // .catch(err => console.error(red(err.toString())))
