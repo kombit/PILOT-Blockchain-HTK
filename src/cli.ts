@@ -262,11 +262,12 @@ async function _create() {
   const constructorArgs:any[] = argv._.slice(2) || []
 
   if (tpl && Object.keys(argv).length === 1) {
-    const tpls = await getContractArtifacts()
+    const allArtifacts = await getContractArtifacts()
     console.log(`${tpl} need the following arguments: `)
 
-    tpls.filter((cTpl) => cTpl.contractName === tpl).forEach(cTpl => {
-      console.log(`  ${cTpl.contractName} ` +
+    const cTpl = allArtifacts.find(cTpl => cTpl.contractName === tpl)
+    if (cTpl) {
+      console.log(`  ` +
         (Array.isArray(cTpl.abi) ? cTpl.abi : [])
           .filter(method => method.type === "constructor")
           .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
@@ -274,7 +275,7 @@ async function _create() {
             .join(', ')
           )
       )
-      console.log('')
+      console.log(`Deploy ${cTpl.contractName} like so:`)
       console.log(`  node cli.js create ${cTpl.contractName} ${
         (Array.isArray(cTpl.abi) ? cTpl.abi : [])
           .filter(method => method.type === "constructor")
@@ -284,7 +285,7 @@ async function _create() {
           )
         }`)
 
-      })
+    }
 
     return
   }
