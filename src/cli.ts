@@ -393,7 +393,8 @@ handlers.set(Cmd.step, async function () {
   const from = argv.f || argv.from || await getAccount()
   console.assert(from, "missing form")
   const name = argv.c || argv.contract || argv._[1]
-  await step(name, address, from)
+  const next:string = (argv.n || argv.number || argv._[2]).toString()
+  await step(name, next, address, from)
 })
 
 handlers.set(Cmd.info, _info)
