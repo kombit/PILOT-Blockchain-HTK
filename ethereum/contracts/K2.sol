@@ -6,7 +6,7 @@ import "./CommonStateNames.sol";
 import "./ICommonState.sol";
 import "./IAccessSubcontracts.sol";
 
-contract K1 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateNames, Owned {
+contract K2 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateNames, Owned {
 
     uint public state = DRAFT; // defaults to draft
 
@@ -30,22 +30,21 @@ contract K1 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
         serviceProvider = _serviceProvider;
         payments = new uint[](12);
 
-        payments[0] = 60000 szabo;  // jan 2018
-        payments[1] = 60000 szabo;  // feb 2018
-        payments[2] = 60000 szabo;  // mar 2018
-        payments[3] = 60000 szabo;  // apr 2018
-        payments[4] = 60000 szabo;  // may 2018
-        payments[5] = 60000 szabo;  // jun 2018
-        payments[6] = 60000 szabo;  // jul 2018
-        payments[7] = 60000 szabo;  // aug 2018
-        payments[8] = 60000 szabo;  // sep 2018
-        payments[9] = 60000 szabo;  // oct 2018
-        payments[10] = 60000 szabo; // nov 2018
-        payments[11] = 60000 szabo; // dec 2018
+        payments[0] =  30000 szabo;  // jan 2018
+        payments[1] =  30000 szabo;  // feb 2018
+        payments[2] =  30000 szabo;  // mar 2018
+        payments[3] =  30000 szabo;  // apr 2018
+        payments[4] =  30000 szabo;  // may 2018
+        payments[5] =  30000 szabo;  // jun 2018
+        payments[6] =  30000 szabo;  // jul 2018
+        payments[7] =  30000 szabo;  // aug 2018
+        payments[8] =  30000 szabo;  // sep 2018
+        payments[9] =  30000 szabo;  // oct 2018
+        payments[10] = 30000 szabo; // nov 2018
+        payments[11] = 30000 szabo; // dec 2018
     }
 
     // state
-
     function activate() external ownerOnly {
         require(state == DRAFT, "current state was not DRAFT");
         state = ACTIVE;
@@ -59,7 +58,6 @@ contract K1 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
         serviceProvider.transfer(amountForMonth);
         payments[_month] = 0;
     }
-
 
     // the contract can hold ether
     function () payable {
@@ -85,4 +83,5 @@ contract K1 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
     function getSubcontract(uint _index) external constant returns(address) {
         return subcontract;
     }
+
 }
