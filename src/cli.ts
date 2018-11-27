@@ -257,6 +257,38 @@ async function _create() {
     return
   }
 
+  const tpl = argv._[1]
+  console.assert(tpl, "Need a template name")
+  const constructorArgs:any[] = argv._.slice(2) || []
+
+  if (tpl && Object.keys(argv).length === 1) {
+    const tpls = await getContractArtifacts()
+    console.log(`${tpl} need the following arguments: `)
+
+    tpls.filter((cTpl) => cTpl.contractName === tpl).forEach(cTpl => {
+      console.log(`  ${cTpl.contractName} ` +
+        (Array.isArray(cTpl.abi) ? cTpl.abi : [])
+          .filter(method => method.type === "constructor")
+          .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
+            .map(input => input.type + " " + input.name)
+            .join(', ')
+          )
+      )
+      console.log('')
+      console.log(`  node cli.js create ${cTpl.contractName} ${
+        (Array.isArray(cTpl.abi) ? cTpl.abi : [])
+          .filter(method => method.type === "constructor")
+          .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
+            .map(input => `<${input.type}>`)
+            .join(' ')
+          )
+        }`)
+
+      })
+
+    return
+  }
+
   const msg = argv.m || argv.message || argv.msg
   const from = argv.f || argv.from || await getAccount()
   const ownerIndex = argv.i || argv.ownerIndex || 0
@@ -264,9 +296,6 @@ async function _create() {
   console.assert(from, "requires from; --from -f")
   console.assert(typeof ownerIndex === 'number', "missing owner index")
 
-  const tpl = argv._[1]
-  console.assert(tpl, "Need a template name")
-  const constructorArgs:any[] = argv._.slice(2) || []
 
   if (argv.json) {
     constructorArgs.forEach(((value, index, array) => {
