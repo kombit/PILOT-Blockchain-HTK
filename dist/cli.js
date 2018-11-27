@@ -12,6 +12,7 @@ const sign_js_1 = require("./methods/sign.js");
 const add_js_1 = require("./methods/add.js");
 const web3_js_1 = require("./web3.js");
 const fund_js_1 = require("./methods/fund.js");
+const step_js_1 = require("./methods/step.js");
 const { red, grey } = chalk_1.default;
 const argv = minimist(process.argv.slice(2), {
     string: [
@@ -29,20 +30,21 @@ const argv = minimist(process.argv.slice(2), {
 var Cmd;
 (function (Cmd) {
     Cmd[Cmd["help"] = 0] = "help";
-    Cmd[Cmd["fund"] = 1] = "fund";
-    Cmd[Cmd["info"] = 2] = "info";
-    Cmd[Cmd["status"] = 3] = "status";
-    Cmd[Cmd["er"] = 4] = "er";
-    Cmd[Cmd["add"] = 5] = "add";
-    Cmd[Cmd["list"] = 6] = "list";
-    Cmd[Cmd["ls"] = 7] = "ls";
-    Cmd[Cmd["register"] = 8] = "register";
-    Cmd[Cmd["create"] = 9] = "create";
-    Cmd[Cmd["mk"] = 10] = "mk";
-    Cmd[Cmd["template"] = 11] = "template";
-    Cmd[Cmd["tpl"] = 12] = "tpl";
-    Cmd[Cmd["sign"] = 13] = "sign";
-    Cmd[Cmd["send"] = 14] = "send";
+    Cmd[Cmd["step"] = 1] = "step";
+    Cmd[Cmd["fund"] = 2] = "fund";
+    Cmd[Cmd["info"] = 3] = "info";
+    Cmd[Cmd["status"] = 4] = "status";
+    Cmd[Cmd["er"] = 5] = "er";
+    Cmd[Cmd["add"] = 6] = "add";
+    Cmd[Cmd["list"] = 7] = "list";
+    Cmd[Cmd["ls"] = 8] = "ls";
+    Cmd[Cmd["register"] = 9] = "register";
+    Cmd[Cmd["create"] = 10] = "create";
+    Cmd[Cmd["mk"] = 11] = "mk";
+    Cmd[Cmd["template"] = 12] = "template";
+    Cmd[Cmd["tpl"] = 13] = "tpl";
+    Cmd[Cmd["sign"] = 14] = "sign";
+    Cmd[Cmd["send"] = 15] = "send";
 })(Cmd || (Cmd = {}));
 const subcommand = Cmd[argv._[0]];
 async function _help() {
@@ -52,11 +54,13 @@ async function _help() {
     console.log('SUBCOMMANDS');
     console.log('  ' + Object.keys(Cmd)
         .filter(v => /^\d+$/.test(v) === false)
-        .filter(v => v.length > 2) // remove short names
         .filter(value => [
+        // blacklisted subcommands:
         Cmd[Cmd.help],
-        Cmd[Cmd.tpl],
-    ].includes(value) == false) // blacklisted
+        Cmd[Cmd.step],
+        Cmd[Cmd.add],
+        Cmd[Cmd.er], Cmd[Cmd.ls], Cmd[Cmd.tpl], Cmd[Cmd.mk],
+    ].includes(value) === false)
         .sort()
         .join(', '));
     console.log('');
@@ -221,15 +225,34 @@ async function _create() {
         console.log(`SEE MORE about the available templates using: node cli.js ${Cmd[Cmd.template]}`);
         return;
     }
+    const tpl = argv._[1];
+    console.assert(tpl, "Need a template name");
+    const constructorArgs = argv._.slice(2) || [];
+    if (tpl && Object.keys(argv).length === 1) {
+        const tpls = await files_js_1.getContractArtifacts();
+        console.log(`${tpl} need the following arguments: `);
+        tpls.filter((cTpl) => cTpl.contractName === tpl).forEach(cTpl => {
+            console.log(`  ${cTpl.contractName} ` +
+                (Array.isArray(cTpl.abi) ? cTpl.abi : [])
+                    .filter(method => method.type === "constructor")
+                    .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
+                    .map(input => input.type + " " + input.name)
+                    .join(', ')));
+            console.log('');
+            console.log(`  node cli.js create ${cTpl.contractName} ${(Array.isArray(cTpl.abi) ? cTpl.abi : [])
+                .filter(method => method.type === "constructor")
+                .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
+                .map(input => `<${input.type}>`)
+                .join(' '))}`);
+        });
+        return;
+    }
     const msg = argv.m || argv.message || argv.msg;
     const from = argv.f || argv.from || await web3_js_1.getAccount();
     const ownerIndex = argv.i || argv.ownerIndex || 0;
     console.assert(msg, `Please leave a note for the contract deployment using --message, -m`);
     console.assert(from, "requires from; --from -f");
     console.assert(typeof ownerIndex === 'number', "missing owner index");
-    const tpl = argv._[1];
-    console.assert(tpl, "Need a template name");
-    const constructorArgs = argv._.slice(2) || [];
     if (argv.json) {
         constructorArgs.forEach(((value, index, array) => {
             array[index] = JSON.parse(value);
@@ -270,7 +293,7 @@ async function _template() {
                 .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
                 .map(input => input.type + " " + input.name)
                 .join(', ')));
-        console.log(grey(`    create ${tpl.contractName} ${(Array.isArray(tpl.abi) ? tpl.abi : [])
+        console.log(grey(`    node cli.js create ${tpl.contractName} ${(Array.isArray(tpl.abi) ? tpl.abi : [])
             .filter(method => method.type === "constructor")
             .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
             .map(input => `<${input.type}>`)
@@ -296,6 +319,15 @@ function subcommandNoArgs(argv) {
     return (argv.h || argv._.length === 1 && Object.values(argv).length === 1);
 }
 const handlers = new Map();
+handlers.set(Cmd.step, async function () {
+    const address = argv.address || argv.a;
+    console.assert(address, 'missing address');
+    const from = argv.f || argv.from || await web3_js_1.getAccount();
+    console.assert(from, "missing form");
+    const name = argv.c || argv.contract || argv._[1];
+    const next = (argv.n || argv.number || argv._[2]).toString();
+    await step_js_1.step(name, next, address, from);
+});
 handlers.set(Cmd.info, _info);
 handlers.set(Cmd.status, _status);
 handlers.set(Cmd.er, handlers.get(Cmd.status));
