@@ -11,6 +11,7 @@ import { sign } from './methods/sign.js'
 import { add } from './methods/add.js'
 import { getAccount } from './web3.js'
 import { fund } from './methods/fund.js'
+import { step } from './methods/step.js'
 
 const {red, grey} = chalk
 
@@ -30,6 +31,7 @@ const argv = minimist(process.argv.slice(2), {
 
 enum Cmd {
   help,
+  step,
   fund,
   info,
   status, er,
@@ -53,11 +55,13 @@ async function _help() {
   console.log('SUBCOMMANDS')
   console.log('  '+ Object.keys(Cmd)
     .filter(v => /^\d+$/.test(v) === false)
-    .filter(v => v.length > 2) // remove short names
     .filter(value => [
-      Cmd[Cmd.help],
-      Cmd[Cmd.tpl],
-    ].includes(value) == false) // blacklisted
+      // blacklisted subcommands:
+      Cmd[Cmd.help], // this is the help menu itself
+      Cmd[Cmd.step], // just a debug tool
+      Cmd[Cmd.add], // deprecated tool!
+      Cmd[Cmd.er], Cmd[Cmd.ls], Cmd[Cmd.tpl], Cmd[Cmd.mk], // aliases
+    ].includes(value) === false)
     .sort()
     .join(', ')
   )
@@ -313,7 +317,7 @@ async function _template () {
         .join(', ')
       )
     )
-    console.log(grey(`    create ${tpl.contractName} ${
+    console.log(grey(`    node cli.js create ${tpl.contractName} ${
       (Array.isArray(tpl.abi) ? tpl.abi : [])
         .filter(method => method.type === "constructor")
         .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
@@ -353,6 +357,15 @@ interface Handler {
   () : Promise<void>
 }
 const handlers = new Map<Cmd, Handler>()
+
+handlers.set(Cmd.step, async function () {
+  const address = argv.address || argv.a
+  console.assert(address, 'missing address')
+  const from = argv.f || argv.from || await getAccount()
+  console.assert(from, "missing form")
+  const name = argv.c || argv.contract || argv._[1]
+  await step(name, address, from)
+})
 
 handlers.set(Cmd.info, _info)
 
