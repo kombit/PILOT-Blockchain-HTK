@@ -35,7 +35,7 @@
     "test": "cd ethereum; truffle test",
     "cli": "node node_modules/typescript/bin/tsc --project ./src -p ./src/tsconfig.json",
     "contracts": "cd ethereum; rm -r build; truffle compile && npm run type-contracts && npm run compile-tests",
-    "ganache": "node node_modules/ganache-cli/build/cli.node.js --port 7545 --networkId 1337",
+    "ganache": "node node_modules/ganache-cli/build/cli.node.js --port 7545 --networkId 1337 --defaultBalanceEther 1000000",
     "type-contracts": "cd ethereum; node ../node_modules/typechain/dist/cli/cli.js --target=truffle --outDir=build/contract-interfaces \"./build/**/*.json\"",
     "compile-tests": "node node_modules/typescript/bin/tsc --project ./ethereum/test -p ./ethereum/tsconfig.json"
   },
