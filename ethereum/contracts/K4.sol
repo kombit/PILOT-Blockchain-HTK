@@ -16,6 +16,7 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
     address public serviceProvider;
 
     ICommonState subcontract;
+    uint numSubcontracts;
 
     constructor(address _owner, address _serviceProvider)
         Owned(_owner) public {
@@ -52,6 +53,16 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
         payments[_month] = 0;
     }
 
+    // the contract can hold ether
+    function () payable {
+    }
+
+    // IAccessSubcontracts
+    function add(ICommonState _subcontract) serviceProviderOnly external {
+        require(state != TERMINATED, "state must not be TERMINATED when adding subcontract");
+        numSubcontracts = 1;
+        subcontract = ICommonState(_subcontract);
+    }
 
     // implementation of ICommonState
     function getState() external constant returns(uint) {
@@ -60,7 +71,7 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
 
     // IHasSubcontracts
     function countSubcontracts() external constant returns(uint) {
-        return 0;
+        return numSubcontracts;
     }
 
 }
