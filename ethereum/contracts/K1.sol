@@ -10,10 +10,13 @@ contract K1 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
 
     uint public state = DRAFT; // defaults to draft
 
-    uint[] payments;
+    uint[] public payments;
 
     // the address where the price payments goes to
     address public serviceProvider;
+
+    //
+    bytes32[] public status;
 
     // address of the sub contract
     ICommonState public subcontract;
@@ -42,6 +45,8 @@ contract K1 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
         payments[9] = 60000 szabo;  // oct 2018
         payments[10] = 60000 szabo; // nov 2018
         payments[11] = 60000 szabo; // dec 2018
+
+        status = new bytes32[](12);
     }
 
     // state
@@ -56,10 +61,23 @@ contract K1 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
         uint amountForMonth = payments[_month]; // lookup getRelativeMonth()
         require(amountForMonth > 0, "Nothing to do, amount was 0");
         require(amountForMonth <= this.balance, "The contract itself is out of money");
+
+        uint rest = (_month+1) % 3;
+        if (rest == 0) {
+            bytes32 b = status[_month];
+            require(b != 0x0, "status was not set");
+        }
+
         serviceProvider.transfer(amountForMonth);
         payments[_month] = 0;
     }
 
+    function setStatus(uint month, bytes32 _status) external {
+        // enable this if its required that setStatus is NOT overwriting existing status
+//        bytes32 b = status[month];
+//        require(b == 0x0, "status was already set");
+        status[month] = _status;
+    }
 
     // the contract can hold ether
     function () payable {
@@ -72,17 +90,6 @@ contract K1 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
 
     // IHasSubcontracts
     function countSubcontracts() external constant returns(uint) {
-        return numSubcontracts;
-    }
-
-    // IAccessSubcontracts
-    function add(ICommonState _subcontract) serviceProviderOnly external {
-        require(state != TERMINATED, "state must not be TERMINATED when adding subcontract");
-        numSubcontracts = 1;
-        subcontract = ICommonState(_subcontract);
-    }
-
-    function getSubcontract(uint _index) external constant returns(address) {
-        return subcontract;
+        return 0;
     }
 }
