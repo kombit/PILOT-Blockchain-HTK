@@ -159,8 +159,8 @@
   ],
   "bytecode": "0x60806040526001805534801561001457600080fd5b50604051604080610a2a833981018060405281019080805190602001909291908051906020019092919050505081806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505080600360006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550600c6040519080825280602002602001820160405280156100f45781602001602082028038833980820191505090505b506002908051906020019061010a9291906102d9565b50666a94d74f4300006002600081548110151561012357fe5b9060005260206000200181905550666a94d74f4300006002600181548110151561014957fe5b9060005260206000200181905550666a94d74f43000060028081548110151561016e57fe5b9060005260206000200181905550666a94d74f4300006002600381548110151561019457fe5b9060005260206000200181905550666a94d74f430000600260048154811015156101ba57fe5b9060005260206000200181905550666a94d74f430000600260058154811015156101e057fe5b9060005260206000200181905550666a94d74f4300006002600681548110151561020657fe5b9060005260206000200181905550666a94d74f4300006002600781548110151561022c57fe5b9060005260206000200181905550666a94d74f4300006002600881548110151561025257fe5b9060005260206000200181905550666a94d74f4300006002600981548110151561027857fe5b9060005260206000200181905550666a94d74f4300006002600a81548110151561029e57fe5b9060005260206000200181905550666a94d74f4300006002600b8154811015156102c457fe5b9060005260206000200181905550505061034b565b828054828255906000526020600020908101928215610315579160200282015b828111156103145782518255916020019190600101906102f9565b5b5090506103229190610326565b5090565b61034891905b8082111561034457600081600090555060010161032c565b5090565b90565b6106d08061035a6000396000f3006080604052600436106100a4576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630762f731146100a65780630f15f4c0146100d15780631865c57d146100e85780633a1cde75146101135780638d69e95e146101405780638da5cb5b146101975780639189a1cd146101ee578063c19d93fb14610219578063c90bd04714610244578063dc04be851461026f575b005b3480156100b257600080fd5b506100bb61029a565b6040518082815260200191505060405180910390f35b3480156100dd57600080fd5b506100e661029f565b005b3480156100f457600080fd5b506100fd6103e6565b6040518082815260200191505060405180910390f35b34801561011f57600080fd5b5061013e600480360381019080803590602001909291905050506103f0565b005b34801561014c57600080fd5b50610155610641565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156101a357600080fd5b506101ac610667565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156101fa57600080fd5b5061020361068c565b6040518082815260200191505060405180910390f35b34801561022557600080fd5b5061022e610694565b6040518082815260200191505060405180910390f35b34801561025057600080fd5b5061025961069a565b6040518082815260200191505060405180910390f35b34801561027b57600080fd5b5061028461069f565b6040518082815260200191505060405180910390f35b600181565b3373ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16141515610363576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260188152602001807f6d73672e73656e64657220776173206e6f74206f776e6572000000000000000081525060200191505060405180910390fd5b600180541415156103dc576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601b8152602001807f63757272656e7420737461746520776173206e6f74204452414654000000000081525060200191505060405180910390fd5b6002600181905550565b6000600154905090565b6000600260015414151561046c576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601c8152602001807f63757272656e7420737461746520776173206e6f74204143544956450000000081525060200191505060405180910390fd5b60028281548110151561047b57fe5b90600052602060002001549050600081111515610500576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601b8152602001807f4e6f7468696e6720746f20646f2c20616d6f756e74207761732030000000000081525060200191505060405180910390fd5b3073ffffffffffffffffffffffffffffffffffffffff163181111515156105b5576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260238152602001807f54686520636f6e747261637420697473656c66206973206f7574206f66206d6f81526020017f6e6579000000000000000000000000000000000000000000000000000000000081525060400191505060405180910390fd5b600360009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166108fc829081150290604051600060405180830381858888f1935050505015801561061d573d6000803e3d6000fd5b50600060028381548110151561062f57fe5b90600052602060002001819055505050565b600360009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600080905090565b60015481565b600281565b6003815600a165627a7a72305820cf24f48462f096ed5b898635ff907051b70237bad15fde714b60e78975c4c0310029",
   "deployedBytecode": "0x6080604052600436106100a4576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630762f731146100a65780630f15f4c0146100d15780631865c57d146100e85780633a1cde75146101135780638d69e95e146101405780638da5cb5b146101975780639189a1cd146101ee578063c19d93fb14610219578063c90bd04714610244578063dc04be851461026f575b005b3480156100b257600080fd5b506100bb61029a565b6040518082815260200191505060405180910390f35b3480156100dd57600080fd5b506100e661029f565b005b3480156100f457600080fd5b506100fd6103e6565b6040518082815260200191505060405180910390f35b34801561011f57600080fd5b5061013e600480360381019080803590602001909291905050506103f0565b005b34801561014c57600080fd5b50610155610641565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156101a357600080fd5b506101ac610667565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156101fa57600080fd5b5061020361068c565b6040518082815260200191505060405180910390f35b34801561022557600080fd5b5061022e610694565b6040518082815260200191505060405180910390f35b34801561025057600080fd5b5061025961069a565b6040518082815260200191505060405180910390f35b34801561027b57600080fd5b5061028461069f565b6040518082815260200191505060405180910390f35b600181565b3373ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16141515610363576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260188152602001807f6d73672e73656e64657220776173206e6f74206f776e6572000000000000000081525060200191505060405180910390fd5b600180541415156103dc576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601b8152602001807f63757272656e7420737461746520776173206e6f74204452414654000000000081525060200191505060405180910390fd5b6002600181905550565b6000600154905090565b6000600260015414151561046c576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601c8152602001807f63757272656e7420737461746520776173206e6f74204143544956450000000081525060200191505060405180910390fd5b60028281548110151561047b57fe5b90600052602060002001549050600081111515610500576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252601b8152602001807f4e6f7468696e6720746f20646f2c20616d6f756e74207761732030000000000081525060200191505060405180910390fd5b3073ffffffffffffffffffffffffffffffffffffffff163181111515156105b5576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260238152602001807f54686520636f6e747261637420697473656c66206973206f7574206f66206d6f81526020017f6e6579000000000000000000000000000000000000000000000000000000000081525060400191505060405180910390fd5b600360009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166108fc829081150290604051600060405180830381858888f1935050505015801561061d573d6000803e3d6000fd5b50600060028381548110151561062f57fe5b90600052602060002001819055505050565b600360009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600080905090565b60015481565b600281565b6003815600a165627a7a72305820cf24f48462f096ed5b898635ff907051b70237bad15fde714b60e78975c4c0310029",
-  "sourceMap": "179:1962:5:-;;;86:1:0;257:25:5;;522:756;8:9:-1;5:2;;;30:1;27;20:12;5:2;522:756:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;590:6;127::6;119:5;;:14;;;;;;;;;;;;;;;;;;74:66;633:16:5;615:15;;:34;;;;;;;;;;;;;;;;;;681:2;670:14;;;;;;;;;;;;;;;;;;;;;;29:2:-1;21:6;17:15;117:4;105:10;97:6;88:34;148:4;140:6;136:17;126:27;;0:157;670:14:5;;;;659:8;:25;;;;;;;;;;;;:::i;:::-;;710:11;695:8;704:1;695:11;;;;;;;;;;;;;;;;;:26;;;;759:11;744:8;753:1;744:11;;;;;;;;;;;;;;;;;:26;;;;808:11;793:8;802:1;793:11;;;;;;;;;;;;;;;;;:26;;;;857:11;842:8;851:1;842:11;;;;;;;;;;;;;;;;;:26;;;;906:11;891:8;900:1;891:11;;;;;;;;;;;;;;;;;:26;;;;955:11;940:8;949:1;940:11;;;;;;;;;;;;;;;;;:26;;;;1004:11;989:8;998:1;989:11;;;;;;;;;;;;;;;;;:26;;;;1053:11;1038:8;1047:1;1038:11;;;;;;;;;;;;;;;;;:26;;;;1102:11;1087:8;1096:1;1087:11;;;;;;;;;;;;;;;;;:26;;;;1151:11;1136:8;1145:1;1136:11;;;;;;;;;;;;;;;;;:26;;;;1200:11;1185:8;1194:2;1185:12;;;;;;;;;;;;;;;;;:26;;;;1248:11;1233:8;1242:2;1233:12;;;;;;;;;;;;;;;;;:26;;;;522:756;;179:1962;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;",
-  "deployedSourceMap": "179:1962:5:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;57:30:0;;8:9:-1;5:2;;;30:1;27;20:12;5:2;57:30:0;;;;;;;;;;;;;;;;;;;;;;;1297:134:5;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1297:134:5;;;;;;1942:81;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1942:81:5;;;;;;;;;;;;;;;;;;;;;;;1437:393;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1437:393:5;;;;;;;;;;;;;;;;;;;;;;;;;;384:30;;8:9:-1;5:2;;;30:1;27;20:12;5:2;384:30:5;;;;;;;;;;;;;;;;;;;;;;;;;;;47:20:6;;8:9:-1;5:2;;;30:1;27;20:12;5:2;47:20:6;;;;;;;;;;;;;;;;;;;;;;;;;;;2053:86:5;;8:9:-1;5:2;;;30:1;27;20:12;5:2;2053:86:5;;;;;;;;;;;;;;;;;;;;;;;257:25;;8:9:-1;5:2;;;30:1;27;20:12;5:2;257:25:5;;;;;;;;;;;;;;;;;;;;;;;93:31:0;;8:9:-1;5:2;;;30:1;27;20:12;5:2;93:31:0;;;;;;;;;;;;;;;;;;;;;;;130:35;;8:9:-1;5:2;;;30:1;27;20:12;5:2;130:35:0;;;;;;;;;;;;;;;;;;;;;;;57:30;86:1;57:30;:::o;1297:134:5:-;195:10:6;186:19;;:5;;;;;;;;;;;:19;;;178:56;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;86:1:0;1354:5:5;;:14;1346:54;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;123:1:0;1410:5:5;:14;;;;1297:134::o;1942:81::-;1988:4;2011:5;;2004:12;;1942:81;:::o;1437:393::-;1549:19;123:1:0;1491:5:5;;:15;1483:56;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1571:8;1580:6;1571:16;;;;;;;;;;;;;;;;;;1549:38;;1622:1;1605:14;:18;1597:58;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1691:4;:12;;;1673:14;:30;;1665:78;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1753:15;;;;;;;;;;;:24;;:40;1778:14;1753:40;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;1753:40:5;1822:1;1803:8;1812:6;1803:16;;;;;;;;;;;;;;;;;:20;;;;1437:393;;:::o;384:30::-;;;;;;;;;;;;;:::o;47:20:6:-;;;;;;;;;;;;;:::o;2053:86:5:-;2108:4;2131:1;2124:8;;2053:86;:::o;257:25::-;;;;:::o;93:31:0:-;123:1;93:31;:::o;130:35::-;164:1;130:35;:::o",
+  "sourceMap": "179:1962:5:-;;;86:1:0;257:25:5;;522:756;8:9:-1;5:2;;;30:1;27;20:12;5:2;522:756:5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;590:6;127::9;119:5;;:14;;;;;;;;;;;;;;;;;;74:66;633:16:5;615:15;;:34;;;;;;;;;;;;;;;;;;681:2;670:14;;;;;;;;;;;;;;;;;;;;;;29:2:-1;21:6;17:15;117:4;105:10;97:6;88:34;148:4;140:6;136:17;126:27;;0:157;670:14:5;;;;659:8;:25;;;;;;;;;;;;:::i;:::-;;710:11;695:8;704:1;695:11;;;;;;;;;;;;;;;;;:26;;;;759:11;744:8;753:1;744:11;;;;;;;;;;;;;;;;;:26;;;;808:11;793:8;802:1;793:11;;;;;;;;;;;;;;;;;:26;;;;857:11;842:8;851:1;842:11;;;;;;;;;;;;;;;;;:26;;;;906:11;891:8;900:1;891:11;;;;;;;;;;;;;;;;;:26;;;;955:11;940:8;949:1;940:11;;;;;;;;;;;;;;;;;:26;;;;1004:11;989:8;998:1;989:11;;;;;;;;;;;;;;;;;:26;;;;1053:11;1038:8;1047:1;1038:11;;;;;;;;;;;;;;;;;:26;;;;1102:11;1087:8;1096:1;1087:11;;;;;;;;;;;;;;;;;:26;;;;1151:11;1136:8;1145:1;1136:11;;;;;;;;;;;;;;;;;:26;;;;1200:11;1185:8;1194:2;1185:12;;;;;;;;;;;;;;;;;:26;;;;1248:11;1233:8;1242:2;1233:12;;;;;;;;;;;;;;;;;:26;;;;522:756;;179:1962;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;",
+  "deployedSourceMap": "179:1962:5:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;57:30:0;;8:9:-1;5:2;;;30:1;27;20:12;5:2;57:30:0;;;;;;;;;;;;;;;;;;;;;;;1297:134:5;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1297:134:5;;;;;;1942:81;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1942:81:5;;;;;;;;;;;;;;;;;;;;;;;1437:393;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1437:393:5;;;;;;;;;;;;;;;;;;;;;;;;;;384:30;;8:9:-1;5:2;;;30:1;27;20:12;5:2;384:30:5;;;;;;;;;;;;;;;;;;;;;;;;;;;47:20:9;;8:9:-1;5:2;;;30:1;27;20:12;5:2;47:20:9;;;;;;;;;;;;;;;;;;;;;;;;;;;2053:86:5;;8:9:-1;5:2;;;30:1;27;20:12;5:2;2053:86:5;;;;;;;;;;;;;;;;;;;;;;;257:25;;8:9:-1;5:2;;;30:1;27;20:12;5:2;257:25:5;;;;;;;;;;;;;;;;;;;;;;;93:31:0;;8:9:-1;5:2;;;30:1;27;20:12;5:2;93:31:0;;;;;;;;;;;;;;;;;;;;;;;130:35;;8:9:-1;5:2;;;30:1;27;20:12;5:2;130:35:0;;;;;;;;;;;;;;;;;;;;;;;57:30;86:1;57:30;:::o;1297:134:5:-;195:10:9;186:19;;:5;;;;;;;;;;;:19;;;178:56;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;86:1:0;1354:5:5;;:14;1346:54;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;123:1:0;1410:5:5;:14;;;;1297:134::o;1942:81::-;1988:4;2011:5;;2004:12;;1942:81;:::o;1437:393::-;1549:19;123:1:0;1491:5:5;;:15;1483:56;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1571:8;1580:6;1571:16;;;;;;;;;;;;;;;;;;1549:38;;1622:1;1605:14;:18;1597:58;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1691:4;:12;;;1673:14;:30;;1665:78;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1753:15;;;;;;;;;;;:24;;:40;1778:14;1753:40;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;1753:40:5;1822:1;1803:8;1812:6;1803:16;;;;;;;;;;;;;;;;;:20;;;;1437:393;;:::o;384:30::-;;;;;;;;;;;;;:::o;47:20:9:-;;;;;;;;;;;;;:::o;2053:86:5:-;2108:4;2131:1;2124:8;;2053:86;:::o;257:25::-;;;;:::o;93:31:0:-;123:1;93:31;:::o;130:35::-;164:1;130:35;:::o",
   "source": "pragma solidity ^0.4.0;\n\nimport \"./Owned.sol\";\nimport \"./IHasSubcontracts.sol\";\nimport \"./CommonStateNames.sol\";\nimport \"./ICommonState.sol\";\nimport \"./IAccessSubcontracts.sol\";\n\ncontract K2 is ICommonState, IHasSubcontracts, CommonStateNames, Owned {\n\n    uint public state = DRAFT; // defaults to draft\n\n    uint[] payments;\n\n    // the address where the price payments goes to\n    address public serviceProvider;\n\n    modifier serviceProviderOnly {\n        require(msg.sender == serviceProvider);\n        _;\n    }\n\n    constructor(address _owner, address _serviceProvider)\n        Owned(_owner) public {\n        serviceProvider = _serviceProvider;\n        payments = new uint[](12);\n\n        payments[0] =  30000 szabo;  // jan 2018\n        payments[1] =  30000 szabo;  // feb 2018\n        payments[2] =  30000 szabo;  // mar 2018\n        payments[3] =  30000 szabo;  // apr 2018\n        payments[4] =  30000 szabo;  // may 2018\n        payments[5] =  30000 szabo;  // jun 2018\n        payments[6] =  30000 szabo;  // jul 2018\n        payments[7] =  30000 szabo;  // aug 2018\n        payments[8] =  30000 szabo;  // sep 2018\n        payments[9] =  30000 szabo;  // oct 2018\n        payments[10] = 30000 szabo; // nov 2018\n        payments[11] = 30000 szabo; // dec 2018\n    }\n\n    // state\n    function activate() external ownerOnly {\n        require(state == DRAFT, \"current state was not DRAFT\");\n        state = ACTIVE;\n    }\n\n    function step(uint _month) external {\n        require(state == ACTIVE, \"current state was not ACTIVE\");\n        uint amountForMonth = payments[_month];\n        require(amountForMonth > 0, \"Nothing to do, amount was 0\");\n        require(amountForMonth <= this.balance, \"The contract itself is out of money\");\n        serviceProvider.transfer(amountForMonth);\n        payments[_month] = 0;\n    }\n\n    // the contract can hold ether\n    function () payable {\n    }\n\n    // implementation of ICommonState\n    function getState() external constant returns(uint) {\n        return state;\n    }\n\n    // IHasSubcontracts\n    function countSubcontracts() external constant returns(uint) {\n        return 0;\n    }\n}\n",
   "sourcePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/K2.sol",
   "ast": {
@@ -190,7 +190,7 @@
         "id": 302,
         "nodeType": "ImportDirective",
         "scope": 513,
-        "sourceUnit": 540,
+        "sourceUnit": 1060,
         "src": "25:21:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -302,10 +302,10 @@
               "id": 313,
               "name": "Owned",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 539,
+              "referencedDeclaration": 1059,
               "src": "244:5:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Owned_$539",
+                "typeIdentifier": "t_contract$_Owned_$1059",
                 "typeString": "contract Owned"
               }
             },
@@ -318,7 +318,7 @@
           11,
           36,
           45,
-          539
+          1059
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -326,7 +326,7 @@
         "id": 512,
         "linearizedBaseContracts": [
           512,
-          539,
+          1059,
           11,
           45,
           36
@@ -463,7 +463,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 554,
+                            "referencedDeclaration": 1770,
                             "src": "468:3:5",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -517,10 +517,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        557,
-                        558
+                        1773,
+                        1774
                       ],
-                      "referencedDeclaration": 557,
+                      "referencedDeclaration": 1773,
                       "src": "460:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -1752,10 +1752,10 @@
                   "name": "Owned",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 539,
+                  "referencedDeclaration": 1059,
                   "src": "584:5:5",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_type$_t_contract$_Owned_$539_$",
+                    "typeIdentifier": "t_type$_t_contract$_Owned_$1059_$",
                     "typeString": "type(contract Owned)"
                   }
                 },
@@ -1926,10 +1926,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        557,
-                        558
+                        1773,
+                        1774
                       ],
-                      "referencedDeclaration": 558,
+                      "referencedDeclaration": 1774,
                       "src": "1346:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -2017,7 +2017,7 @@
                   "name": "ownerOnly",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 538,
+                  "referencedDeclaration": 1058,
                   "src": "1326:9:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -2138,10 +2138,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        557,
-                        558
+                        1773,
+                        1774
                       ],
-                      "referencedDeclaration": 558,
+                      "referencedDeclaration": 1774,
                       "src": "1483:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -2330,10 +2330,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        557,
-                        558
+                        1773,
+                        1774
                       ],
-                      "referencedDeclaration": 558,
+                      "referencedDeclaration": 1774,
                       "src": "1597:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -2396,7 +2396,7 @@
                             "name": "this",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 579,
+                            "referencedDeclaration": 1795,
                             "src": "1691:4:5",
                             "typeDescriptions": {
                               "typeIdentifier": "t_contract$_K2_$512",
@@ -2457,10 +2457,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        557,
-                        558
+                        1773,
+                        1774
                       ],
-                      "referencedDeclaration": 558,
+                      "referencedDeclaration": 1774,
                       "src": "1665:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -2924,7 +2924,7 @@
         "id": 302,
         "nodeType": "ImportDirective",
         "scope": 513,
-        "sourceUnit": 540,
+        "sourceUnit": 1060,
         "src": "25:21:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -3036,10 +3036,10 @@
               "id": 313,
               "name": "Owned",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 539,
+              "referencedDeclaration": 1059,
               "src": "244:5:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Owned_$539",
+                "typeIdentifier": "t_contract$_Owned_$1059",
                 "typeString": "contract Owned"
               }
             },
@@ -3052,7 +3052,7 @@
           11,
           36,
           45,
-          539
+          1059
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -3060,7 +3060,7 @@
         "id": 512,
         "linearizedBaseContracts": [
           512,
-          539,
+          1059,
           11,
           45,
           36
@@ -3197,7 +3197,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 554,
+                            "referencedDeclaration": 1770,
                             "src": "468:3:5",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -3251,10 +3251,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        557,
-                        558
+                        1773,
+                        1774
                       ],
-                      "referencedDeclaration": 557,
+                      "referencedDeclaration": 1773,
                       "src": "460:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -4486,10 +4486,10 @@
                   "name": "Owned",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 539,
+                  "referencedDeclaration": 1059,
                   "src": "584:5:5",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_type$_t_contract$_Owned_$539_$",
+                    "typeIdentifier": "t_type$_t_contract$_Owned_$1059_$",
                     "typeString": "type(contract Owned)"
                   }
                 },
@@ -4660,10 +4660,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        557,
-                        558
+                        1773,
+                        1774
                       ],
-                      "referencedDeclaration": 558,
+                      "referencedDeclaration": 1774,
                       "src": "1346:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -4751,7 +4751,7 @@
                   "name": "ownerOnly",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 538,
+                  "referencedDeclaration": 1058,
                   "src": "1326:9:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -4872,10 +4872,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        557,
-                        558
+                        1773,
+                        1774
                       ],
-                      "referencedDeclaration": 558,
+                      "referencedDeclaration": 1774,
                       "src": "1483:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -5064,10 +5064,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        557,
-                        558
+                        1773,
+                        1774
                       ],
-                      "referencedDeclaration": 558,
+                      "referencedDeclaration": 1774,
                       "src": "1597:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -5130,7 +5130,7 @@
                             "name": "this",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 579,
+                            "referencedDeclaration": 1795,
                             "src": "1691:4:5",
                             "typeDescriptions": {
                               "typeIdentifier": "t_contract$_K2_$512",
@@ -5191,10 +5191,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        557,
-                        558
+                        1773,
+                        1774
                       ],
-                      "referencedDeclaration": 558,
+                      "referencedDeclaration": 1774,
                       "src": "1665:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -5637,5 +5637,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-11-28T11:23:00.747Z"
+  "updatedAt": "2018-11-28T15:01:34.641Z"
 }
