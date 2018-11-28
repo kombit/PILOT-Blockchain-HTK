@@ -35,17 +35,19 @@ const colour = (state:number) => {
 export async function recursiveWalk(address:string, web3:any, displayName:string, level:number = 0):Promise<any> {
   if (address === '0x0000000000000000000000000000000000000000') return Promise.reject('address was 0x')
 
-  const instance = new web3.eth.Contract(require( join(__dirname, '../../ethereum/build/contracts/ICommonState.json')).abi, address)
+  const hasSubcontracts = new web3.eth.Contract(require( join(__dirname, '../../ethereum/build/contracts/IHasSubcontracts.json')).abi, address)
+  const accessSubcontracts = new web3.eth.Contract(require( join(__dirname, '../../ethereum/build/contracts/IAccessSubcontracts.json')).abi, address)
+  const commonState = new web3.eth.Contract(require( join(__dirname, '../../ethereum/build/contracts/ICommonState.json')).abi, address)
 
   const [contractState, numSubContracts] = await Promise.all([
-    <Promise<StateNames>>instance.methods.getState().call(),
-    <Promise<number>>instance.methods.countSubcontracts().call(),
+    <Promise<StateNames>>commonState.methods.getState().call(),
+    <Promise<number>>hasSubcontracts.methods.countSubcontracts().call(),
   ])
 
   console.log(`${displayName} (at ${shorten(address)}) is ${colour(parseInt(contractState.toString(), 10))}, has ${numSubContracts} subcontracts`)
 
   for (let i = 0; i < numSubContracts; i++) {
-    const subContractAddress = await <Promise<string>>instance.methods.getSubcontract(i.toString()).call()
+    const subContractAddress = await <Promise<string>>accessSubcontracts.methods.getSubcontract(i.toString()).call()
     await recursiveWalk(subContractAddress, web3, `${' '.repeat(2+level*2)}- subcontract`, level+1)
   }
 }
