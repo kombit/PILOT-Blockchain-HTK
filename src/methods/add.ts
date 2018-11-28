@@ -1,4 +1,5 @@
 import { join } from 'path'
+import { ok } from 'assert'
 
 const Web3 = require('web3')
 
@@ -16,7 +17,7 @@ export async function add (address:string, subcontractAddress:string, from:strin
         address,
         {})
       instance.methods.getSubcontract(0).call().then(val => {
-        console.assert(val.toString().toLowerCase() === subcontractAddress.toLowerCase(), "Was not set correct")
+        ok(val.toString().toLowerCase() === subcontractAddress.toLowerCase(), "Was not set correct")
       })
     })
 }

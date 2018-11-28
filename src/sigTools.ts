@@ -3,11 +3,12 @@ const solsha3 = require('solidity-sha3').default
 const leftPad = require('left-pad')
 import {BigNumber} from 'bignumber.js'
 import * as lightwallet from 'eth-lightwallet'
+import { ok } from 'assert'
 
 const Web3 = require('web3')
 
 const txutils = (lightwallet as any).txutils // type washing
-console.assert(txutils, 'lightwallet.txutils should be a thing');
+ok(txutils, 'lightwallet.txutils should be a thing');
 
 // keystore
 export type ECSignature = {sigV: number, sigR: string, sigS: string}
@@ -30,8 +31,8 @@ export function retrieveKeystore (seedPhrase:string, password:string = ''):Promi
 export function createSig (ks:keystore, signingAddr:string, keyFromPw:Uint8Array, multisigContractAddr:string, nonce:number, destinationMethod:string, destinationAddr:string, destinationValue:number = 0):ECSignature {
   const nonceBn:BigNumber = new BigNumber(nonce, 10) // typeguard
   const valueBn:BigNumber = new BigNumber(destinationValue, 10) // typeguard
-  console.assert(multisigContractAddr.substr(0,2) === "0x", "multisigAddr should be in hex format",multisigContractAddr)
-  console.assert(destinationAddr.substr(0,2) === "0x", "destinationAddr should be in hex format",destinationAddr)
+  ok(multisigContractAddr.substr(0,2) === "0x", "multisigAddr should be in hex format: "+multisigContractAddr)
+  ok(destinationAddr.substr(0,2) === "0x", "destinationAddr should be in hex format: "+destinationAddr)
 
   const data = txutils._encodeFunctionTxData(destinationMethod, [], []);// sending data doesn't work https://github.com/ethereum/solidity/issues/2884
 
@@ -58,7 +59,7 @@ export function createSig (ks:keystore, signingAddr:string, keyFromPw:Uint8Array
 export function multiSigCall (method:string, sig1:ECSignature, sig2:ECSignature, destAddress:string, multisigAddress:string, from:string) {
   const sigsOrdered:ECSignature[] = [sig1, sig2] // .sort() // should have been sorted based on sender address
   // validate all input
-  sigsOrdered.forEach(sig1 => console.assert(sig1.sigV && sig1.sigR && sig1.sigS, "missing V, R or S", sig1))
+  sigsOrdered.forEach(sig1 => ok(sig1.sigV && sig1.sigR && sig1.sigS, "missing V, R or S"))
 
   const sigs = {
     sigV: sigsOrdered.map(sig => sig.sigV),
