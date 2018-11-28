@@ -18,15 +18,6 @@ contract K1 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
     //
     bytes32[] public status;
 
-    // address of the sub contract
-    ICommonState public subcontract;
-    // count number of sub contracts (here we only have 1, see also the `add` method)
-    uint public numSubcontracts;
-
-    modifier serviceProviderOnly {
-        require(msg.sender == serviceProvider);
-        _;
-    }
 
     constructor(address _owner, address _serviceProvider)
         Owned(_owner) public {
