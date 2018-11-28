@@ -116,17 +116,17 @@ async function _tx () {
   const multisigAddress:string = argv.u || argv.multisig
   const from:string = argv.from || argv.f || await getAccount()
 
-  console.assert(destMethod, "missing dest. method; use --method -m")
-  console.assert(destAddress, "missing dest. address; use --dest -d")
-  console.assert(multisigAddress, "missing multiSig address; use --multisig -u")
-  console.assert(from, "requires from; --from -f")
+  ok(destMethod, "missing dest. method; use --method -m")
+  ok(destAddress, "missing dest. address; use --dest -d")
+  ok(multisigAddress, "missing multiSig address; use --multisig -u")
+  ok(from, "requires from; --from -f")
 
   const sig1 = JSON.parse(argv._[1]) // {"sigV":28,"sigR":"0x7d223c507acf17887340f364f7cf910ec54dfb2f10e08ce5ddc3d60bf9b221b3","sigS":"0x1bdd9f4ba9afd5466b59010746caf55dd396769a1c8a8c001e3ee693276af1d3"}
   const sig2 = JSON.parse(argv._[2]) // {"sigV":28,"sigR":"0x7d223c507acf17887340f364f7cf910ec54dfb2f10e08ce5ddc3d60bf9b221b3","sigS":"0x1bdd9f4ba9afd5466b59010746caf55dd396769a1c8a8c001e3ee693276af1d3"}
 
   // validate all input
   new Array(sig1, sig2)
-    .forEach((sig, index) => console.assert(sig.sigV && sig.sigR && sig.sigS, index +": missing V, R or S", sig))
+    .forEach((sig, index) => ok(sig.sigV && sig.sigR && sig.sigS, index +": missing V, R or S"))
 
   multiSigCall(destMethod, sig1, sig2, destAddress, multisigAddress, from)
 }
@@ -150,11 +150,11 @@ async function _sign () {
   const destMethod = argv.m || argv.method
   const destAddress = argv.d || argv.dest
 
-  console.assert(seedPhrase, "need seed phrase --seed -s")
-  console.assert(multisigAddress, "missing --multisig -u")
-  console.assert(!!password || password === '', "need password")
-  console.assert(destMethod, "missing dest. method --method -m")
-  console.assert(destAddress, "missing dest. address --dest -d")
+  ok(seedPhrase, "need seed phrase --seed -s")
+  ok(multisigAddress, "missing --multisig -u")
+  ok(!!password || password === '', "need password")
+  ok(destMethod, "missing dest. method --method -m")
+  ok(destAddress, "missing dest. address --dest -d")
 
   const sig = await sign(destMethod, destAddress, multisigAddress, seedPhrase, password)
   console.log('Signature')
@@ -182,10 +182,10 @@ async function _add () {
   const from:string = argv.f || argv.from || await getAccount()
 
   const networkId = argv.networkId || '1337'
-  console.assert(networkId)
-  console.assert(subcontractAddress, "need sub contract address; --subcontract -s")
-  console.assert(targetAddress, "requires address; --address -a")
-  console.assert(from, "requires from; --from -f")
+  ok(networkId)
+  ok(subcontractAddress, "need sub contract address; --subcontract -s")
+  ok(targetAddress, "requires address; --address -a")
+  ok(from, "requires from; --from -f")
 
   await add(targetAddress, subcontractAddress, from)
 }
@@ -199,7 +199,7 @@ async function _info () {
 
   const networkId = argv.networkId || '1337'
   const contractAddress:string = argv._[1]
-  console.assert(contractAddress, "please provide an address")
+  ok(contractAddress, "please provide an address")
   await info(contractAddress, networkId)
 }
 
@@ -265,7 +265,7 @@ async function _create() {
   }
 
   const tpl = argv._[1]
-  console.assert(tpl, "Need a template name")
+  ok(tpl, "Need a template name")
   const constructorArgs:any[] = argv._.slice(2) || []
 
   if (tpl && Object.keys(argv).length === 1 && Object.keys(argv._).length === 2) {
@@ -377,9 +377,9 @@ async function _fund () {
   const address = argv._[1]
   const amount = argv._[2]
 
-  console.assert(amount, 'missing amount (ether)')
-  console.assert(address, 'missing address')
-  console.assert(address.substr(0,2 ) === '0x', 'something is off with address')
+  ok(amount, 'missing amount (ether)')
+  ok(address, 'missing address')
+  ok(address.substr(0,2 ) === '0x', 'something is off with address')
 
   await fund(address, amount)
   console.log("Transaction sent! Be sure to check for confirmations.")
@@ -387,9 +387,9 @@ async function _fund () {
 
 async function _step() {
   const address = argv.address || argv.a
-  console.assert(address, 'missing address')
+  ok(address, 'missing address')
   const from = argv.f || argv.from || await getAccount()
-  console.assert(from, "missing form")
+  ok(from, "missing form")
   const name = argv.c || argv.contract || argv._[1]
   const next:string = (argv.n || argv.number || argv._[2]).toString()
   await step(name, next, address, from)
@@ -432,6 +432,6 @@ handlers.set(Cmd.tpl, handlers.get(Cmd.template) as Handler)
 handlers.set(Cmd.mk, handlers.get(Cmd.create) as Handler)
 
 const handler = handlers.get(subcommand as any) || handlers.get(Cmd.help) as Handler
-console.assert(handler, "should have found handler")
+ok(handler, "should have found handler")
 handler()
   .catch(err => console.error(red(err.toString())))
