@@ -15,10 +15,7 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
     // the address where the price payments goes to
     address public serviceProvider;
 
-    modifier serviceProviderOnly {
-        require(msg.sender == serviceProvider);
-        _;
-    }
+    ICommonState subcontract;
 
     constructor(address _owner, address _serviceProvider)
         Owned(_owner) public {
@@ -30,6 +27,11 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
         payments[2] = 5000 szabo;  // mar 2018
     }
 
+    modifier serviceProviderOnly {
+        require(msg.sender == serviceProvider);
+        _;
+    }
+
     // state
     function activate() external ownerOnly {
         require(state == DRAFT, "current state was not DRAFT");
@@ -37,10 +39,15 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
     }
 
     function step(uint _month) external {
-        //        require(state == ACTIVE, "current state was not ACTIVE");
+        require(state == ACTIVE, "current state was not ACTIVE");
+
         uint amountForMonth = payments[_month]; // lookup getRelativeMonth()
         require(amountForMonth > 0, "Nothing to do, amount was 0");
         require(amountForMonth <= this.balance, "The contract itself is out of money");
+
+        // our subcontract must not be terminated
+        require(subcontract.getState() == ACTIVE);
+
         serviceProvider.transfer(amountForMonth);
         payments[_month] = 0;
     }
