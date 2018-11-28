@@ -187,7 +187,7 @@ async function _add () {
   ok(targetAddress, "requires address; --address -a")
   ok(from, "requires from; --from -f")
 
-  await add(targetAddress, subcontractAddress, from)
+  await add(targetAddress, subcontractAddress, from, !!argv.test)
 }
 
 async function _info () {
