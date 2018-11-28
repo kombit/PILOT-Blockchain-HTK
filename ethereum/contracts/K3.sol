@@ -30,6 +30,10 @@ contract K3 is ICommonState, IHasSubcontracts, CommonStateNames, Owned {
         payments[2] = 5000 szabo;  // mar 2018
     }
 
+    // the contract can hold ether
+    function () payable {
+    }
+
     // state
     function activate() external ownerOnly {
         require(state == DRAFT, "current state was not DRAFT");
