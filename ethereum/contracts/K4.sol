@@ -64,6 +64,10 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
         subcontract = ICommonState(_subcontract);
     }
 
+    function getSubcontract(uint _index) external constant returns(address) {
+        return address(subcontract);
+    }
+
     // implementation of ICommonState
     function getState() external constant returns(uint) {
         return state;
