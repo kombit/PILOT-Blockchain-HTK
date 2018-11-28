@@ -58,7 +58,7 @@ contract K1 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
 
     function step(uint _month) external {
         require(state == ACTIVE, "current state was not ACTIVE");
-        uint amountForMonth = payments[_month]; // lookup getRelativeMonth()
+        uint amountForMonth = payments[_month];
         require(amountForMonth > 0, "Nothing to do, amount was 0");
         require(amountForMonth <= this.balance, "The contract itself is out of money");
 
