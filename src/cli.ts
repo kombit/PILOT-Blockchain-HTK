@@ -12,8 +12,14 @@ import { add } from './methods/add.js'
 import { getAccount } from './web3.js'
 import { fund } from './methods/fund.js'
 import { step } from './methods/step.js'
+import { ok} from 'assert'
 
 const {red, grey} = chalk
+
+if (parseInt(process.version.replace('v',''),10) < 10) {
+  console.log("Please install node v10")
+  process.exit()
+}
 
 const argv = minimist(process.argv.slice(2), {
   string: [
@@ -45,8 +51,6 @@ enum Cmd {
 }
 
 const subcommand:Cmd|undefined = Cmd[argv._[0]]
-
-
 
 async function _help() {
   console.log('USAGE')
@@ -233,7 +237,7 @@ async function _list() {
 }
 
 async function _create() {
-  if (subcommandNoArgs(argv)) {
+  async function displayHelp() {
 
     console.log("USAGE")
     console.log(`  node.cli create --from 0x123 --message "a test contract" <contract name> <constructor arguments>`)
@@ -254,48 +258,52 @@ async function _create() {
 
     console.log('')
     console.log(`SEE MORE about the available templates using: node cli.js ${Cmd[Cmd.template]}`)
-    return
+  }
+
+  if (subcommandNoArgs(argv)) {
+    return displayHelp()
   }
 
   const tpl = argv._[1]
   console.assert(tpl, "Need a template name")
   const constructorArgs:any[] = argv._.slice(2) || []
 
-  if (tpl && Object.keys(argv).length === 1) {
+  if (tpl && Object.keys(argv).length === 1 && Object.keys(argv._).length === 2) {
     const allArtifacts = await getContractArtifacts()
-    console.log(`${tpl} need the following arguments: `)
 
     const cTpl = allArtifacts.find(cTpl => cTpl.contractName === tpl)
-    if (cTpl) {
-      console.log(`  ` +
-        (Array.isArray(cTpl.abi) ? cTpl.abi : [])
-          .filter(method => method.type === "constructor")
-          .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
-            .map(input => input.type + " " + input.name)
-            .join(', ')
-          )
-      )
-      console.log(`Deploy ${cTpl.contractName} like so:`)
-      console.log(`  node cli.js create ${cTpl.contractName} ${
-        (Array.isArray(cTpl.abi) ? cTpl.abi : [])
-          .filter(method => method.type === "constructor")
-          .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
-            .map(input => `<${input.type}>`)
-            .join(' ')
-          )
-        }`)
-
+    if (!cTpl) {
+      return displayHelp()
     }
 
+    console.log(`${tpl} need the following arguments: `)
+
+    console.log(`  ` +
+      (Array.isArray(cTpl.abi) ? cTpl.abi : [])
+        .filter(method => method.type === "constructor")
+        .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
+          .map(input => input.type + " " + input.name)
+          .join(', ')
+        )
+    )
+    console.log(`Deploy ${cTpl.contractName} like so:`)
+    console.log(`  node cli.js create ${cTpl.contractName} ${
+      (Array.isArray(cTpl.abi) ? cTpl.abi : [])
+        .filter(method => method.type === "constructor")
+        .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
+          .map(input => `<${input.type}>`)
+          .join(' ')
+        )
+      }`)
     return
   }
 
   const msg = argv.m || argv.message || argv.msg
   const from = argv.f || argv.from || await getAccount()
   const ownerIndex = argv.i || argv.ownerIndex || 0
-  console.assert(msg, `Please leave a note for the contract deployment using --message, -m`)
-  console.assert(from, "requires from; --from -f")
-  console.assert(typeof ownerIndex === 'number', "missing owner index")
+  ok(msg, `Please leave a note for the contract deployment using --message, -m`)
+  ok(from, "requires from; --from -f")
+  ok(typeof ownerIndex === 'number', "missing owner index")
 
 
   if (argv.json) {
@@ -306,7 +314,7 @@ async function _create() {
 
   const multiSigOwners:undefined|string[] = argv.owners
   let multiSigContractDeployed
-  console.assert(multiSigOwners === undefined || (Array.isArray(multiSigOwners) && multiSigOwners.length > 1), "specifying multisig with --owners requires at least 2 owners")
+  ok(multiSigOwners === undefined || (Array.isArray(multiSigOwners) && multiSigOwners.length > 1), "specifying multisig with --owners requires at least 2 owners")
   if (Array.isArray(multiSigOwners)) {
     console.log("Deploying multisig contract for "+multiSigOwners.length + " owners ...")
     multiSigOwners.sort() // important! see SimpleMultiSig.sol
@@ -426,4 +434,4 @@ handlers.set(Cmd.mk, handlers.get(Cmd.create) as Handler)
 const handler = handlers.get(subcommand as any) || handlers.get(Cmd.help) as Handler
 console.assert(handler, "should have found handler")
 handler()
-  // .catch(err => console.error(red(err.toString())))
+  .catch(err => console.error(red(err.toString())))
