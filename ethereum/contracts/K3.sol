@@ -6,7 +6,7 @@ import "./CommonStateNames.sol";
 import "./ICommonState.sol";
 import "./IAccessSubcontracts.sol";
 
-contract K3 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateNames, Owned {
+contract K3 is ICommonState, IHasSubcontracts, CommonStateNames, Owned {
 
     uint public state = DRAFT; // defaults to draft
 
