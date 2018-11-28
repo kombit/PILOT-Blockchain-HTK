@@ -29,7 +29,7 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
     }
 
     modifier serviceProviderOnly {
-        require(msg.sender == serviceProvider);
+        require(msg.sender == serviceProvider, "sender was not serviceProvider");
         _;
     }
 
@@ -58,14 +58,14 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
     }
 
     // IAccessSubcontracts
-    function add(ICommonState _subcontract) serviceProviderOnly external {
+    function add(ICommonState _subcontract) external { // serviceProviderOnly ?
         require(state != TERMINATED, "state must not be TERMINATED when adding subcontract");
         numSubcontracts = 1;
         subcontract = ICommonState(_subcontract);
     }
 
     function getSubcontract(uint _index) external constant returns(address) {
-        return address(subcontract);
+        return subcontract;
     }
 
     // implementation of ICommonState
