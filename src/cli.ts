@@ -377,6 +377,16 @@ async function _fund () {
   console.log("Transaction sent! Be sure to check for confirmations.")
 }
 
+async function _step() {
+  const address = argv.address || argv.a
+  console.assert(address, 'missing address')
+  const from = argv.f || argv.from || await getAccount()
+  console.assert(from, "missing form")
+  const name = argv.c || argv.contract || argv._[1]
+  const next:string = (argv.n || argv.number || argv._[2]).toString()
+  await step(name, next, address, from)
+}
+
 function subcommandNoArgs(argv:ParsedArgs):boolean {
   return (argv.h || argv._.length === 1 && Object.values(argv).length === 1)
 }
@@ -388,15 +398,7 @@ interface Handler {
 }
 const handlers = new Map<Cmd, Handler>()
 
-handlers.set(Cmd.step, async function () {
-  const address = argv.address || argv.a
-  console.assert(address, 'missing address')
-  const from = argv.f || argv.from || await getAccount()
-  console.assert(from, "missing form")
-  const name = argv.c || argv.contract || argv._[1]
-  const next:string = (argv.n || argv.number || argv._[2]).toString()
-  await step(name, next, address, from)
-})
+handlers.set(Cmd.step, _step)
 
 handlers.set(Cmd.info, _info)
 
