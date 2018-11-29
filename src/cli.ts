@@ -10,8 +10,16 @@ import { status } from './methods/status.js'
 import { sign } from './methods/sign.js'
 import { add } from './methods/add.js'
 import { getAccount } from './web3.js'
+import { fund } from './methods/fund.js'
+import { step } from './methods/step.js'
+import { ok} from 'assert'
 
-const {red} = chalk
+const {red, grey} = chalk
+
+if (parseInt(process.version.replace('v',''),10) < 10) {
+  console.log("Please install node v10")
+  process.exit()
+}
 
 const argv = minimist(process.argv.slice(2), {
   string: [
@@ -29,6 +37,8 @@ const argv = minimist(process.argv.slice(2), {
 
 enum Cmd {
   help,
+  step,
+  fund,
   info,
   status, er,
   add,
@@ -42,8 +52,6 @@ enum Cmd {
 
 const subcommand:Cmd|undefined = Cmd[argv._[0]]
 
-
-
 async function _help() {
   console.log('USAGE')
   console.log(`  node cli.js <subcommand>`)
@@ -51,11 +59,13 @@ async function _help() {
   console.log('SUBCOMMANDS')
   console.log('  '+ Object.keys(Cmd)
     .filter(v => /^\d+$/.test(v) === false)
-    .filter(v => v.length > 2) // remove short names
     .filter(value => [
-      Cmd[Cmd.help],
-      Cmd[Cmd.tpl],
-    ].includes(value) == false) // blacklisted
+      // blacklisted subcommands:
+      Cmd[Cmd.help], // this is the help menu itself
+      Cmd[Cmd.step], // just a debug tool
+      Cmd[Cmd.add], // deprecated tool!
+      Cmd[Cmd.er], Cmd[Cmd.ls], Cmd[Cmd.tpl], Cmd[Cmd.mk], // aliases
+    ].includes(value) === false)
     .sort()
     .join(', ')
   )
@@ -70,6 +80,8 @@ async function _register () {
     return
   }
 
+  const fundNewAccount = (argv.f !== undefined)
+
   const newSeed = keystore.generateRandomSeed()
   const [ks, keyFromPw] = await retrieveKeystore(newSeed, '')
 
@@ -77,6 +89,10 @@ async function _register () {
   const [signingAddr] = ks.getAddresses()
   console.log("Address: "+signingAddr)
   console.log("Seed:    "+newSeed)
+  if (fundNewAccount) {
+    await fund(signingAddr, '1')
+    console.log("  Sent 1 ether to new account.")
+  }
 }
 
 async function _tx () {
@@ -100,17 +116,17 @@ async function _tx () {
   const multisigAddress:string = argv.u || argv.multisig
   const from:string = argv.from || argv.f || await getAccount()
 
-  console.assert(destMethod, "missing dest. method; use --method -m")
-  console.assert(destAddress, "missing dest. address; use --dest -d")
-  console.assert(multisigAddress, "missing multiSig address; use --multisig -u")
-  console.assert(from, "requires from; --from -f")
+  ok(destMethod, "missing dest. method; use --method -m")
+  ok(destAddress, "missing dest. address; use --dest -d")
+  ok(multisigAddress, "missing multiSig address; use --multisig -u")
+  ok(from, "requires from; --from -f")
 
   const sig1 = JSON.parse(argv._[1]) // {"sigV":28,"sigR":"0x7d223c507acf17887340f364f7cf910ec54dfb2f10e08ce5ddc3d60bf9b221b3","sigS":"0x1bdd9f4ba9afd5466b59010746caf55dd396769a1c8a8c001e3ee693276af1d3"}
   const sig2 = JSON.parse(argv._[2]) // {"sigV":28,"sigR":"0x7d223c507acf17887340f364f7cf910ec54dfb2f10e08ce5ddc3d60bf9b221b3","sigS":"0x1bdd9f4ba9afd5466b59010746caf55dd396769a1c8a8c001e3ee693276af1d3"}
 
   // validate all input
   new Array(sig1, sig2)
-    .forEach((sig, index) => console.assert(sig.sigV && sig.sigR && sig.sigS, index +": missing V, R or S", sig))
+    .forEach((sig, index) => ok(sig.sigV && sig.sigR && sig.sigS, index +": missing V, R or S"))
 
   multiSigCall(destMethod, sig1, sig2, destAddress, multisigAddress, from)
 }
@@ -134,11 +150,11 @@ async function _sign () {
   const destMethod = argv.m || argv.method
   const destAddress = argv.d || argv.dest
 
-  console.assert(seedPhrase, "need seed phrase --seed -s")
-  console.assert(multisigAddress, "missing --multisig -u")
-  console.assert(!!password || password === '', "need password")
-  console.assert(destMethod, "missing dest. method --method -m")
-  console.assert(destAddress, "missing dest. address --dest -d")
+  ok(seedPhrase, "need seed phrase --seed -s")
+  ok(multisigAddress, "missing --multisig -u")
+  ok(!!password || password === '', "need password")
+  ok(destMethod, "missing dest. method --method -m")
+  ok(destAddress, "missing dest. address --dest -d")
 
   const sig = await sign(destMethod, destAddress, multisigAddress, seedPhrase, password)
   console.log('Signature')
@@ -166,12 +182,12 @@ async function _add () {
   const from:string = argv.f || argv.from || await getAccount()
 
   const networkId = argv.networkId || '1337'
-  console.assert(networkId)
-  console.assert(subcontractAddress, "need sub contract address; --subcontract -s")
-  console.assert(targetAddress, "requires address; --address -a")
-  console.assert(from, "requires from; --from -f")
+  ok(networkId)
+  ok(subcontractAddress, "need sub contract address; --subcontract -s")
+  ok(targetAddress, "requires address; --address -a")
+  ok(from, "requires from; --from -f")
 
-  await add(targetAddress, subcontractAddress, from)
+  await add(targetAddress, subcontractAddress, from, !!argv.test)
 }
 
 async function _info () {
@@ -183,7 +199,7 @@ async function _info () {
 
   const networkId = argv.networkId || '1337'
   const contractAddress:string = argv._[1]
-  console.assert(contractAddress, "please provide an address")
+  ok(contractAddress, "please provide an address")
   await info(contractAddress, networkId)
 }
 
@@ -221,7 +237,7 @@ async function _list() {
 }
 
 async function _create() {
-  if (subcommandNoArgs(argv)) {
+  async function displayHelp() {
 
     console.log("USAGE")
     console.log(`  node.cli create --from 0x123 --message "a test contract" <contract name> <constructor arguments>`)
@@ -242,19 +258,53 @@ async function _create() {
 
     console.log('')
     console.log(`SEE MORE about the available templates using: node cli.js ${Cmd[Cmd.template]}`)
+  }
+
+  if (subcommandNoArgs(argv)) {
+    return displayHelp()
+  }
+
+  const tpl = argv._[1]
+  ok(tpl, "Need a template name")
+  const constructorArgs:any[] = argv._.slice(2) || []
+
+  if (tpl && Object.keys(argv).length === 1 && Object.keys(argv._).length === 2) {
+    const allArtifacts = await getContractArtifacts()
+
+    const cTpl = allArtifacts.find(cTpl => cTpl.contractName === tpl)
+    if (!cTpl) {
+      return displayHelp()
+    }
+
+    console.log(`${tpl} need the following arguments: `)
+
+    console.log(`  ` +
+      (Array.isArray(cTpl.abi) ? cTpl.abi : [])
+        .filter(method => method.type === "constructor")
+        .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
+          .map(input => input.type + " " + input.name)
+          .join(', ')
+        )
+    )
+    console.log(`Deploy ${cTpl.contractName} like so:`)
+    console.log(`  node cli.js create ${cTpl.contractName} ${
+      (Array.isArray(cTpl.abi) ? cTpl.abi : [])
+        .filter(method => method.type === "constructor")
+        .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
+          .map(input => `<${input.type}>`)
+          .join(' ')
+        )
+      }`)
     return
   }
 
   const msg = argv.m || argv.message || argv.msg
   const from = argv.f || argv.from || await getAccount()
   const ownerIndex = argv.i || argv.ownerIndex || 0
-  console.assert(msg, `Please leave a note for the contract deployment using --message, -m`)
-  console.assert(from, "requires from; --from -f")
-  console.assert(typeof ownerIndex === 'number', "missing owner index")
+  ok(msg, `Please leave a note for the contract deployment using --message, -m`)
+  ok(from, "requires from; --from -f")
+  ok(typeof ownerIndex === 'number', "missing owner index")
 
-  const tpl = argv._[1]
-  console.assert(tpl, "Need a template name")
-  const constructorArgs:any[] = argv._.slice(2) || []
 
   if (argv.json) {
     constructorArgs.forEach(((value, index, array) => {
@@ -264,7 +314,7 @@ async function _create() {
 
   const multiSigOwners:undefined|string[] = argv.owners
   let multiSigContractDeployed
-  console.assert(multiSigOwners === undefined || (Array.isArray(multiSigOwners) && multiSigOwners.length > 1), "specifying multisig with --owners requires at least 2 owners")
+  ok(multiSigOwners === undefined || (Array.isArray(multiSigOwners) && multiSigOwners.length > 1), "specifying multisig with --owners requires at least 2 owners")
   if (Array.isArray(multiSigOwners)) {
     console.log("Deploying multisig contract for "+multiSigOwners.length + " owners ...")
     multiSigOwners.sort() // important! see SimpleMultiSig.sol
@@ -305,15 +355,44 @@ async function _template () {
         .join(', ')
       )
     )
-    console.log(`    create ${tpl.contractName} ${
+    console.log(grey(`    node cli.js create ${tpl.contractName} ${
       (Array.isArray(tpl.abi) ? tpl.abi : [])
         .filter(method => method.type === "constructor")
         .map(theConstructor => (Array.isArray(theConstructor.inputs) ? theConstructor.inputs : [])
           .map(input => `<${input.type}>`)
           .join(' ')
         )
-      }`)
+      }`))
   })
+}
+
+async function _fund () {
+  if (subcommandNoArgs(argv)) {
+    console.log("USAGE ")
+    console.log("  fund <address> <amount>")
+    console.log("")
+    return
+  }
+
+  const address = argv._[1]
+  const amount = argv._[2]
+
+  ok(amount, 'missing amount (ether)')
+  ok(address, 'missing address')
+  ok(address.substr(0,2 ) === '0x', 'something is off with address')
+
+  await fund(address, amount)
+  console.log("Transaction sent! Be sure to check for confirmations.")
+}
+
+async function _step() {
+  const address = argv.address || argv.a
+  ok(address, 'missing address')
+  const from = argv.f || argv.from || await getAccount()
+  ok(from, "missing form")
+  const name = argv.c || argv.contract || argv._[1]
+  const next:string = (argv.n || argv.number || argv._[2]).toString()
+  await step(name, next, address, from)
 }
 
 function subcommandNoArgs(argv:ParsedArgs):boolean {
@@ -326,6 +405,8 @@ interface Handler {
   () : Promise<void>
 }
 const handlers = new Map<Cmd, Handler>()
+
+handlers.set(Cmd.step, _step)
 
 handlers.set(Cmd.info, _info)
 
@@ -343,6 +424,7 @@ handlers.set(Cmd.list, _list)
 handlers.set(Cmd.ls, handlers.get(Cmd.list) as Handler)
 
 handlers.set(Cmd.create, _create)
+handlers.set(Cmd.fund, _fund)
 
 handlers.set(Cmd.template, _template)
 handlers.set(Cmd.tpl, handlers.get(Cmd.template) as Handler)
@@ -350,6 +432,6 @@ handlers.set(Cmd.tpl, handlers.get(Cmd.template) as Handler)
 handlers.set(Cmd.mk, handlers.get(Cmd.create) as Handler)
 
 const handler = handlers.get(subcommand as any) || handlers.get(Cmd.help) as Handler
-console.assert(handler, "should have found handler")
+ok(handler, "should have found handler")
 handler()
   .catch(err => console.error(red(err.toString())))

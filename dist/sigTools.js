@@ -5,9 +5,10 @@ const solsha3 = require('solidity-sha3').default;
 const leftPad = require('left-pad');
 const bignumber_js_1 = require("bignumber.js");
 const lightwallet = require("eth-lightwallet");
+const assert_1 = require("assert");
 const Web3 = require('web3');
 const txutils = lightwallet.txutils; // type washing
-console.assert(txutils, 'lightwallet.txutils should be a thing');
+assert_1.ok(txutils, 'lightwallet.txutils should be a thing');
 function retrieveKeystore(seedPhrase, password = '') {
     return new Promise(resolve => {
         eth_lightwallet_1.keystore.createVault({
@@ -26,8 +27,8 @@ exports.retrieveKeystore = retrieveKeystore;
 function createSig(ks, signingAddr, keyFromPw, multisigContractAddr, nonce, destinationMethod, destinationAddr, destinationValue = 0) {
     const nonceBn = new bignumber_js_1.BigNumber(nonce, 10); // typeguard
     const valueBn = new bignumber_js_1.BigNumber(destinationValue, 10); // typeguard
-    console.assert(multisigContractAddr.substr(0, 2) === "0x", "multisigAddr should be in hex format", multisigContractAddr);
-    console.assert(destinationAddr.substr(0, 2) === "0x", "destinationAddr should be in hex format", destinationAddr);
+    assert_1.ok(multisigContractAddr.substr(0, 2) === "0x", "multisigAddr should be in hex format: " + multisigContractAddr);
+    assert_1.ok(destinationAddr.substr(0, 2) === "0x", "destinationAddr should be in hex format: " + destinationAddr);
     const data = txutils._encodeFunctionTxData(destinationMethod, [], []); // sending data doesn't work https://github.com/ethereum/solidity/issues/2884
     let input = '0x19' + '00'
         + multisigContractAddr.slice(2)
@@ -47,7 +48,7 @@ exports.createSig = createSig;
 function multiSigCall(method, sig1, sig2, destAddress, multisigAddress, from) {
     const sigsOrdered = [sig1, sig2]; // .sort() // should have been sorted based on sender address
     // validate all input
-    sigsOrdered.forEach(sig1 => console.assert(sig1.sigV && sig1.sigR && sig1.sigS, "missing V, R or S", sig1));
+    sigsOrdered.forEach(sig1 => assert_1.ok(sig1.sigV && sig1.sigR && sig1.sigS, "missing V, R or S"));
     const sigs = {
         sigV: sigsOrdered.map(sig => sig.sigV),
         sigR: sigsOrdered.map(sig => sig.sigR),
