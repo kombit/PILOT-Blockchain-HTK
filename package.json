@@ -34,6 +34,7 @@
     "test-repo": "npm run clear && npm i && npm run build && npm test",
     "test": "cd ethereum; truffle test",
     "cli": "node node_modules/typescript/bin/tsc --project ./src -p ./src/tsconfig.json",
+    "publish": "npm run cli && git add dist; git commit -m build; npm run contracts && git add ethereum; git commit -m build",
     "contracts": "cd ethereum; rm -r build; truffle compile && npm run type-contracts && npm run compile-tests",
     "ganache": "node node_modules/ganache-cli/build/cli.node.js --port 7545 --networkId 1337 --defaultBalanceEther 1000000",
     "type-contracts": "cd ethereum; node ../node_modules/typechain/dist/cli/cli.js --target=truffle --outDir=build/contract-interfaces \"./build/**/*.json\"",

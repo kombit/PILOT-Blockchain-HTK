@@ -10,7 +10,7 @@ contract K2 is ICommonState, IHasSubcontracts, CommonStateNames, Owned {
 
     uint public state = DRAFT; // defaults to draft
 
-    uint[] payments;
+    uint[] public payments;
 
     // the address where the price payments goes to
     address public serviceProvider;
