@@ -6,7 +6,7 @@ import { addDeployedContract, getContractArtifacts, getDeployedContracts2, saved
 import { create } from './methods/create.js'
 import { info, } from './methods/info.js'
 import { ParsedArgs } from 'minimist'
-import { status } from './methods/status.js'
+import { summary } from './methods/summary.js'
 import { sign } from './methods/sign.js'
 import { add } from './methods/add.js'
 import { getAccount } from './web3.js'
@@ -203,7 +203,7 @@ async function _info () {
   await info(contractAddress, networkId)
 }
 
-async function _status() {
+async function _summary() {
   if (argv.h) {
     console.log('USAGE')
     console.log('  node cli.js er der styr på det?')
@@ -212,7 +212,7 @@ async function _status() {
 
   // const networkId = argv.networkId || '1337'
   // await info(contractAddress, networkId)
-  await status()
+  await summary()
 }
 
 async function _list() {
@@ -410,7 +410,7 @@ handlers.set(Cmd.step, _step)
 
 handlers.set(Cmd.info, _info)
 
-handlers.set(Cmd.status, _status)
+handlers.set(Cmd.status, _summary)
 handlers.set(Cmd.er, handlers.get(Cmd.status) as Handler)
 
 handlers.set(Cmd.add, _add)
