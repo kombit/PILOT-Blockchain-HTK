@@ -7,7 +7,7 @@ const eth_lightwallet_1 = require("eth-lightwallet");
 const files_js_1 = require("./files.js");
 const create_js_1 = require("./methods/create.js");
 const info_js_1 = require("./methods/info.js");
-const status_js_1 = require("./methods/status.js");
+const summary_js_1 = require("./methods/summary.js");
 const sign_js_1 = require("./methods/sign.js");
 const add_js_1 = require("./methods/add.js");
 const web3_js_1 = require("./web3.js");
@@ -181,7 +181,7 @@ async function _info() {
     assert_1.ok(contractAddress, "please provide an address");
     await info_js_1.info(contractAddress, networkId);
 }
-async function _status() {
+async function _summary() {
     if (argv.h) {
         console.log('USAGE');
         console.log('  node cli.js er der styr på det?');
@@ -189,7 +189,7 @@ async function _status() {
     }
     // const networkId = argv.networkId || '1337'
     // await info(contractAddress, networkId)
-    await status_js_1.status();
+    await summary_js_1.summary();
 }
 async function _list() {
     if (argv.h) {
@@ -339,7 +339,7 @@ function subcommandNoArgs(argv) {
 const handlers = new Map();
 handlers.set(Cmd.step, _step);
 handlers.set(Cmd.info, _info);
-handlers.set(Cmd.status, _status);
+handlers.set(Cmd.status, _summary);
 handlers.set(Cmd.er, handlers.get(Cmd.status));
 handlers.set(Cmd.add, _add);
 handlers.set(Cmd.send, _tx);
