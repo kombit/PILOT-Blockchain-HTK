@@ -1,7 +1,7 @@
 import { join } from 'path'
 import chalk from 'chalk'
 import { ok } from 'assert'
-const Web3 = require('web3')
+import { getWeb3 } from '../web3.js'
 const {greenBright} = chalk
 
 export async function create (template:string, from:string, constructorArguments:any[] = []) {
@@ -10,7 +10,7 @@ export async function create (template:string, from:string, constructorArguments
     ok(val !== null, "can't pass null to constructor")
   })
 
-  const web3 = new Web3('http://localhost:7545')
+  const web3 = getWeb3()
 
   const artifact = require(join(__dirname,`../../ethereum/build/contracts/${template}.json`))
 

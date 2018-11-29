@@ -1,7 +1,7 @@
 import { shorten } from '../visual-helpers.js'
 import chalk from 'chalk'
 import { join } from 'path'
-const Web3 = require('web3')
+import { getWeb3 } from '../web3.js'
 
 const {yellow, red, blue, greenBright} = chalk
 
@@ -9,7 +9,7 @@ export async function info (contractAddress:string, networkId:string) {
   console.log(`CONTRACT STATE INFORMATION`)
   console.log('')
 
-  const web3 = new Web3('http://localhost:7545')
+  const web3 = getWeb3()
   await recursiveWalk(contractAddress, web3,`Contract`)
     .catch(err => console.error(red(err)))
 }

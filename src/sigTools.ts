@@ -4,8 +4,7 @@ const leftPad = require('left-pad')
 import {BigNumber} from 'bignumber.js'
 import * as lightwallet from 'eth-lightwallet'
 import { ok } from 'assert'
-
-const Web3 = require('web3')
+import { getWeb3 } from './web3.js'
 
 const txutils = (lightwallet as any).txutils // type washing
 ok(txutils, 'lightwallet.txutils should be a thing');
@@ -67,7 +66,7 @@ export function multiSigCall (method:string, sig1:ECSignature, sig2:ECSignature,
     sigS: sigsOrdered.map(sig => sig.sigS),
   }
 
-  const web3 = new Web3('http://localhost:7545')
+  const web3 = getWeb3()
   const multisigInstance:any = new web3.eth.Contract(require('../ethereum/build/contracts/SimpleMultiSig').abi,
     multisigAddress,
     {
