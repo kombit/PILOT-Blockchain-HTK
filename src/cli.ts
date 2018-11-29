@@ -39,8 +39,8 @@ enum Cmd {
   help,
   step,
   fund,
-  info,
-  status, er,
+  info, status,
+  summary,
   add,
   list, ls,
   register,
@@ -64,7 +64,7 @@ async function _help() {
       Cmd[Cmd.help], // this is the help menu itself
       Cmd[Cmd.step], // just a debug tool
       Cmd[Cmd.add], // deprecated tool!
-      Cmd[Cmd.er], Cmd[Cmd.ls], Cmd[Cmd.tpl], Cmd[Cmd.mk], // aliases
+      Cmd[Cmd.ls], Cmd[Cmd.tpl], Cmd[Cmd.mk], // aliases
     ].includes(value) === false)
     .sort()
     .join(', ')
@@ -409,9 +409,9 @@ const handlers = new Map<Cmd, Handler>()
 handlers.set(Cmd.step, _step)
 
 handlers.set(Cmd.info, _info)
+handlers.set(Cmd.status, handlers.get(Cmd.info) as Handler)
 
-handlers.set(Cmd.status, _summary)
-handlers.set(Cmd.er, handlers.get(Cmd.status) as Handler)
+handlers.set(Cmd.summary, _summary)
 
 handlers.set(Cmd.add, _add)
 handlers.set(Cmd.send, _tx)
