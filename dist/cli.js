@@ -39,7 +39,7 @@ var Cmd;
     Cmd[Cmd["fund"] = 2] = "fund";
     Cmd[Cmd["info"] = 3] = "info";
     Cmd[Cmd["status"] = 4] = "status";
-    Cmd[Cmd["er"] = 5] = "er";
+    Cmd[Cmd["summary"] = 5] = "summary";
     Cmd[Cmd["add"] = 6] = "add";
     Cmd[Cmd["list"] = 7] = "list";
     Cmd[Cmd["ls"] = 8] = "ls";
@@ -64,7 +64,7 @@ async function _help() {
         Cmd[Cmd.help],
         Cmd[Cmd.step],
         Cmd[Cmd.add],
-        Cmd[Cmd.er], Cmd[Cmd.ls], Cmd[Cmd.tpl], Cmd[Cmd.mk],
+        Cmd[Cmd.ls], Cmd[Cmd.tpl], Cmd[Cmd.mk],
     ].includes(value) === false)
         .sort()
         .join(', '));
@@ -339,8 +339,8 @@ function subcommandNoArgs(argv) {
 const handlers = new Map();
 handlers.set(Cmd.step, _step);
 handlers.set(Cmd.info, _info);
-handlers.set(Cmd.status, _summary);
-handlers.set(Cmd.er, handlers.get(Cmd.status));
+handlers.set(Cmd.status, handlers.get(Cmd.info));
+handlers.set(Cmd.summary, _summary);
 handlers.set(Cmd.add, _add);
 handlers.set(Cmd.send, _tx);
 handlers.set(Cmd.help, _help);

@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const visual_helpers_js_1 = require("../visual-helpers.js");
 const chalk_1 = require("chalk");
 const path_1 = require("path");
-const Web3 = require('web3');
+const web3_js_1 = require("../web3.js");
 const { yellow, red, blue, greenBright } = chalk_1.default;
 async function info(contractAddress, networkId) {
     console.log(`CONTRACT STATE INFORMATION`);
     console.log('');
-    const web3 = new Web3('http://localhost:7545');
+    const web3 = web3_js_1.getWeb3();
     await recursiveWalk(contractAddress, web3, `Contract`)
         .catch(err => console.error(red(err)));
 }

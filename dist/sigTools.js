@@ -6,7 +6,7 @@ const leftPad = require('left-pad');
 const bignumber_js_1 = require("bignumber.js");
 const lightwallet = require("eth-lightwallet");
 const assert_1 = require("assert");
-const Web3 = require('web3');
+const web3_js_1 = require("./web3.js");
 const txutils = lightwallet.txutils; // type washing
 assert_1.ok(txutils, 'lightwallet.txutils should be a thing');
 function retrieveKeystore(seedPhrase, password = '') {
@@ -54,7 +54,7 @@ function multiSigCall(method, sig1, sig2, destAddress, multisigAddress, from) {
         sigR: sigsOrdered.map(sig => sig.sigR),
         sigS: sigsOrdered.map(sig => sig.sigS),
     };
-    const web3 = new Web3('http://localhost:7545');
+    const web3 = web3_js_1.getWeb3();
     const multisigInstance = new web3.eth.Contract(require('../ethereum/build/contracts/SimpleMultiSig').abi, multisigAddress, {
         from: from,
     });
