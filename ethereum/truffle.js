@@ -13,7 +13,14 @@ module.exports = {
       // 0x3238b049ed6c894225e97616a46e355ca10973a2
       provider: () => new HDWalletProvider("off liquid broom dad kiss silver junior drift scorpion crawl dad demise",
         "https://ropsten.infura.io/v3/" + projectId),
-      network_id: '4'
+      network_id: "3"
     },
-  }
+
+    rinkeby: {
+      //
+      provider: () => new HDWalletProvider("..",
+        "https://rinkeby.infura.io/v3/" + projectId),
+      network_id: "4"
+    },
+  },
 }
