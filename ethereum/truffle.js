@@ -1,4 +1,6 @@
-// const HDWalletProvider = require("truffle-hdwallet-provider")
+const HDWalletProvider = require("truffle-hdwallet-provider")
+
+const projectId = '1e207f767007497db243a0c87df0f15a'
 
 module.exports = {
   networks: {
@@ -7,9 +9,11 @@ module.exports = {
       port: 7545,
       network_id: "1337" // Match any network id
     },
-    // rinkfura: {
-    //   provider: new HDWalletProvider("candy maple cake sugar pudding cream honey rich smooth crumble sweet treat", "https://rinkeby.infura.io/v3/9d9b175c53064013bc50d8d41faa429a"),
-    //   network_id: 4
-    // }
+    ropsten: {
+      // 0x3238b049ed6c894225e97616a46e355ca10973a2
+      provider: () => new HDWalletProvider("off liquid broom dad kiss silver junior drift scorpion crawl dad demise",
+        "https://ropsten.infura.io/v3/" + projectId),
+      network_id: '4'
+    },
   }
 }
