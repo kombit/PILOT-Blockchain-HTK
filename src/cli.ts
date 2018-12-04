@@ -300,10 +300,10 @@ async function _create() {
     return
   }
 
-  const msg = argv.m || argv.message || argv.msg
+  const msg = argv.m || argv.message || ""
   const from = argv.f || argv.from || await getAccount()
   const ownerIndex = argv.i || argv.ownerIndex || 0
-  ok(msg, `Please leave a note for the contract deployment using --message, -m`)
+  ok(typeof msg === 'string', `Please leave a note for the contract deployment using --message, -m`)
   ok(from, "requires from; --from -f")
   ok(typeof ownerIndex === 'number', "missing owner index")
 
