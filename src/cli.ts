@@ -200,7 +200,7 @@ async function _info () {
   }
 
   const networkId = argv.networkId || '1337'
-  const contractAddress:string = argv._[1]
+  const contractAddress:string = argv.address || argv.a || argv._[1]
   ok(contractAddress, "please provide an address")
   await info(contractAddress, networkId)
 }
