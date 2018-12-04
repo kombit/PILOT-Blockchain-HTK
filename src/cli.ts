@@ -27,6 +27,7 @@ const argv = minimist(process.argv.slice(2), {
     'a', 'address',
     'm', 'multisig',
     'n', 'number',
+    'amount',
     'd', 'dest',
     'u',
     'sp', 's',
@@ -375,8 +376,8 @@ async function _fund () {
     return
   }
 
-  const address = argv.address || argv.a || argv._[1]
-  const amount = argv.amount || argv.m || argv._[2]
+  const address = argv.address || argv.a
+  const amount = argv.amount || argv.m
 
   ok(amount, 'missing amount (ether); --amount, -m')
   ok(address, 'missing address; --address, -a')
