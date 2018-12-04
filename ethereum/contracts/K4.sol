@@ -47,7 +47,7 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
         require(amountForMonth <= this.balance, "The contract itself is out of money");
 
         // our subcontract must not be terminated
-        require(subcontract.getState() == ACTIVE);
+        require(subcontract.getState() == ACTIVE, "K4's subcontract should have been ACTIVE");
 
         serviceProvider.transfer(amountForMonth);
         payments[_month] = 0;
