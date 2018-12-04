@@ -26,6 +26,7 @@ const argv = minimist(process.argv.slice(2), {
     '_',
     'a', 'address',
     'm', 'multisig',
+    'n', 'number',
     'd', 'dest',
     'u',
     'sp', 's',
@@ -369,16 +370,16 @@ async function _template () {
 async function _fund () {
   if (subcommandNoArgs(argv)) {
     console.log("USAGE ")
-    console.log("  fund <address> <amount>")
+    console.log("  fund --address <address> --amount <amount>")
     console.log("")
     return
   }
 
-  const address = argv._[1]
-  const amount = argv._[2]
+  const address = argv.address || argv.a || argv._[1]
+  const amount = argv.amount || argv.m || argv._[2]
 
-  ok(amount, 'missing amount (ether)')
-  ok(address, 'missing address')
+  ok(amount, 'missing amount (ether); --amount, -m')
+  ok(address, 'missing address; --address, -a')
   ok(address.substr(0,2 ) === '0x', 'something is off with address')
 
   await fund(address, amount)
@@ -386,13 +387,22 @@ async function _fund () {
 }
 
 async function _step() {
-  const address = argv.address || argv.a
-  ok(address, 'missing address')
-  const from = argv.f || argv.from || await getAccount()
-  ok(from, "missing form")
-  const name = argv.c || argv.contract || argv._[1]
-  const next:string = (argv.n || argv.number || argv._[2]).toString()
-  await step(name, next, address, from)
+  if (subcommandNoArgs(argv)) {
+    console.log('USAGE')
+    console.log('  node cli.js step --address <contract address> --number <step number>')
+    console.log('')
+    return
+  }
+
+  const address:string = argv.address || argv.a
+  const number:string = (argv.n || argv.number) + ''
+  const from:string = argv.f || argv.from || await getAccount()
+
+  ok(address, 'missing address; --address, -a')
+  ok (number, "missing step number; --number, -n")
+  ok(from, "missing from; --from, -f")
+
+  await step(number, address, from)
 }
 
 function subcommandNoArgs(argv:ParsedArgs):boolean {
