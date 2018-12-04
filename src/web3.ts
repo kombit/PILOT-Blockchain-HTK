@@ -6,10 +6,9 @@ const Web3 = require('web3')
 
 const argv = minimist(process.argv.slice(2), {
   default: {
-    'network': 'development',
   },
 })
-const network = argv.network // defaults to 'development'
+const network = argv.network || process.env.NETWORK || 'development' // defaults to 'development'
 
 const truffleConfig = require( join(__dirname, '../ethereum/truffle.js' ))
 ok(truffleConfig.networks[network], `missing configuration for '${network}'`)
