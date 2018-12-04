@@ -53,6 +53,9 @@ $ node cli.js activate --address 0xFfbca8BaB46Db0DAb7F30ef529152acf80b0dd29
 -- og herefter kan vi betale med K4
 
 $ node cli.js step --number 0 --address 0x4be1C7E9C2fd1571BA84fe7FfdFc70cAEe8b5e84
+$ node cli.js step --number 1 --address 0x4be1C7E9C2fd1571BA84fe7FfdFc70cAEe8b5e84
+$ node cli.js step --number 2 --address 0x4be1C7E9C2fd1571BA84fe7FfdFc70cAEe8b5e84
+...
 
 -- indtil alle måneder er betalt..
 
