@@ -30,6 +30,18 @@ else {
 
 ok(provider, "missing some setup for provider")
 
+export function stop() {
+  try {
+    if (provider.engine) {
+      // console.log("Attempting to stop provider engine gracefully")
+      provider.engine.stop()
+    }
+  }
+  catch (e) {
+    console.log(e.message)
+  }
+}
+
 export function getWeb3 () {
   const web3 = new Web3(provider)
   return web3

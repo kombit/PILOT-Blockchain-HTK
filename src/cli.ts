@@ -9,7 +9,7 @@ import { ParsedArgs } from 'minimist'
 import { summary } from './methods/summary.js'
 import { sign } from './methods/sign.js'
 import { add } from './methods/add.js'
-import { getAccount } from './web3.js'
+import { getAccount, stop } from './web3.js'
 import { fund } from './methods/fund.js'
 import { step } from './methods/step.js'
 import { ok} from 'assert'
@@ -434,4 +434,7 @@ handlers.set(Cmd.mk, handlers.get(Cmd.create) as Handler)
 const handler = handlers.get(subcommand as any) || handlers.get(Cmd.help) as Handler
 ok(handler, "should have found handler")
 handler()
+  .then(() => {
+    stop()
+  })
   .catch(err => console.error(red(err.toString())))
