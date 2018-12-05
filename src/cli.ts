@@ -9,11 +9,12 @@ import { ParsedArgs } from 'minimist'
 import { summary } from './methods/summary.js'
 import { sign } from './methods/sign.js'
 import { add } from './methods/add.js'
-import { getAccount, stop } from './web3.js'
+import { getAccount, getWeb3, stop } from './web3.js'
 import { fund } from './methods/fund.js'
 import { step } from './methods/step.js'
 import { ok} from 'assert'
 import { activate } from './methods/activate.js'
+import { setStatus } from './methods/setStatus.js'
 
 const {red, grey} = chalk
 
@@ -27,7 +28,7 @@ const argv = minimist(process.argv.slice(2), {
     '_',
     'a', 'address',
     'm', 'multisig',
-    'n', 'number',
+    'n', 'number', 'month',
     'amount',
     'd', 'dest',
     'u',
@@ -53,6 +54,7 @@ enum Cmd {
   template, templates, tpl,
   sign,
   send,
+  "set-status",
 }
 
 const subcommand:Cmd|undefined = Cmd[argv._[0]]
@@ -430,6 +432,32 @@ async function _activate() {
   await activate(address, from)
 }
 
+async function _setStatus() {
+  if (subcommandNoArgs(argv)) {
+    console.log('USAGE')
+    console.log('  node cli.js set-status --status 0x --number 0 --address <contract address>')
+    console.log('')
+    return
+  }
+
+  const address:string = argv.address || argv.a
+  const month:string = argv.month || argv.n || argv.number
+  const status:string = argv.status || argv.s
+  const from:string = argv.f || argv.from || await getAccount()
+
+  const web3 = getWeb3()
+  ok(status, 'missing status; --status, -s')
+  ok(web3.utils.isHex(status), 'status must be hex notation')
+  const hexStatus:string = '0x' + status.replace('0x', '')
+  ok(web3.utils.isHexStrict(hexStatus), 'status must be hex notation - prefixed with 0x')
+
+  ok(address, 'missing address; --address, -a')
+  ok(from, "missing from; --from, -f")
+  ok(month, "missing month; --month")
+
+  await setStatus(month, hexStatus, address, from)
+}
+
 function subcommandNoArgs(argv:ParsedArgs):boolean {
   return (argv.h || argv._.length === 1 && Object.values(argv).length === 1)
 }
@@ -466,6 +494,8 @@ handlers.set(Cmd.fund, _fund)
 handlers.set(Cmd.template, _template)
 handlers.set(Cmd.templates, _template)
 handlers.set(Cmd.tpl, _template)
+
+handlers.set(Cmd['set-status'], _setStatus)
 
 handlers.set(Cmd.mk, handlers.get(Cmd.create) as Handler)
 
