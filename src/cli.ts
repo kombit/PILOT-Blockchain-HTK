@@ -13,6 +13,7 @@ import { getAccount, stop } from './web3.js'
 import { fund } from './methods/fund.js'
 import { step } from './methods/step.js'
 import { ok} from 'assert'
+import { activate } from './methods/activate.js'
 
 const {red, grey} = chalk
 
@@ -41,6 +42,7 @@ const argv = minimist(process.argv.slice(2), {
 enum Cmd {
   help,
   step,
+  activate,
   fund,
   info, status,
   summary,
@@ -64,6 +66,7 @@ async function _help() {
     .filter(v => /^\d+$/.test(v) === false)
     .filter(value => [
       // blacklisted subcommands:
+      Cmd[Cmd.activate], // this is the help menu itself
       Cmd[Cmd.help], // this is the help menu itself
       Cmd[Cmd.step], // just a debug tool
       Cmd[Cmd.add], // deprecated tool!
@@ -407,6 +410,23 @@ async function _step() {
   await step(number, address, from)
 }
 
+async function _activate() {
+  if (subcommandNoArgs(argv)) {
+    console.log('USAGE')
+    console.log('  node cli.js activate --address <contract address>')
+    console.log('')
+    return
+  }
+
+  const address:string = argv.address || argv.a || argv._[1]
+  const from:string = argv.f || argv.from || await getAccount()
+
+  ok(address, 'missing address; --address, -a')
+  ok(from, "missing from; --from, -f")
+
+  await activate(address, from)
+}
+
 function subcommandNoArgs(argv:ParsedArgs):boolean {
   return (argv.h || argv._.length === 1 && Object.values(argv).length === 1)
 }
@@ -419,6 +439,8 @@ interface Handler {
 const handlers = new Map<Cmd, Handler>()
 
 handlers.set(Cmd.step, _step)
+
+handlers.set(Cmd.activate, _activate)
 
 handlers.set(Cmd.info, _info)
 handlers.set(Cmd.status, handlers.get(Cmd.info) as Handler)
@@ -446,7 +468,7 @@ handlers.set(Cmd.mk, handlers.get(Cmd.create) as Handler)
 const handler = handlers.get(subcommand as any) || handlers.get(Cmd.help) as Handler
 ok(handler, "should have found handler")
 handler()
-  .then(() => {
+  .finally(() => {
     stop()
   })
   .catch(err => console.error(red(err.toString())))
