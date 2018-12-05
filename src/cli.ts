@@ -43,6 +43,7 @@ const argv = minimist(process.argv.slice(2), {
 enum Cmd {
   help,
   step,
+  pay,
   activate,
   fund,
   info, status,
@@ -470,6 +471,7 @@ interface Handler {
 const handlers = new Map<Cmd, Handler>()
 
 handlers.set(Cmd.step, _step)
+handlers.set(Cmd.pay, _step)
 
 handlers.set(Cmd.activate, _activate)
 
