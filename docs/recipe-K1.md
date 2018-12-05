@@ -107,8 +107,29 @@ Contract (at 0xCA..5f)
 $ node cli.js set-status --address 0xCA1C7caC964471A87e621A9297598c1ce87a785f -m 882c45af101a865c8732fe6b00db47a54cd61a7a23250f7c0021595019be8068
 
 
--- nu kan vi betale 3. måned
+-- nu kan vi betale månederne ud, indtil der ikke er flere betalinger...
 
 $ node cli.js step --number 2 --address 0xCA1C7caC964471A87e621A9297598c1ce87a785f
 
--- indtil der ikke er flere betalinger
+-- hvad siger info når der ikke er flere betalinger?
+
+$ node cli.js info 0x6796f54C9192bD7f90e24d9C6EfDb96e93dDFc0b
+CONTRACT STATE INFORMATION
+
+Contract (at 0x67..0b)
+  State is expired
+  Has 0 subcontracts
+
+  Interval payments (12 total)
+    Paid (0 pending)
+    Paid (0 pending)
+    Paid (0 pending)
+    Paid (0 pending)
+    Paid (0 pending)
+    Paid (0 pending)
+    Paid (0 pending)
+    Paid (0 pending)
+    Paid (0 pending)
+    Paid (0 pending)
+    Paid (0 pending)
+    Paid (0 pending)
