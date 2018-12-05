@@ -44,7 +44,6 @@ contract K1 is ICommonState, IHasSubcontracts, CommonStateNames, KCommon, Owned 
     // state
 
     function activate() external ownerOnly {
-        require(state == DRAFT, "current state was not DRAFT");
         state = ACTIVE;
     }
 
@@ -57,7 +56,10 @@ contract K1 is ICommonState, IHasSubcontracts, CommonStateNames, KCommon, Owned 
         uint rest = (_month+1) % 3;
         if (rest == 0) {
             bytes32 b = status[_month];
-            require(b != 0x0, "status was not set");
+            if (b == 0x0) {
+                state = PAUSE;
+                return;
+            }
         }
 
         serviceProvider.transfer(amountForMonth);

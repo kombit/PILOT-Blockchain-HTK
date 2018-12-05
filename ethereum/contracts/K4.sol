@@ -36,7 +36,6 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
 
     // state
     function activate() external ownerOnly {
-        require(state == DRAFT, "current state was not DRAFT");
         state = ACTIVE;
     }
 
@@ -64,7 +63,6 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
 
     // IAccessSubcontracts
     function add(ICommonState _subcontract) external { // serviceProviderOnly ?
-        require(state != TERMINATED, "state must not be TERMINATED when adding subcontract");
         numSubcontracts = 1;
         subcontract = ICommonState(_subcontract);
     }

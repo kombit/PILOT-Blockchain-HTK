@@ -37,7 +37,6 @@ contract K3 is ICommonState, IHasSubcontracts, CommonStateNames, KCommon, Owned 
 
     // state
     function activate() external ownerOnly {
-        require(state == DRAFT, "current state was not DRAFT");
         state = ACTIVE;
     }
 
