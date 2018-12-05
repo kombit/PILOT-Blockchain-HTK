@@ -468,7 +468,5 @@ handlers.set(Cmd.mk, handlers.get(Cmd.create) as Handler)
 const handler = handlers.get(subcommand as any) || handlers.get(Cmd.help) as Handler
 ok(handler, "should have found handler")
 handler()
-  .finally(() => {
-    stop()
-  })
   .catch(err => console.error(red(err.toString())))
+  .finally(() => stop())
