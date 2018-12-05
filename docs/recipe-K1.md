@@ -37,7 +37,7 @@ CONTRACTS OVERVIEW
     2018-12-04 ny kontrakt
 	
 	
--- vi starter en truffle console for at aktivere kontrakten uden multisig
+-- vi bruger activate til at aktivere kontrakten, fordi vi har oprettet den uden multi-sig
 
 node cli.js activate 0xCA1C7caC964471A87e621A9297598c1ce87a785f
 
