@@ -50,7 +50,7 @@ enum Cmd {
   list, ls,
   register,
   create, mk,
-  template, tpl,
+  template, templates, tpl,
   sign,
   send,
 }
@@ -66,11 +66,14 @@ async function _help() {
     .filter(v => /^\d+$/.test(v) === false)
     .filter(value => [
       // blacklisted subcommands:
-      Cmd[Cmd.activate], // this is the help menu itself
       Cmd[Cmd.help], // this is the help menu itself
-      Cmd[Cmd.step], // just a debug tool
-      Cmd[Cmd.add], // deprecated tool!
-      Cmd[Cmd.ls], Cmd[Cmd.tpl], Cmd[Cmd.mk], // aliases
+      Cmd[Cmd.activate], // for presentation only
+      Cmd[Cmd.step], // for presentation only
+      // aliases:
+      Cmd[Cmd.mk],
+      Cmd[Cmd.ls],
+      Cmd[Cmd.tpl], Cmd[Cmd.templates],
+      Cmd[Cmd.status],
     ].includes(value) === false)
     .sort()
     .join(', ')
@@ -461,7 +464,8 @@ handlers.set(Cmd.create, _create)
 handlers.set(Cmd.fund, _fund)
 
 handlers.set(Cmd.template, _template)
-handlers.set(Cmd.tpl, handlers.get(Cmd.template) as Handler)
+handlers.set(Cmd.templates, _template)
+handlers.set(Cmd.tpl, _template)
 
 handlers.set(Cmd.mk, handlers.get(Cmd.create) as Handler)
 
