@@ -386,7 +386,7 @@ async function _fund () {
     return
   }
 
-  const address = argv.address || argv.a
+  const address = argv.address || argv.a || argv._[1]
   const amount = argv.amount || argv.m
 
   ok(amount, 'missing amount (ether); --amount, -m')
