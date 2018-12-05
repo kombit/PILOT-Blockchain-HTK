@@ -5,8 +5,9 @@ import "./IHasSubcontracts.sol";
 import "./CommonStateNames.sol";
 import "./ICommonState.sol";
 import "./IAccessSubcontracts.sol";
+import "./KCommon.sol";
 
-contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateNames, Owned {
+contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateNames, KCommon, Owned {
 
     uint public state = DRAFT; // defaults to draft
 
@@ -23,9 +24,9 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
         serviceProvider = _serviceProvider;
         payments = new uint[](3);
 
-        payments[0] = 5000 szabo;  // jan 2018
-        payments[1] = 5000 szabo;  // feb 2018
-        payments[2] = 5000 szabo;  // mar 2018
+        payments[0] = 5000 * KR;  // jan 2018
+        payments[1] = 5000 * KR;  // feb 2018
+        payments[2] = 5000 * KR;  // mar 2018
     }
 
     modifier serviceProviderOnly {

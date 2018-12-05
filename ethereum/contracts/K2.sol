@@ -5,8 +5,9 @@ import "./IHasSubcontracts.sol";
 import "./CommonStateNames.sol";
 import "./ICommonState.sol";
 import "./IAccessSubcontracts.sol";
+import "./KCommon.sol";
 
-contract K2 is ICommonState, IHasSubcontracts, CommonStateNames, Owned {
+contract K2 is ICommonState, IHasSubcontracts, CommonStateNames, KCommon, Owned {
 
     uint public state = DRAFT; // defaults to draft
 
@@ -25,18 +26,18 @@ contract K2 is ICommonState, IHasSubcontracts, CommonStateNames, Owned {
         serviceProvider = _serviceProvider;
         payments = new uint[](12);
 
-        payments[0] =  30000 szabo;  // jan 2018
-        payments[1] =  30000 szabo;  // feb 2018
-        payments[2] =  30000 szabo;  // mar 2018
-        payments[3] =  30000 szabo;  // apr 2018
-        payments[4] =  30000 szabo;  // may 2018
-        payments[5] =  30000 szabo;  // jun 2018
-        payments[6] =  30000 szabo;  // jul 2018
-        payments[7] =  30000 szabo;  // aug 2018
-        payments[8] =  30000 szabo;  // sep 2018
-        payments[9] =  30000 szabo;  // oct 2018
-        payments[10] = 30000 szabo; // nov 2018
-        payments[11] = 30000 szabo; // dec 2018
+        payments[0] =  30000 * KR;  // jan 2018
+        payments[1] =  30000 * KR;  // feb 2018
+        payments[2] =  30000 * KR;  // mar 2018
+        payments[3] =  30000 * KR;  // apr 2018
+        payments[4] =  30000 * KR;  // may 2018
+        payments[5] =  30000 * KR;  // jun 2018
+        payments[6] =  30000 * KR;  // jul 2018
+        payments[7] =  30000 * KR;  // aug 2018
+        payments[8] =  30000 * KR;  // sep 2018
+        payments[9] =  30000 * KR;  // oct 2018
+        payments[10] = 30000 * KR; // nov 2018
+        payments[11] = 30000 * KR; // dec 2018
     }
 
     // state
