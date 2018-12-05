@@ -18,10 +18,12 @@ var StateNames;
     StateNames[StateNames["draft"] = 1] = "draft";
     StateNames[StateNames["active"] = 2] = "active";
     StateNames[StateNames["terminated"] = 3] = "terminated";
+    StateNames[StateNames["expired"] = 4] = "expired";
 })(StateNames || (StateNames = {}));
 const stateColours = new Map();
 stateColours.set(StateNames.draft, yellow);
 stateColours.set(StateNames.active, greenBright);
+stateColours.set(StateNames.expired, blue);
 stateColours.set(StateNames.terminated, blue);
 const colour = (state) => {
     const func = stateColours.get(state);
