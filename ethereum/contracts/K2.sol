@@ -53,6 +53,10 @@ contract K2 is ICommonState, IHasSubcontracts, CommonStateNames, KCommon, Owned 
         require(amountForMonth <= this.balance, "The contract itself is out of money");
         serviceProvider.transfer(amountForMonth);
         payments[_month] = 0;
+
+        if (_month == 11) {
+            state = EXPIRED;
+        }
     }
 
     // the contract can hold ether

@@ -52,6 +52,10 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
 
         serviceProvider.transfer(amountForMonth);
         payments[_month] = 0;
+
+        if (_month == 2) {
+            state = EXPIRED;
+        }
     }
 
     // the contract can hold ether

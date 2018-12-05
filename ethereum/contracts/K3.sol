@@ -48,6 +48,10 @@ contract K3 is ICommonState, IHasSubcontracts, CommonStateNames, KCommon, Owned 
         require(amountForMonth <= this.balance, "The contract itself is out of money");
         serviceProvider.transfer(amountForMonth);
         payments[_month] = 0;
+
+        if (_month == 2) {
+            state = EXPIRED;
+        }
     }
 
 

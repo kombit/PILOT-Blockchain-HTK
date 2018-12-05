@@ -62,6 +62,10 @@ contract K1 is ICommonState, IHasSubcontracts, CommonStateNames, KCommon, Owned 
 
         serviceProvider.transfer(amountForMonth);
         payments[_month] = 0;
+
+        if (_month == 11) {
+            state = EXPIRED;
+        }
     }
 
     function setStatus(uint month, bytes32 _status) external {

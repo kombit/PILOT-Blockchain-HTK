@@ -18,11 +18,13 @@ enum StateNames {
   draft = 1,
   active = 2,
   terminated = 3,
+  expired = 4,
 }
 
 const stateColours = new Map<StateNames, Function>()
 stateColours.set(StateNames.draft, yellow)
 stateColours.set(StateNames.active, greenBright)
+stateColours.set(StateNames.expired, blue)
 stateColours.set(StateNames.terminated, blue)
 
 const colour = (state:number) => {
