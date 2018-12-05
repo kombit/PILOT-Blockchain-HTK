@@ -39,11 +39,7 @@ CONTRACTS OVERVIEW
 	
 -- vi starter en truffle console for at aktivere kontrakten uden multisig
 
-$ truffle console
-truffle(development)>
-
-                      vi kalder activate() fordi vi er ejeren
-truffle(development)> K1.at('0xCA1C7caC964471A87e621A9297598c1ce87a785f').activate()
+node cli.js activate 0xCA1C7caC964471A87e621A9297598c1ce87a785f
 
 
 -- vi tager dens addresse og bruger til 'info' kommandoen
