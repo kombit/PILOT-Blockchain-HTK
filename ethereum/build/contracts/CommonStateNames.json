@@ -18,6 +18,20 @@
     {
       "constant": true,
       "inputs": [],
+      "name": "EXPIRED",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
       "name": "ACTIVE",
       "outputs": [
         {
@@ -44,20 +58,20 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x608060405234801561001057600080fd5b5061010b806100206000396000f3006080604052600436106053576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630762f731146058578063c90bd047146080578063dc04be851460a8575b600080fd5b348015606357600080fd5b50606a60d0565b6040518082815260200191505060405180910390f35b348015608b57600080fd5b50609260d5565b6040518082815260200191505060405180910390f35b34801560b357600080fd5b5060ba60da565b6040518082815260200191505060405180910390f35b600181565b600281565b6003815600a165627a7a72305820e6e00f8ebf43a483af175e099dfdd326b52e1b0b85d14ef9a2014737920db8f00029",
-  "deployedBytecode": "0x6080604052600436106053576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630762f731146058578063c90bd047146080578063dc04be851460a8575b600080fd5b348015606357600080fd5b50606a60d0565b6040518082815260200191505060405180910390f35b348015608b57600080fd5b50609260d5565b6040518082815260200191505060405180910390f35b34801560b357600080fd5b5060ba60da565b6040518082815260200191505060405180910390f35b600181565b600281565b6003815600a165627a7a72305820e6e00f8ebf43a483af175e099dfdd326b52e1b0b85d14ef9a2014737920db8f00029",
-  "sourceMap": "25:143:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;25:143:0;;;;;;;",
-  "deployedSourceMap": "25:143:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;57:30;;8:9:-1;5:2;;;30:1;27;20:12;5:2;57:30:0;;;;;;;;;;;;;;;;;;;;;;;93:31;;8:9:-1;5:2;;;30:1;27;20:12;5:2;93:31:0;;;;;;;;;;;;;;;;;;;;;;;130:35;;8:9:-1;5:2;;;30:1;27;20:12;5:2;130:35:0;;;;;;;;;;;;;;;;;;;;;;;57:30;86:1;57:30;:::o;93:31::-;123:1;93:31;:::o;130:35::-;164:1;130:35;:::o",
-  "source": "pragma solidity ^0.4.0;\n\ncontract CommonStateNames {\n    uint public constant DRAFT = 1;\n    uint public constant ACTIVE = 2;\n    uint public constant TERMINATED = 3;\n}\n",
+  "bytecode": "0x608060405234801561001057600080fd5b50610153806100206000396000f300608060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630762f73114610067578063414ac85b14610092578063c90bd047146100bd578063dc04be85146100e8575b600080fd5b34801561007357600080fd5b5061007c610113565b6040518082815260200191505060405180910390f35b34801561009e57600080fd5b506100a7610118565b6040518082815260200191505060405180910390f35b3480156100c957600080fd5b506100d261011d565b6040518082815260200191505060405180910390f35b3480156100f457600080fd5b506100fd610122565b6040518082815260200191505060405180910390f35b600181565b600481565b600281565b6003815600a165627a7a723058207fec8abc536977dfcf093caa36774a42233625a40bd69e51fe2a7032bafeb8310029",
+  "deployedBytecode": "0x608060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630762f73114610067578063414ac85b14610092578063c90bd047146100bd578063dc04be85146100e8575b600080fd5b34801561007357600080fd5b5061007c610113565b6040518082815260200191505060405180910390f35b34801561009e57600080fd5b506100a7610118565b6040518082815260200191505060405180910390f35b3480156100c957600080fd5b506100d261011d565b6040518082815260200191505060405180910390f35b3480156100f457600080fd5b506100fd610122565b6040518082815260200191505060405180910390f35b600181565b600481565b600281565b6003815600a165627a7a723058207fec8abc536977dfcf093caa36774a42233625a40bd69e51fe2a7032bafeb8310029",
+  "sourceMap": "25:181:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;25:181:0;;;;;;;",
+  "deployedSourceMap": "25:181:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;57:30;;8:9:-1;5:2;;;30:1;27;20:12;5:2;57:30:0;;;;;;;;;;;;;;;;;;;;;;;171:32;;8:9:-1;5:2;;;30:1;27;20:12;5:2;171:32:0;;;;;;;;;;;;;;;;;;;;;;;93:31;;8:9:-1;5:2;;;30:1;27;20:12;5:2;93:31:0;;;;;;;;;;;;;;;;;;;;;;;130:35;;8:9:-1;5:2;;;30:1;27;20:12;5:2;130:35:0;;;;;;;;;;;;;;;;;;;;;;;57:30;86:1;57:30;:::o;171:32::-;202:1;171:32;:::o;93:31::-;123:1;93:31;:::o;130:35::-;164:1;130:35;:::o",
+  "source": "pragma solidity ^0.4.0;\n\ncontract CommonStateNames {\n    uint public constant DRAFT = 1;\n    uint public constant ACTIVE = 2;\n    uint public constant TERMINATED = 3;\n    uint public constant EXPIRED = 4;\n}\n",
   "sourcePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/CommonStateNames.sol",
   "ast": {
     "absolutePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/CommonStateNames.sol",
     "exportedSymbols": {
       "CommonStateNames": [
-        11
+        14
       ]
     },
-    "id": 12,
+    "id": 15,
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -77,9 +91,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 11,
+        "id": 14,
         "linearizedBaseContracts": [
-          11
+          14
         ],
         "name": "CommonStateNames",
         "nodeType": "ContractDefinition",
@@ -89,7 +103,7 @@
             "id": 4,
             "name": "DRAFT",
             "nodeType": "VariableDeclaration",
-            "scope": 11,
+            "scope": 14,
             "src": "57:30:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -132,7 +146,7 @@
             "id": 7,
             "name": "ACTIVE",
             "nodeType": "VariableDeclaration",
-            "scope": 11,
+            "scope": 14,
             "src": "93:31:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -175,7 +189,7 @@
             "id": 10,
             "name": "TERMINATED",
             "nodeType": "VariableDeclaration",
-            "scope": 11,
+            "scope": 14,
             "src": "130:35:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -212,22 +226,65 @@
               "value": "3"
             },
             "visibility": "public"
+          },
+          {
+            "constant": true,
+            "id": 13,
+            "name": "EXPIRED",
+            "nodeType": "VariableDeclaration",
+            "scope": 14,
+            "src": "171:32:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 11,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "171:4:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "34",
+              "id": 12,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "202:1:0",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_4_by_1",
+                "typeString": "int_const 4"
+              },
+              "value": "4"
+            },
+            "visibility": "public"
           }
         ],
-        "scope": 12,
-        "src": "25:143:0"
+        "scope": 15,
+        "src": "25:181:0"
       }
     ],
-    "src": "0:169:0"
+    "src": "0:207:0"
   },
   "legacyAST": {
     "absolutePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/CommonStateNames.sol",
     "exportedSymbols": {
       "CommonStateNames": [
-        11
+        14
       ]
     },
-    "id": 12,
+    "id": 15,
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -247,9 +304,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 11,
+        "id": 14,
         "linearizedBaseContracts": [
-          11
+          14
         ],
         "name": "CommonStateNames",
         "nodeType": "ContractDefinition",
@@ -259,7 +316,7 @@
             "id": 4,
             "name": "DRAFT",
             "nodeType": "VariableDeclaration",
-            "scope": 11,
+            "scope": 14,
             "src": "57:30:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -302,7 +359,7 @@
             "id": 7,
             "name": "ACTIVE",
             "nodeType": "VariableDeclaration",
-            "scope": 11,
+            "scope": 14,
             "src": "93:31:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -345,7 +402,7 @@
             "id": 10,
             "name": "TERMINATED",
             "nodeType": "VariableDeclaration",
-            "scope": 11,
+            "scope": 14,
             "src": "130:35:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -382,13 +439,56 @@
               "value": "3"
             },
             "visibility": "public"
+          },
+          {
+            "constant": true,
+            "id": 13,
+            "name": "EXPIRED",
+            "nodeType": "VariableDeclaration",
+            "scope": 14,
+            "src": "171:32:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 11,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "171:4:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "34",
+              "id": 12,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "202:1:0",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_4_by_1",
+                "typeString": "int_const 4"
+              },
+              "value": "4"
+            },
+            "visibility": "public"
           }
         ],
-        "scope": 12,
-        "src": "25:143:0"
+        "scope": 15,
+        "src": "25:181:0"
       }
     ],
-    "src": "0:169:0"
+    "src": "0:207:0"
   },
   "compiler": {
     "name": "solc",
@@ -396,5 +496,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-11-29T13:45:53.949Z"
+  "updatedAt": "2018-12-05T13:58:51.555Z"
 }

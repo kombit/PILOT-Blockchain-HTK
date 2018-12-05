@@ -26,14 +26,14 @@
     "absolutePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/IHasSubcontracts.sol",
     "exportedSymbols": {
       "IHasSubcontracts": [
-        45
+        48
       ]
     },
-    "id": 46,
+    "id": 49,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 38,
+        "id": 41,
         "literals": [
           "solidity",
           "^",
@@ -46,10 +46,10 @@
       {
         "absolutePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/ICommonState.sol",
         "file": "./ICommonState.sol",
-        "id": 39,
+        "id": 42,
         "nodeType": "ImportDirective",
-        "scope": 46,
-        "sourceUnit": 37,
+        "scope": 49,
+        "sourceUnit": 40,
         "src": "25:28:3",
         "symbolAliases": [],
         "unitAlias": ""
@@ -60,9 +60,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 45,
+        "id": 48,
         "linearizedBaseContracts": [
-          45
+          48
         ],
         "name": "IHasSubcontracts",
         "nodeType": "ContractDefinition",
@@ -70,7 +70,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 44,
+            "id": 47,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -78,22 +78,22 @@
             "name": "countSubcontracts",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 40,
+              "id": 43,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "114:2:3"
             },
             "payable": false,
             "returnParameters": {
-              "id": 43,
+              "id": 46,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 42,
+                  "id": 45,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44,
+                  "scope": 47,
                   "src": "143:4:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -102,7 +102,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 41,
+                    "id": 44,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "143:4:3",
@@ -117,14 +117,14 @@
               ],
               "src": "142:6:3"
             },
-            "scope": 45,
+            "scope": 48,
             "src": "88:61:3",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 46,
+        "scope": 49,
         "src": "55:96:3"
       }
     ],
@@ -134,14 +134,14 @@
     "absolutePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/IHasSubcontracts.sol",
     "exportedSymbols": {
       "IHasSubcontracts": [
-        45
+        48
       ]
     },
-    "id": 46,
+    "id": 49,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 38,
+        "id": 41,
         "literals": [
           "solidity",
           "^",
@@ -154,10 +154,10 @@
       {
         "absolutePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/ICommonState.sol",
         "file": "./ICommonState.sol",
-        "id": 39,
+        "id": 42,
         "nodeType": "ImportDirective",
-        "scope": 46,
-        "sourceUnit": 37,
+        "scope": 49,
+        "sourceUnit": 40,
         "src": "25:28:3",
         "symbolAliases": [],
         "unitAlias": ""
@@ -168,9 +168,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 45,
+        "id": 48,
         "linearizedBaseContracts": [
-          45
+          48
         ],
         "name": "IHasSubcontracts",
         "nodeType": "ContractDefinition",
@@ -178,7 +178,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 44,
+            "id": 47,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -186,22 +186,22 @@
             "name": "countSubcontracts",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 40,
+              "id": 43,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "114:2:3"
             },
             "payable": false,
             "returnParameters": {
-              "id": 43,
+              "id": 46,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 42,
+                  "id": 45,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 44,
+                  "scope": 47,
                   "src": "143:4:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -210,7 +210,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 41,
+                    "id": 44,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "143:4:3",
@@ -225,14 +225,14 @@
               ],
               "src": "142:6:3"
             },
-            "scope": 45,
+            "scope": 48,
             "src": "88:61:3",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 46,
+        "scope": 49,
         "src": "55:96:3"
       }
     ],
@@ -244,5 +244,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-11-29T13:45:53.950Z"
+  "updatedAt": "2018-12-05T13:58:51.555Z"
 }
