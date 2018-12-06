@@ -45,6 +45,10 @@ contract K2 is ICommonState, IHasSubcontracts, CommonStateNames, KCommon, Owned 
         state = ACTIVE;
     }
 
+    function pause() external ownerOnly {
+        state = PAUSE;
+    }
+
     function step(uint _month) external {
         require(state == ACTIVE, "current state was not ACTIVE");
         uint amountForMonth = payments[_month];
