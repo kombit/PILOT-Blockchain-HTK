@@ -9,8 +9,12 @@ Ganache CLI v6.1.8 (ganache-core: 2.2.1)
 
 Available Accounts
 ==================
-(0) 0x921d335007664f3f207032d7146d9f368c0b5e0b (~1000000 ETH)
-(1) 0xe791159bb87b5b60ebd4148d6f278dda05d0ccc0 (~1000000 ETH)
+(0) 0xed44a2776ce667dd90af100ae768661e88c0c95d (~1000000 ETH)
+(1) 0x47d0bba4a5d1de867f7487ec144226ae59ff37c3 (~1000000 ETH)
+... 
+HD Wallet
+==================
+Mnemonic: wolf flash type breeze cute alarm perfect permit lake brand burst trouble
 ```
 
 -- Vi laver en wallet til den 2. part, 'service provider'
@@ -24,25 +28,46 @@ Seed:    only wrist upper exhibit biology wonder once question sauce animal cele
 -- Opret en K1 med 1. og 2. ejer, se at vi bruger --owners 
 
 ```text
-$ node cli.js create K1 0x921d335007664f3f207032d7146d9f368c0b5e0b 0xe791159bb87b5b60ebd4148d6f278dda05d0ccc0 --owners 0x4641304dbfd8f741588100d36bf64438cebfc762 --owners 0xcf19f57ea7307d52d9a6983c6a8e7665246e8913
+$ node cli.js create K1 0xed44a2776ce667dd90af100ae768661e88c0c95d 0x04ce9694f04bd6c9dc6c659fda8d884f70b9e330 --owners 0xed44a2776ce667dd90af100ae768661e88c0c95d --owners 0x04ce9694f04bd6c9dc6c659fda8d884f70b9e330
 Deploying multisig contract for 2 owners ...
-  deployed SimpleMultiSig to 0x0C3Ce5D1A664639DD29367667a4698C66071523F
+  deployed SimpleMultiSig to 0x9133ad26d37ca7446e61Fcf4Ac21EEC9235eAe9b
 
 Constructor arguments in applied order (2):
-  0x0C3Ce5D1A664639DD29367667a4698C66071523F
-  0xe791159bb87b5b60ebd4148d6f278dda05d0ccc0
-  deployed K1 to 0x9BD87AcA78b77260B01B7E240F1C393D07Ceb64b
+  0x9133ad26d37ca7446e61Fcf4Ac21EEC9235eAe9b
+  0x04ce9694f04bd6c9dc6c659fda8d884f70b9e330
+  deployed K1 to 0x7ebD2AcAcB58A6cEA388678D61Efb672A839Eb92
 ```
 
--- brug sign hos begge parter
+-- brug sign hos begge parter, 1. part
 
 ```text
-$ node cli.js sign --seed "mnemonic words" --dest 0x654 --method activate --multisig 0x231 --from 0x890
-{"sigV": 28, "sigR": "0x789", "sigS": "0x456"}
+$ node cli.js sign --seed 'wolf flash type breeze cute alarm perfect permit lake brand burst trouble' --method activate --dest 0x7ebD2AcAcB58A6cEA388678D61Efb672A839Eb92 --multisig 0x9133ad26d37ca7446e61Fcf4Ac21EEC9235eAe9b
+Signature
+{"sigV":27,"sigR":"0x4a376e5289c5070d534f74417017c395f23742a2fb1eb15f1828f45dd109898c","sigS":"0x4adf6407ff9f3ebc222c5d858ce3b807e0b02b719f9f2c2d8112c5b0c77875db"}
+
+  Use it with node send like so:
+  send '{"sigV":27,"sigR":"0x4a376e5289c5070d534f74417017c395f23742a2fb1eb15f1828f45dd109898c","sigS":"0x4adf6407ff9f3ebc222c5d858ce3b807e0b02b719f9f2c2d8112c5b0c77875db"}' <other sig> --dest 0x7ebD2AcAcB58A6cEA388678D61Efb672A839Eb92 --multisig 0x9133ad26d37ca7446e61Fcf4Ac21EEC9235eAe9b
 ```
 
--- brug send til at sende transaktionen til K1
+-- 2. part 
 
 ```text
-$ node cli.js send '{"sigV":28,"sigR":"0x84b","sigS":"0x6a"}' '{"sigV":28,"sigR":"0xaca","sigS":"0x6b0"}' --from 0x123 --dest 0x345 --multisig 0x678
+$ node cli.js sign --seed 'only wrist upper exhibit biology wonder once question sauce animal celery sibling' --method activate --dest 0x7ebD2AcAcB58A6cEA388678D61Efb672A839Eb92 --multisig 0x9133ad26d37ca7446e61Fcf4Ac21EEC9235eAe9b
+Signature
+{"sigV":28,"sigR":"0xbca27f42c1dbbeb8cf972e675176d8077a8dc4be36bbb617b967bc5abf0a1585","sigS":"0x2e98b3e5523ed20f05eb062b129b0d4208ae2d89766fbe39353539f0f3c87bdd"}
+
+  Use it with node send like so:
+  send '{"sigV":28,"sigR":"0xbca27f42c1dbbeb8cf972e675176d8077a8dc4be36bbb617b967bc5abf0a1585","sigS":"0x2e98b3e5523ed20f05eb062b129b0d4208ae2d89766fbe39353539f0f3c87bdd"}' <other sig> --dest 0x7ebD2AcAcB58A6cEA388678D61Efb672A839Eb92 --multisig 0x9133ad26d37ca7446e61Fcf4Ac21EEC9235eAe9b
+```
+
+-- brug send til at sende de to signaturer
+
+wrong order
+```text
+$ node cli.js send '{"sigV":28,"sigR":"0xbca27f42c1dbbeb8cf972e675176d8077a8dc4be36bbb617b967bc5abf0a1585","sigS":"0x2e98b3e5523ed20f05eb062b129b0d4208ae2d89766fbe39353539f0f3c87bdd"}' '{"sigV":27,"sigR":"0x4a376e5289c5070d534f74417017c395f23742a2fb1eb15f1828f45dd109898c","sigS":"0x4adf6407ff9f3ebc222c5d858ce3b807e0b02b719f9f2c2d8112c5b0c77875db"}' --method activate --dest 0x7ebD2AcAcB58A6cEA388678D61Efb672A839Eb92 --multisig 0x9133ad26d37ca7446e61Fcf4Ac21EEC9235eAe9b
 ```    
+
+```text
+$ node cli.js send '{"sigV":28,"sigR":"0xbca27f42c1dbbeb8cf972e675176d8077a8dc4be36bbb617b967bc5abf0a1585","sigS":"0x2e98b3e5523ed20f05eb062b129b0d4208ae2d89766fbe39353539f0f3c87bdd"}' '{"sigV":27,"sigR":"0x4a376e5289c5070d534f74417017c395f23742a2fb1eb15f1828f45dd109898c","sigS":"0x4adf6407ff9f3ebc222c5d858ce3b807e0b02b719f9f2c2d8112c5b0c77875db"}' --method activate --dest 0x7ebD2AcAcB58A6cEA388678D61Efb672A839Eb92 --multisig 0x9133ad26d37ca7446e61Fcf4Ac21EEC9235eAe9b
+nonce 0
+```
