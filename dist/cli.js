@@ -130,7 +130,14 @@ async function _tx() {
     // validate all input
     new Array(sig1, sig2)
         .forEach((sig, index) => assert_1.ok(sig.sigV && sig.sigR && sig.sigS, index + ": missing V, R or S"));
-    sigTools_js_1.multiSigCall(destMethod, sig1, sig2, destAddress, multisigAddress, from);
+    try {
+        sigTools_js_1.multiSigCall(destMethod, sig1, sig2, destAddress, multisigAddress, from);
+    }
+    catch (e) {
+        if (e.message.includes('order')) {
+            sigTools_js_1.multiSigCall(destMethod, sig2, sig1, destAddress, multisigAddress, from);
+        }
+    }
 }
 async function _sign() {
     if (subcommandNoArgs(argv)) {
@@ -159,7 +166,7 @@ async function _sign() {
     console.log(JSON.stringify(sig));
     console.log('');
     console.log(`  Use it with node send like so:`);
-    console.log(`  ${Cmd[Cmd.send]} '${JSON.stringify(sig)}' <other sig> --dest ${destAddress} --multisig ${multisigAddress}`);
+    console.log(`  ${Cmd[Cmd.send]} '${JSON.stringify(sig)}' <other sig> --method ${destMethod} --dest ${destAddress} --multisig ${multisigAddress}`);
 }
 async function _add() {
     if (subcommandNoArgs(argv)) {
