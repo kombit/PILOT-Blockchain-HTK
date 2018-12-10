@@ -45,14 +45,14 @@
     "absolutePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/IAccessSubcontracts.sol",
     "exportedSymbols": {
       "IAccessSubcontracts": [
-        27
+        33
       ]
     },
-    "id": 28,
+    "id": 34,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 13,
+        "id": 19,
         "literals": [
           "solidity",
           "^",
@@ -65,10 +65,10 @@
       {
         "absolutePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/ICommonState.sol",
         "file": "./ICommonState.sol",
-        "id": 14,
+        "id": 20,
         "nodeType": "ImportDirective",
-        "scope": 28,
-        "sourceUnit": 37,
+        "scope": 34,
+        "sourceUnit": 43,
         "src": "25:28:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -79,9 +79,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 27,
+        "id": 33,
         "linearizedBaseContracts": [
-          27
+          33
         ],
         "name": "IAccessSubcontracts",
         "nodeType": "ContractDefinition",
@@ -89,7 +89,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 19,
+            "id": 25,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -97,31 +97,31 @@
             "name": "add",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 17,
+              "id": 23,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 16,
+                  "id": 22,
                   "name": "_subcontract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 19,
+                  "scope": 25,
                   "src": "104:25:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_ICommonState_$36",
+                    "typeIdentifier": "t_contract$_ICommonState_$42",
                     "typeString": "contract ICommonState"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 15,
+                    "id": 21,
                     "name": "ICommonState",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 36,
+                    "referencedDeclaration": 42,
                     "src": "104:12:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_ICommonState_$36",
+                      "typeIdentifier": "t_contract$_ICommonState_$42",
                       "typeString": "contract ICommonState"
                     }
                   },
@@ -133,12 +133,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 18,
+              "id": 24,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "139:0:1"
             },
-            "scope": 27,
+            "scope": 33,
             "src": "91:49:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -147,7 +147,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 26,
+            "id": 32,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -155,15 +155,15 @@
             "name": "getSubcontract",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 22,
+              "id": 28,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 21,
+                  "id": 27,
                   "name": "_index",
                   "nodeType": "VariableDeclaration",
-                  "scope": 26,
+                  "scope": 32,
                   "src": "169:11:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -172,7 +172,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 20,
+                    "id": 26,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "169:4:1",
@@ -189,15 +189,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 25,
+              "id": 31,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 24,
+                  "id": 30,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 26,
+                  "scope": 32,
                   "src": "208:7:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -206,7 +206,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 23,
+                    "id": 29,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "208:7:1",
@@ -221,14 +221,14 @@
               ],
               "src": "207:9:1"
             },
-            "scope": 27,
+            "scope": 33,
             "src": "145:72:1",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 28,
+        "scope": 34,
         "src": "55:164:1"
       }
     ],
@@ -238,14 +238,14 @@
     "absolutePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/IAccessSubcontracts.sol",
     "exportedSymbols": {
       "IAccessSubcontracts": [
-        27
+        33
       ]
     },
-    "id": 28,
+    "id": 34,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 13,
+        "id": 19,
         "literals": [
           "solidity",
           "^",
@@ -258,10 +258,10 @@
       {
         "absolutePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/ICommonState.sol",
         "file": "./ICommonState.sol",
-        "id": 14,
+        "id": 20,
         "nodeType": "ImportDirective",
-        "scope": 28,
-        "sourceUnit": 37,
+        "scope": 34,
+        "sourceUnit": 43,
         "src": "25:28:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -272,9 +272,9 @@
         "contractKind": "interface",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 27,
+        "id": 33,
         "linearizedBaseContracts": [
-          27
+          33
         ],
         "name": "IAccessSubcontracts",
         "nodeType": "ContractDefinition",
@@ -282,7 +282,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 19,
+            "id": 25,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -290,31 +290,31 @@
             "name": "add",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 17,
+              "id": 23,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 16,
+                  "id": 22,
                   "name": "_subcontract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 19,
+                  "scope": 25,
                   "src": "104:25:1",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_ICommonState_$36",
+                    "typeIdentifier": "t_contract$_ICommonState_$42",
                     "typeString": "contract ICommonState"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 15,
+                    "id": 21,
                     "name": "ICommonState",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 36,
+                    "referencedDeclaration": 42,
                     "src": "104:12:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_ICommonState_$36",
+                      "typeIdentifier": "t_contract$_ICommonState_$42",
                       "typeString": "contract ICommonState"
                     }
                   },
@@ -326,12 +326,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 18,
+              "id": 24,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "139:0:1"
             },
-            "scope": 27,
+            "scope": 33,
             "src": "91:49:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -340,7 +340,7 @@
           {
             "body": null,
             "documentation": null,
-            "id": 26,
+            "id": 32,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -348,15 +348,15 @@
             "name": "getSubcontract",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 22,
+              "id": 28,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 21,
+                  "id": 27,
                   "name": "_index",
                   "nodeType": "VariableDeclaration",
-                  "scope": 26,
+                  "scope": 32,
                   "src": "169:11:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -365,7 +365,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 20,
+                    "id": 26,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "169:4:1",
@@ -382,15 +382,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 25,
+              "id": 31,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 24,
+                  "id": 30,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 26,
+                  "scope": 32,
                   "src": "208:7:1",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -399,7 +399,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 23,
+                    "id": 29,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "208:7:1",
@@ -414,14 +414,14 @@
               ],
               "src": "207:9:1"
             },
-            "scope": 27,
+            "scope": 33,
             "src": "145:72:1",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 28,
+        "scope": 34,
         "src": "55:164:1"
       }
     ],
@@ -433,5 +433,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-11-29T13:45:53.949Z"
+  "updatedAt": "2018-12-10T10:35:28.158Z"
 }

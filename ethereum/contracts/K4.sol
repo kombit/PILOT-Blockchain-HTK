@@ -5,8 +5,9 @@ import "./IHasSubcontracts.sol";
 import "./CommonStateNames.sol";
 import "./ICommonState.sol";
 import "./IAccessSubcontracts.sol";
+import "./KCommon.sol";
 
-contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateNames, Owned {
+contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateNames, KCommon, Owned {
 
     uint public state = DRAFT; // defaults to draft
 
@@ -23,9 +24,9 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
         serviceProvider = _serviceProvider;
         payments = new uint[](3);
 
-        payments[0] = 5000 szabo;  // jan 2018
-        payments[1] = 5000 szabo;  // feb 2018
-        payments[2] = 5000 szabo;  // mar 2018
+        payments[0] = 5000 * KR;  // jan 2018
+        payments[1] = 5000 * KR;  // feb 2018
+        payments[2] = 5000 * KR;  // mar 2018
     }
 
     modifier serviceProviderOnly {
@@ -35,7 +36,6 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
 
     // state
     function activate() external ownerOnly {
-        require(state == DRAFT, "current state was not DRAFT");
         state = ACTIVE;
     }
 
@@ -47,10 +47,14 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
         require(amountForMonth <= this.balance, "The contract itself is out of money");
 
         // our subcontract must not be terminated
-        require(subcontract.getState() == ACTIVE);
+        require(subcontract.getState() == ACTIVE, "K4's subcontract should have been ACTIVE");
 
         serviceProvider.transfer(amountForMonth);
         payments[_month] = 0;
+
+        if (_month == 2) {
+            state = EXPIRED;
+        }
     }
 
     // the contract can hold ether
@@ -59,7 +63,6 @@ contract K4 is ICommonState, IHasSubcontracts, IAccessSubcontracts, CommonStateN
 
     // IAccessSubcontracts
     function add(ICommonState _subcontract) external { // serviceProviderOnly ?
-        require(state != TERMINATED, "state must not be TERMINATED when adding subcontract");
         numSubcontracts = 1;
         subcontract = ICommonState(_subcontract);
     }

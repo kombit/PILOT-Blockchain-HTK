@@ -6,22 +6,40 @@ const Web3 = require('web3')
 
 const argv = minimist(process.argv.slice(2), {
   default: {
-    'network': 'development',
-  }, // always treat these as strings
+  },
 })
-// console.debug(argv)
-const network = argv.network
-ok(network, "missing network?")
-const truffleConfig = require( join(__dirname, '../ethereum/truffle.js' ))
+const network = argv.network || process.env.NETWORK || 'development' // defaults to 'development'
 
+const truffleConfig = require( join(__dirname, '../ethereum/truffle.js' ))
 ok(truffleConfig.networks[network], `missing configuration for '${network}'`)
 
 export const networkId = truffleConfig.networks[network].network_id
 ok(networkId, "missing network ID")
 
-const {host, port} = truffleConfig.networks[network]
-const protocol = (!host || host.includes('127.0.0.1')) ? 'http:' : 'https:'
-const provider = `${protocol}//${host}:${port}`
+let provider:any
+
+if (network === 'development') {
+  const {host, port} = truffleConfig.networks[network]
+  provider = `http://${host}:${port}`
+}
+else {
+  provider = truffleConfig.networks[network].provider()
+  ok(typeof provider === "object", "should be provider obj here")
+}
+
+ok(provider, "missing some setup for provider")
+
+export function stop() {
+  try {
+    if (provider.engine) {
+      // console.log("Attempting to stop provider engine gracefully")
+      provider.engine.stop()
+    }
+  }
+  catch (e) {
+    console.log(e.message)
+  }
+}
 
 export function getWeb3 () {
   const web3 = new Web3(provider)

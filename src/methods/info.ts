@@ -3,7 +3,7 @@ import chalk from 'chalk'
 import { join } from 'path'
 import { getWeb3 } from '../web3.js'
 
-const {yellow, red, blue, greenBright} = chalk
+const {yellow, red, cyan, greenBright} = chalk
 
 export async function info (contractAddress:string, networkId:string) {
   console.log(`CONTRACT STATE INFORMATION`)
@@ -18,12 +18,16 @@ enum StateNames {
   draft = 1,
   active = 2,
   terminated = 3,
+  expired = 4,
+  pause = 5,
 }
 
 const stateColours = new Map<StateNames, Function>()
 stateColours.set(StateNames.draft, yellow)
 stateColours.set(StateNames.active, greenBright)
-stateColours.set(StateNames.terminated, blue)
+stateColours.set(StateNames.expired, cyan)
+stateColours.set(StateNames.terminated, red)
+stateColours.set(StateNames.pause, yellow)
 
 const colour = (state:number) => {
   const func = stateColours.get(state)

@@ -5,8 +5,9 @@ import "./IHasSubcontracts.sol";
 import "./CommonStateNames.sol";
 import "./ICommonState.sol";
 import "./IAccessSubcontracts.sol";
+import "./KCommon.sol";
 
-contract K1 is ICommonState, IHasSubcontracts, CommonStateNames, Owned {
+contract K1 is ICommonState, IHasSubcontracts, CommonStateNames, KCommon, Owned {
 
     uint public state = DRAFT; // defaults to draft
 
@@ -24,18 +25,18 @@ contract K1 is ICommonState, IHasSubcontracts, CommonStateNames, Owned {
         serviceProvider = _serviceProvider;
         payments = new uint[](12);
 
-        payments[0] = 60000 szabo;  // jan 2018
-        payments[1] = 60000 szabo;  // feb 2018
-        payments[2] = 60000 szabo;  // mar 2018
-        payments[3] = 60000 szabo;  // apr 2018
-        payments[4] = 60000 szabo;  // may 2018
-        payments[5] = 60000 szabo;  // jun 2018
-        payments[6] = 60000 szabo;  // jul 2018
-        payments[7] = 60000 szabo;  // aug 2018
-        payments[8] = 60000 szabo;  // sep 2018
-        payments[9] = 60000 szabo;  // oct 2018
-        payments[10] = 60000 szabo; // nov 2018
-        payments[11] = 60000 szabo; // dec 2018
+        payments[0] = 60000 * KR;  // jan 2018
+        payments[1] = 60000 * KR;  // feb 2018
+        payments[2] = 60000 * KR;  // mar 2018
+        payments[3] = 60000 * KR;  // apr 2018
+        payments[4] = 60000 * KR;  // may 2018
+        payments[5] = 60000 * KR;  // jun 2018
+        payments[6] = 60000 * KR;  // jul 2018
+        payments[7] = 60000 * KR;  // aug 2018
+        payments[8] = 60000 * KR;  // sep 2018
+        payments[9] = 60000 * KR;  // oct 2018
+        payments[10] = 60000 * KR; // nov 2018
+        payments[11] = 60000 * KR; // dec 2018
 
         status = new bytes32[](12);
     }
@@ -43,7 +44,6 @@ contract K1 is ICommonState, IHasSubcontracts, CommonStateNames, Owned {
     // state
 
     function activate() external ownerOnly {
-        require(state == DRAFT, "current state was not DRAFT");
         state = ACTIVE;
     }
 
@@ -56,11 +56,18 @@ contract K1 is ICommonState, IHasSubcontracts, CommonStateNames, Owned {
         uint rest = (_month+1) % 3;
         if (rest == 0) {
             bytes32 b = status[_month];
-            require(b != 0x0, "status was not set");
+            if (b == 0x0) {
+                state = PAUSE;
+                return;
+            }
         }
 
         serviceProvider.transfer(amountForMonth);
         payments[_month] = 0;
+
+        if (_month == 11) {
+            state = EXPIRED;
+        }
     }
 
     function setStatus(uint month, bytes32 _status) external {

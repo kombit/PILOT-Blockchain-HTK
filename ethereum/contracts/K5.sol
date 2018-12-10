@@ -5,8 +5,9 @@ import "./IHasSubcontracts.sol";
 import "./CommonStateNames.sol";
 import "./ICommonState.sol";
 import "./IAccessSubcontracts.sol";
+import "./KCommon.sol";
 
-contract K5 is ICommonState, IHasSubcontracts, CommonStateNames, Owned {
+contract K5 is ICommonState, IHasSubcontracts, CommonStateNames, KCommon, Owned {
 
     uint public state = DRAFT; // defaults to draft
 
@@ -25,9 +26,9 @@ contract K5 is ICommonState, IHasSubcontracts, CommonStateNames, Owned {
         serviceProvider = _serviceProvider;
         payments = new uint[](3);
 
-        payments[0] = 5000 szabo;  // jan 2018
-        payments[1] = 5000 szabo;  // feb 2018
-        payments[2] = 5000 szabo;  // mar 2018
+        payments[0] = 5000 * KR;  // jan 2018
+        payments[1] = 5000 * KR;  // feb 2018
+        payments[2] = 5000 * KR;  // mar 2018
     }
 
     // the contract can hold ether
@@ -36,7 +37,6 @@ contract K5 is ICommonState, IHasSubcontracts, CommonStateNames, Owned {
 
     // state
     function activate() external ownerOnly {
-        require(state == DRAFT, "current state was not DRAFT");
         state = ACTIVE;
     }
 
@@ -47,6 +47,10 @@ contract K5 is ICommonState, IHasSubcontracts, CommonStateNames, Owned {
         require(amountForMonth <= this.balance, "The contract itself is out of money");
         serviceProvider.transfer(amountForMonth);
         payments[_month] = 0;
+
+        if (_month == 2) {
+            state = EXPIRED;
+        }
     }
 
 

@@ -4,7 +4,7 @@ const visual_helpers_js_1 = require("../visual-helpers.js");
 const chalk_1 = require("chalk");
 const path_1 = require("path");
 const web3_js_1 = require("../web3.js");
-const { yellow, red, blue, greenBright } = chalk_1.default;
+const { yellow, red, cyan, greenBright } = chalk_1.default;
 async function info(contractAddress, networkId) {
     console.log(`CONTRACT STATE INFORMATION`);
     console.log('');
@@ -18,11 +18,15 @@ var StateNames;
     StateNames[StateNames["draft"] = 1] = "draft";
     StateNames[StateNames["active"] = 2] = "active";
     StateNames[StateNames["terminated"] = 3] = "terminated";
+    StateNames[StateNames["expired"] = 4] = "expired";
+    StateNames[StateNames["pause"] = 5] = "pause";
 })(StateNames || (StateNames = {}));
 const stateColours = new Map();
 stateColours.set(StateNames.draft, yellow);
 stateColours.set(StateNames.active, greenBright);
-stateColours.set(StateNames.terminated, blue);
+stateColours.set(StateNames.expired, cyan);
+stateColours.set(StateNames.terminated, red);
+stateColours.set(StateNames.pause, yellow);
 const colour = (state) => {
     const func = stateColours.get(state);
     if (func)

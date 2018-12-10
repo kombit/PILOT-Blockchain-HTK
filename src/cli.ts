@@ -9,12 +9,14 @@ import { ParsedArgs } from 'minimist'
 import { summary } from './methods/summary.js'
 import { sign } from './methods/sign.js'
 import { add } from './methods/add.js'
-import { getAccount } from './web3.js'
+import { getAccount, getWeb3, stop } from './web3.js'
 import { fund } from './methods/fund.js'
 import { step } from './methods/step.js'
 import { ok} from 'assert'
+import { activate } from './methods/activate.js'
+import { setStatus } from './methods/setStatus.js'
 
-const {red, grey} = chalk
+const {red, grey, yellowBright} = chalk
 
 if (parseInt(process.version.replace('v',''),10) < 10) {
   console.log("Please install node v10")
@@ -26,9 +28,12 @@ const argv = minimist(process.argv.slice(2), {
     '_',
     'a', 'address',
     'm', 'multisig',
+    'n', 'number', 'month',
+    'amount',
     'd', 'dest',
     'u',
-    'sp', 's',
+    'status', 's',
+    'subcontract',
     'o', 'owners',
     'from', 'f'
   ], // always treat these as strings
@@ -38,6 +43,8 @@ const argv = minimist(process.argv.slice(2), {
 enum Cmd {
   help,
   step,
+  pay,
+  activate,
   fund,
   info, status,
   summary,
@@ -45,9 +52,10 @@ enum Cmd {
   list, ls,
   register,
   create, mk,
-  template, tpl,
+  template, templates, tpl,
   sign,
   send,
+  "set-status",
 }
 
 const subcommand:Cmd|undefined = Cmd[argv._[0]]
@@ -62,9 +70,13 @@ async function _help() {
     .filter(value => [
       // blacklisted subcommands:
       Cmd[Cmd.help], // this is the help menu itself
-      Cmd[Cmd.step], // just a debug tool
-      Cmd[Cmd.add], // deprecated tool!
-      Cmd[Cmd.ls], Cmd[Cmd.tpl], Cmd[Cmd.mk], // aliases
+      Cmd[Cmd.activate], // for presentation only
+      Cmd[Cmd.step], // for presentation only
+      // aliases:
+      Cmd[Cmd.mk],
+      Cmd[Cmd.ls],
+      Cmd[Cmd.tpl], Cmd[Cmd.templates],
+      Cmd[Cmd.status],
     ].includes(value) === false)
     .sort()
     .join(', ')
@@ -128,7 +140,14 @@ async function _tx () {
   new Array(sig1, sig2)
     .forEach((sig, index) => ok(sig.sigV && sig.sigR && sig.sigS, index +": missing V, R or S"))
 
-  multiSigCall(destMethod, sig1, sig2, destAddress, multisigAddress, from)
+  try {
+    multiSigCall(destMethod, sig1, sig2, destAddress, multisigAddress, from)
+  }
+  catch (e) {
+    if (e.message.includes('order')) {
+      multiSigCall(destMethod, sig2, sig1, destAddress, multisigAddress, from)
+    }
+  }
 }
 
 async function _sign () {
@@ -158,10 +177,10 @@ async function _sign () {
 
   const sig = await sign(destMethod, destAddress, multisigAddress, seedPhrase, password)
   console.log('Signature')
-  console.log(JSON.stringify(sig))
+  console.log(yellowBright( JSON.stringify(sig) ))
   console.log('')
   console.log(`  Use it with node send like so:`)
-  console.log(`  ${Cmd[Cmd.send]} '${JSON.stringify(sig)}' <other sig> --dest ${destAddress} --multisig ${multisigAddress}`)
+  console.log(`  node cli.js ${Cmd[Cmd.send]} --method ${destMethod} --dest ${destAddress} --multisig ${multisigAddress} '${JSON.stringify(sig)}' '<other sig>'`)
 }
 
 async function _add () {
@@ -198,7 +217,7 @@ async function _info () {
   }
 
   const networkId = argv.networkId || '1337'
-  const contractAddress:string = argv._[1]
+  const contractAddress:string = argv.address || argv.a || argv._[1]
   ok(contractAddress, "please provide an address")
   await info(contractAddress, networkId)
 }
@@ -298,10 +317,10 @@ async function _create() {
     return
   }
 
-  const msg = argv.m || argv.message || argv.msg
+  const msg = argv.m || argv.message || ""
   const from = argv.f || argv.from || await getAccount()
   const ownerIndex = argv.i || argv.ownerIndex || 0
-  ok(msg, `Please leave a note for the contract deployment using --message, -m`)
+  ok(typeof msg === 'string', `Please leave a note for the contract deployment using --message, -m`)
   ok(from, "requires from; --from -f")
   ok(typeof ownerIndex === 'number', "missing owner index")
 
@@ -369,16 +388,16 @@ async function _template () {
 async function _fund () {
   if (subcommandNoArgs(argv)) {
     console.log("USAGE ")
-    console.log("  fund <address> <amount>")
+    console.log("  fund --address <address> --amount <amount>")
     console.log("")
     return
   }
 
-  const address = argv._[1]
-  const amount = argv._[2]
+  const address = argv.address || argv.a || argv._[1]
+  const amount = argv.amount || argv.m
 
-  ok(amount, 'missing amount (ether)')
-  ok(address, 'missing address')
+  ok(amount, 'missing amount (ether); --amount, -m')
+  ok(address, 'missing address; --address, -a')
   ok(address.substr(0,2 ) === '0x', 'something is off with address')
 
   await fund(address, amount)
@@ -386,13 +405,65 @@ async function _fund () {
 }
 
 async function _step() {
-  const address = argv.address || argv.a
-  ok(address, 'missing address')
-  const from = argv.f || argv.from || await getAccount()
-  ok(from, "missing form")
-  const name = argv.c || argv.contract || argv._[1]
-  const next:string = (argv.n || argv.number || argv._[2]).toString()
-  await step(name, next, address, from)
+  if (subcommandNoArgs(argv)) {
+    console.log('USAGE')
+    console.log('  node cli.js step --address <contract address> --number <step number>')
+    console.log('')
+    return
+  }
+
+  const address:string = argv.address || argv.a || argv._[1]
+  const number:string = (argv.n || argv.number) + ''
+  const from:string = argv.f || argv.from || await getAccount()
+
+  ok(address, 'missing address; --address, -a')
+  ok (number, "missing step number; --number, -n")
+  ok(from, "missing from; --from, -f")
+
+  await step(number, address, from)
+}
+
+async function _activate() {
+  if (subcommandNoArgs(argv)) {
+    console.log('USAGE')
+    console.log('  node cli.js activate --address <contract address>')
+    console.log('')
+    return
+  }
+
+  const address:string = argv.address || argv.a || argv._[1]
+  const from:string = argv.f || argv.from || await getAccount()
+
+  ok(address, 'missing address; --address, -a')
+  ok(from, "missing from; --from, -f")
+
+  await activate(address, from)
+}
+
+async function _setStatus() {
+  if (subcommandNoArgs(argv)) {
+    console.log('USAGE')
+    console.log('  node cli.js set-status --status 0x --number 0 --address <contract address>')
+    console.log('')
+    return
+  }
+
+  const address:string = argv.address || argv.a
+  const month:string = argv.month || argv.n || argv.number
+  const status:string = argv.status || argv.s
+  const from:string = argv.f || argv.from || await getAccount()
+
+  const web3 = getWeb3()
+  ok(status, 'missing status; --status, -s')
+  ok(web3.utils.isHex(status), 'status must be hex notation')
+  const hexStatus:string = '0x' + status.replace('0x', '')
+  ok(web3.utils.isHexStrict(hexStatus), 'status must be hex notation - prefixed with 0x')
+
+  ok(address, 'missing address; --address, -a')
+  ok(from, "missing from; --from, -f")
+  ok(month, "missing month; --month")
+
+  await setStatus(month, hexStatus, address, from)
 }
 
 function subcommandNoArgs(argv:ParsedArgs):boolean {
@@ -407,6 +478,9 @@ interface Handler {
 const handlers = new Map<Cmd, Handler>()
 
 handlers.set(Cmd.step, _step)
+handlers.set(Cmd.pay, _step)
+
+handlers.set(Cmd.activate, _activate)
 
 handlers.set(Cmd.info, _info)
 handlers.set(Cmd.status, handlers.get(Cmd.info) as Handler)
@@ -427,7 +501,10 @@ handlers.set(Cmd.create, _create)
 handlers.set(Cmd.fund, _fund)
 
 handlers.set(Cmd.template, _template)
-handlers.set(Cmd.tpl, handlers.get(Cmd.template) as Handler)
+handlers.set(Cmd.templates, _template)
+handlers.set(Cmd.tpl, _template)
+
+handlers.set(Cmd['set-status'], _setStatus)
 
 handlers.set(Cmd.mk, handlers.get(Cmd.create) as Handler)
 
@@ -435,3 +512,4 @@ const handler = handlers.get(subcommand as any) || handlers.get(Cmd.help) as Han
 ok(handler, "should have found handler")
 handler()
   .catch(err => console.error(red(err.toString())))
+  .finally(() => stop())

@@ -1,0 +1,200 @@
+{
+  "contractName": "KCommon",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "KR",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6080604052348015600f57600080fd5b5060a18061001e6000396000f300608060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063dae1b076146044575b600080fd5b348015604f57600080fd5b506056606c565b6040518082815260200191505060405180910390f35b64e8d4a51000815600a165627a7a7230582021e2b8c8055db657b6c460d899cf4fad6b8a20352a6025ac64c8df16621752320029",
+  "deployedBytecode": "0x608060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063dae1b076146044575b600080fd5b348015604f57600080fd5b506056606c565b6040518082815260200191505060405180910390f35b64e8d4a51000815600a165627a7a7230582021e2b8c8055db657b6c460d899cf4fad6b8a20352a6025ac64c8df16621752320029",
+  "sourceMap": "25:81:9:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;25:81:9;;;;;;;",
+  "deployedSourceMap": "25:81:9:-;;;;;;;;;;;;;;;;;;;;;;;;48:33;;8:9:-1;5:2;;;30:1;27;20:12;5:2;48:33:9;;;;;;;;;;;;;;;;;;;;;;;;74:7;48:33;:::o",
+  "source": "pragma solidity ^0.4.0;\n\ncontract KCommon {\n    uint constant public KR = 1 szabo; // common denominator\n}",
+  "sourcePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/KCommon.sol",
+  "ast": {
+    "absolutePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/KCommon.sol",
+    "exportedSymbols": {
+      "KCommon": [
+        1147
+      ]
+    },
+    "id": 1148,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1143,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:9"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 1147,
+        "linearizedBaseContracts": [
+          1147
+        ],
+        "name": "KCommon",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": true,
+            "id": 1146,
+            "name": "KR",
+            "nodeType": "VariableDeclaration",
+            "scope": 1147,
+            "src": "48:33:9",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 1144,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "48:4:9",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "31",
+              "id": 1145,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "74:7:9",
+              "subdenomination": "szabo",
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_1000000000000_by_1",
+                "typeString": "int_const 1000000000000"
+              },
+              "value": "1"
+            },
+            "visibility": "public"
+          }
+        ],
+        "scope": 1148,
+        "src": "25:81:9"
+      }
+    ],
+    "src": "0:106:9"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/julian/work-git/multisig-contracts/ethereum/contracts/KCommon.sol",
+    "exportedSymbols": {
+      "KCommon": [
+        1147
+      ]
+    },
+    "id": 1148,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1143,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:9"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 1147,
+        "linearizedBaseContracts": [
+          1147
+        ],
+        "name": "KCommon",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": true,
+            "id": 1146,
+            "name": "KR",
+            "nodeType": "VariableDeclaration",
+            "scope": 1147,
+            "src": "48:33:9",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 1144,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "48:4:9",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "31",
+              "id": 1145,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "74:7:9",
+              "subdenomination": "szabo",
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_1000000000000_by_1",
+                "typeString": "int_const 1000000000000"
+              },
+              "value": "1"
+            },
+            "visibility": "public"
+          }
+        ],
+        "scope": 1148,
+        "src": "25:81:9"
+      }
+    ],
+    "src": "0:106:9"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "2.0.1",
+  "updatedAt": "2018-12-10T10:35:28.165Z"
+}
