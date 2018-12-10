@@ -16,7 +16,7 @@ const step_js_1 = require("./methods/step.js");
 const assert_1 = require("assert");
 const activate_js_1 = require("./methods/activate.js");
 const setStatus_js_1 = require("./methods/setStatus.js");
-const { red, grey } = chalk_1.default;
+const { red, grey, yellowBright } = chalk_1.default;
 if (parseInt(process.version.replace('v', ''), 10) < 10) {
     console.log("Please install node v10");
     process.exit();
@@ -30,7 +30,7 @@ const argv = minimist(process.argv.slice(2), {
         'amount',
         'd', 'dest',
         'u',
-        'sp', 's',
+        'status', 's',
         'subcontract',
         'o', 'owners',
         'from', 'f'
@@ -163,10 +163,10 @@ async function _sign() {
     assert_1.ok(destAddress, "missing dest. address --dest -d");
     const sig = await sign_js_1.sign(destMethod, destAddress, multisigAddress, seedPhrase, password);
     console.log('Signature');
-    console.log(JSON.stringify(sig));
+    console.log(yellowBright(JSON.stringify(sig)));
     console.log('');
     console.log(`  Use it with node send like so:`);
-    console.log(`  ${Cmd[Cmd.send]} '${JSON.stringify(sig)}' <other sig> --method ${destMethod} --dest ${destAddress} --multisig ${multisigAddress}`);
+    console.log(`  node cli.js ${Cmd[Cmd.send]} --method ${destMethod} --dest ${destAddress} --multisig ${multisigAddress} '${JSON.stringify(sig)}' '<other sig>'`);
 }
 async function _add() {
     if (subcommandNoArgs(argv)) {
@@ -351,7 +351,7 @@ async function _step() {
         console.log('');
         return;
     }
-    const address = argv.address || argv.a;
+    const address = argv.address || argv.a || argv._[1];
     const number = (argv.n || argv.number) + '';
     const from = argv.f || argv.from || await web3_js_1.getAccount();
     assert_1.ok(address, 'missing address; --address, -a');
