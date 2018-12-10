@@ -25,10 +25,10 @@ Address: 0x04ce9694f04bd6c9dc6c659fda8d884f70b9e330
 Seed:    only wrist upper exhibit biology wonder once question sauce animal celery sibling
 ```
 
--- Opret en K1 med 1. og 2. ejer, se at vi bruger --owners 
+-- Opret en K1 med 1. og 2. ejer, se at vi bruger --owners, og derfor sætter K1 constructorens owner-argument til 0x
 
 ```text
-$ node cli.js create K1 0xed44a2776ce667dd90af100ae768661e88c0c95d 0x04ce9694f04bd6c9dc6c659fda8d884f70b9e330 --owners 0xed44a2776ce667dd90af100ae768661e88c0c95d --owners 0x04ce9694f04bd6c9dc6c659fda8d884f70b9e330
+$ node cli.js create K1 0x 0x04ce9694f04bd6c9dc6c659fda8d884f70b9e330 --owners 0xed44a2776ce667dd90af100ae768661e88c0c95d --owners 0x04ce9694f04bd6c9dc6c659fda8d884f70b9e330
 Deploying multisig contract for 2 owners ...
   deployed SimpleMultiSig to 0x9133ad26d37ca7446e61Fcf4Ac21EEC9235eAe9b
 
@@ -64,7 +64,7 @@ Signature
 
 wrong order
 ```text
-$ node cli.js send '{"sigV":28,"sigR":"0xbca27f42c1dbbeb8cf972e675176d8077a8dc4be36bbb617b967bc5abf0a1585","sigS":"0x2e98b3e5523ed20f05eb062b129b0d4208ae2d89766fbe39353539f0f3c87bdd"}' '{"sigV":27,"sigR":"0x4a376e5289c5070d534f74417017c395f23742a2fb1eb15f1828f45dd109898c","sigS":"0x4adf6407ff9f3ebc222c5d858ce3b807e0b02b719f9f2c2d8112c5b0c77875db"}' --method activate --dest 0x7ebD2AcAcB58A6cEA388678D61Efb672A839Eb92 --multisig 0x9133ad26d37ca7446e61Fcf4Ac21EEC9235eAe9b
+$ node cli.js send '{"sigV":28,"sigR":"0xbca27f42c1dbbeb8cf972e675176d8077a8dc4be36bbb617b967bc5abf0a1585","sigS":"0x2e98b3e5523ed20f05eb062b129b0d4208ae2d89766fbe39353539f0f3c87bdd"}' '{"sigV":27,"sigR":"0x4a376e5289c5070d534f74417017c395f23742a2fb1eb15f1828f45dd109898c","sigS":"0x4adf6407ff9f3ebc222c5d858ce3b807e0b02b719f9f2c2d8112c5b0c77875db"}' --method pause --dest 0x7ebD2AcAcB58A6cEA388678D61Efb672A839Eb92 --multisig 0x9133ad26d37ca7446e61Fcf4Ac21EEC9235eAe9b
 ```    
 
 ```text
