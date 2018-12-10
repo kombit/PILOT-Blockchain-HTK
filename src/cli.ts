@@ -32,7 +32,7 @@ const argv = minimist(process.argv.slice(2), {
     'amount',
     'd', 'dest',
     'u',
-    'sp', 's',
+    'status', 's',
     'subcontract',
     'o', 'owners',
     'from', 'f'
