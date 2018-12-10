@@ -16,7 +16,7 @@ import { ok} from 'assert'
 import { activate } from './methods/activate.js'
 import { setStatus } from './methods/setStatus.js'
 
-const {red, grey} = chalk
+const {red, grey, yellowBright} = chalk
 
 if (parseInt(process.version.replace('v',''),10) < 10) {
   console.log("Please install node v10")
@@ -177,10 +177,10 @@ async function _sign () {
 
   const sig = await sign(destMethod, destAddress, multisigAddress, seedPhrase, password)
   console.log('Signature')
-  console.log(JSON.stringify(sig))
+  console.log(yellowBright( JSON.stringify(sig) ))
   console.log('')
   console.log(`  Use it with node send like so:`)
-  console.log(`  ${Cmd[Cmd.send]} '${JSON.stringify(sig)}' <other sig> --method ${destMethod} --dest ${destAddress} --multisig ${multisigAddress}`)
+  console.log(`  node cli.js ${Cmd[Cmd.send]} --method ${destMethod} --dest ${destAddress} --multisig ${multisigAddress} '${JSON.stringify(sig)}' '<other sig>'`)
 }
 
 async function _add () {
@@ -412,7 +412,7 @@ async function _step() {
     return
   }
 
-  const address:string = argv.address || argv.a
+  const address:string = argv.address || argv.a || argv._[1]
   const number:string = (argv.n || argv.number) + ''
   const from:string = argv.f || argv.from || await getAccount()
 
